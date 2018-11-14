@@ -36,6 +36,11 @@
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="DatabaseSearch" Margin="15"/>
                             <TextBlock Text="Tìm kiếm" VerticalAlignment="Center"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding SearchBookCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Padding="1">

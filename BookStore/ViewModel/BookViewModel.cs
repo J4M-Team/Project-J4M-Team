@@ -27,9 +27,10 @@ namespace BookStore.ViewModel
             }
         }
 
-        public ICommand BookCommand { get; set; }
-        public ICommand AccountCommand { get; set; }
-        public ICommand EditBookCommand { get; set; }
+        public ICommand BookCommand { get; set; }//Hiển thị màn hình thống kê sách
+        public ICommand AccountCommand { get; set; }//Hiển thị màn hình thông tin tài khoản
+        public ICommand EditBookCommand { get; set; }//Hiển thị màn hình thêm sách
+        public ICommand SearchBookCommand { get; set; }//Hiển thị màn hình tìm kiếm sách
 
         public BookViewModel()
         {
@@ -44,11 +45,18 @@ namespace BookStore.ViewModel
                 FramePage = new AccountPage();
             }
                );
+
             EditBookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 FramePage = new EditBookPage();
             }
                );
+
+            SearchBookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                FramePage = new SearchPage();
+            }
+              );
         }
     }
 }
