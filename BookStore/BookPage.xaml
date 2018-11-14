@@ -17,7 +17,7 @@
       Title="BookPage">
 
     <Grid>
-        <materialDesign:Card Margin="15">
+        <materialDesign:Card Margin="30,10,0,0" Width="500" HorizontalAlignment="Left" >
             <ListView ItemsSource="{Binding Items1}">
                 <ListView.View>
                     <GridView>
