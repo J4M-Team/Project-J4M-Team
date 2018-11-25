@@ -107,6 +107,20 @@
     <Compile Include="BookPage.xaml.cs">
       <DependentUpon>BookPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\MyClass\CAccount.cs" />
+    <Compile Include="Model\MyClass\CBill.cs" />
+    <Compile Include="Model\MyClass\CBook.cs" />
+    <Compile Include="Model\MyClass\CBook_Price.cs" />
+    <Compile Include="Model\MyClass\CBook_Query.cs" />
+    <Compile Include="Model\MyClass\CCustomer.cs" />
+    <Compile Include="Model\MyClass\CCustomer_Types.cs" />
+    <Compile Include="Model\MyClass\CEmployee.cs" />
+    <Compile Include="Model\MyClass\CEmployee_Info.cs" />
+    <Compile Include="Model\MyClass\CEvaluate.cs" />
+    <Compile Include="Model\MyClass\CHuman.cs" />
+    <Compile Include="Model\MyClass\CRole.cs" />
+    <Compile Include="Model\MyClass\CSalesman.cs" />
+    <Compile Include="Model\MyClass\CWarehouse.cs" />
     <Compile Include="SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
@@ -189,9 +203,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Resource Include="Image\Book.png" />
   </ItemGroup>
