@@ -167,6 +167,7 @@
     <Compile Include="Model\Customer_Vip.cs">
       <DependentUpon>BookStoreModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Model\DataProvider.cs" />
     <Compile Include="Model\Employee.cs">
       <DependentUpon>BookStoreModel.tt</DependentUpon>
     </Compile>
