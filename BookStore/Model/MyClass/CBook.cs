@@ -75,6 +75,22 @@ namespace BookStore.Model.MyClass
             return List;
         }
 
+        public bool Add(CBook BookData)
+        {
+            try
+            {
+                var Book = new Book { Book_Name = BookData.Name, Book_Author = BookData.Author, Book_Type = BookData.Type, Book_Theme = BookData.Theme, Book_Count = BookData.Count };
+                DataProvider.Ins.DB.Books.Add(Book);
+                DataProvider.Ins.DB.SaveChanges();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+
+        }
+
         #endregion
     }
 }

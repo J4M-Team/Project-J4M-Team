@@ -35,17 +35,20 @@
                         <TextBox
                         materialDesign:HintAssist.Hint="Tên sách"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Margin="0,8">
+                        Margin="0,8"
+                            Text="{Binding Name}">
                         </TextBox>
                         <TextBox
                         materialDesign:HintAssist.Hint="Tác giả"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Margin="0,8">
+                        Margin="0,8"
+                            Text="{Binding Author}">
                         </TextBox>
                         <ComboBox
                         materialDesign:HintAssist.Hint="Chủ đề"
                         IsEditable="True"
-                        materialDesign:HintAssist.HintOpacity=".26" Margin="0,8">
+                        materialDesign:HintAssist.HintOpacity=".26" Margin="0,8"
+                            Text="{Binding Theme}">
                             <ComboBoxItem>
                                 Học tập
                             </ComboBoxItem>
@@ -62,7 +65,8 @@
                         <ComboBox
                         materialDesign:HintAssist.Hint="Thể loại"
                         IsEditable="True"
-                        materialDesign:HintAssist.HintOpacity=".26" Margin="0,8">
+                        materialDesign:HintAssist.HintOpacity=".26" Margin="0,8"
+                            Text="{Binding Type}">
                             <ComboBoxItem>
                                 Kinh dị
                             </ComboBoxItem>
@@ -79,7 +83,7 @@
                         <TextBox
                         materialDesign:HintAssist.Hint="Số lượng"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Margin="0,8">
+                        Margin="0,8" Text="{Binding Count}">
                         </TextBox>
                     </StackPanel>
                 </Grid>
@@ -88,7 +92,8 @@
             <Button Content="thêm" Width="100" 
                     VerticalAlignment="Bottom" 
                     Margin="0,150"
-                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"></Button>
+                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                    Command="{Binding AddCommand}"></Button>
         </Grid>
         <Grid Grid.Column="1">
             <materialDesign:Card Margin="10">
@@ -120,7 +125,7 @@
                             MaxLength="255"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                         <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Content}"
+                            Binding="{Binding Theme}"
                             Header="Chủ đề"
                             MaxLength="255"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
