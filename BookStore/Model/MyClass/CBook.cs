@@ -53,5 +53,28 @@ namespace BookStore.Model.MyClass
         public CBook_Price Price { get { return _Price; } set { _Price = value; } }
 
         #endregion
+
+        #region method
+
+        public List<CBook> Load()
+        {
+            var List = new List<CBook>();
+            try
+            {
+                var sql = DataProvider.Ins.DB.Books;
+                foreach(var item in sql)
+                {
+                    var Book = new CBook { Id = item.Book_Id, Name = item.Book_Name, Author = item.Book_Author, Type = item.Book_Type, Theme = item.Book_Theme, Count = (int)item.Book_Count };
+                    List.Add(Book);
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        #endregion
     }
 }

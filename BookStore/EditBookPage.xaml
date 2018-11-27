@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:local="clr-namespace:BookStore"
       mc:Ignorable="d" 
        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -14,7 +15,13 @@
       Background="White"
       FontFamily="{DynamicResource MaterialDesignFont}"
       d:DesignHeight="450" d:DesignWidth="800"
+      DataContext="{StaticResource EditBookPageVM}"
       Title="EditBookPage">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="300"></ColumnDefinition>
@@ -87,7 +94,7 @@
             <materialDesign:Card Margin="10">
                 <DataGrid
                     Margin="0 0 0 0"
-                    ItemsSource="{Binding Items3}"
+                    ItemsSource="{Binding ListBook}"
                     CanUserSortColumns="True"
                     CanUserAddRows="False"
                     AutoGenerateColumns="False"
@@ -95,7 +102,7 @@
                     materialDesign:DataGridAssist.ColumnHeaderPadding="8">
                     <DataGrid.Columns>
                         <DataGridTextColumn
-                            Binding="{Binding Code}"
+                            Binding="{Binding Id}"
                             Header="Mã sách"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}" />
                         <materialDesign:MaterialDataGridTextColumn
@@ -103,22 +110,22 @@
                             Header="Tên sách"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                         <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Description}"
+                            Binding="{Binding Author}"
                             Header="Tác giả"
                             MaxLength="255"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                         <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Description}"
+                            Binding="{Binding Type}"
                             Header="Thể loại"
                             MaxLength="255"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                         <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Description}"
+                            Binding="{Binding Content}"
                             Header="Chủ đề"
                             MaxLength="255"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}" />
                         <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Description}"
+                            Binding="{Binding Count}"
                             Header="Số lượng"/>
                     </DataGrid.Columns>
                 </DataGrid>
