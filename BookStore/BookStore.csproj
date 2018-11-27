@@ -36,6 +36,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="MaterialDesignColors, Version=1.0.0.14576, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\MaterialDesignColors.1.1.1\lib\net45\MaterialDesignColors.dll</HintPath>
     </Reference>
@@ -64,7 +70,10 @@
       <HintPath>..\packages\Microsoft.SDK.Expression.Blend.1.0.0\lib\net45\Microsoft.SDK.Expression.Blend.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.SDK.Expression.Blend.1.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
     </Reference>
@@ -107,6 +116,75 @@
     <Compile Include="BookPage.xaml.cs">
       <DependentUpon>BookPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Bill.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Bill_Info.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Bill_Remove.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Book.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BookStoreModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BookStoreModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BookStoreModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BookStoreModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>BookStoreModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Book_Input.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Book_Input_Price.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Book_Output.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Book_Output_Price.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Book_Query.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Customer.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Customer_Types.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Customer_Vip.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Employee.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Employee_Account.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Employee_Info.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Employee_Role.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Evaluate.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Evaluate_Store.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\MyClass\CAccount.cs" />
     <Compile Include="Model\MyClass\CBill.cs" />
     <Compile Include="Model\MyClass\CBook.cs" />
@@ -121,6 +199,15 @@
     <Compile Include="Model\MyClass\CRole.cs" />
     <Compile Include="Model\MyClass\CSalesman.cs" />
     <Compile Include="Model\MyClass\CWarehouse.cs" />
+    <Compile Include="Model\Output_Info.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\PayWage_History.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Salary_Bonus.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
@@ -194,6 +281,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EntityDeploy Include="Model\BookStoreModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>BookStoreModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\BookStoreModel.edmx.diagram">
+      <DependentUpon>BookStoreModel.edmx</DependentUpon>
+    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -203,12 +297,26 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Model\BookStoreModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>BookStoreModel.Context.cs</LastGenOutput>
+      <DependentUpon>BookStoreModel.edmx</DependentUpon>
+    </Content>
+    <Content Include="Model\BookStoreModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>BookStoreModel.edmx</DependentUpon>
+      <LastGenOutput>BookStoreModel.cs</LastGenOutput>
+    </Content>
+  </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\Book.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
