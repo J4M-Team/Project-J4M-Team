@@ -101,8 +101,6 @@ namespace BookStore.ViewModel
             AddCommand = new RelayCommand<object>((p) => {
                 if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Author) || string.IsNullOrEmpty(Theme) || string.IsNullOrEmpty(Type) || string.IsNullOrEmpty(Count))
                     return false;
-                //if (string.IsNullOrEmpty(Name))
-                //    return false;
                 return true;
             }, (p) =>
             {
