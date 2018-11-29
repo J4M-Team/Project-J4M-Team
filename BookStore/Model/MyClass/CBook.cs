@@ -75,6 +75,11 @@ namespace BookStore.Model.MyClass
             return List;
         }
 
+        /// <summary>
+        /// Hàm thêm mới một sách dưới cơ sở dữ liệu
+        /// </summary>
+        /// <param name="BookData">Dữ liệu sách cần thêm mới</param>
+        /// <returns>nếu thành công trả về true, thất bại trả về false</returns>
         public bool Add(CBook BookData)
         {
             try
@@ -89,6 +94,85 @@ namespace BookStore.Model.MyClass
                 return false;
             }
 
+        }
+
+        /// <summary>
+        /// Hàm cập nhật thông tin của sách dưới cơ sở dữ liệu
+        /// </summary>
+        /// <param name="BookData">Dữ liệu cần thay đổi</param>
+        /// <returns>nếu thành công trả về true, thất bại trả về false</returns>
+        public bool Update(CBook BookData)
+        {
+            try
+            {
+                //Tìm đối tượng cần update theo khóa chính
+                var BooktoUpdate = DataProvider.Ins.DB.Books.Find(BookData.Id);
+                if (BooktoUpdate != null)
+                {
+                    //update dữ liệu mới
+                    BooktoUpdate.Book_Name = BookData.Name;
+                    BooktoUpdate.Book_Theme = BookData.Theme;
+                    BooktoUpdate.Book_Author = BookData.Author;
+                    BooktoUpdate.Book_Type = BookData.Type;
+
+                    //lưu thay đổi
+                    DataProvider.Ins.DB.SaveChanges();
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// Hàm trả về danh sách chủ đề 
+        /// </summary>
+        /// <returns>List</returns>
+        public List<string> ListTheme()
+        {
+            var List = new List<string>();
+
+            try
+            {
+                //Lấy ra danh sách chủ đề
+                var Theme = (from item in DataProvider.Ins.DB.Books select new { item.Book_Theme }).Distinct();
+
+                foreach (var item in Theme)
+                {              
+                    List.Add(item.Book_Theme);
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
+
+        public List<string> ListType()
+        {
+            var List = new List<string>();
+
+            try
+            {
+                //Lấy ra danh sách loại
+                var Type = (from item in DataProvider.Ins.DB.Books select new { item.Book_Type }).Distinct();
+
+                foreach (var item in Type)
+                {
+                    List.Add(item.Book_Type);
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
         }
 
         #endregion

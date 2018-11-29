@@ -7,15 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Controls;
+using System.Windows;
 
 namespace BookStore.ViewModel
 {
+
     public class EditBookPageVM:BaseViewModel
     {
 
         #region data binding
         private ObservableCollection<CBook> _ListBook;
-
         public ObservableCollection<CBook> ListBook
         {
             get { return _ListBook; }
@@ -23,6 +25,39 @@ namespace BookStore.ViewModel
             {
                 _ListBook = value;
                 OnPropertyChanged(nameof(ListBook));
+            }
+        }
+
+        private ObservableCollection<string> _ListTheme;
+        public ObservableCollection<string> ListTheme
+        {
+            get { return _ListTheme; }
+            set
+            {
+                _ListTheme = value;
+                OnPropertyChanged(nameof(ListTheme));
+            }
+        }
+
+        private ObservableCollection<string> _ListType;
+        public ObservableCollection<string> ListType
+        {
+            get { return _ListType; }
+            set
+            {
+                _ListType = value;
+                OnPropertyChanged(nameof(ListType));
+            }
+        }
+
+        private CBook _SelectedItem;
+        public CBook SelectedItem
+        {
+            get { return _SelectedItem; }
+            set
+            {
+                _SelectedItem = value;
+                OnPropertyChanged(nameof(SelectedItem));
             }
         }
 
@@ -36,7 +71,7 @@ namespace BookStore.ViewModel
                 OnPropertyChanged(nameof(Name));
             }
         }
-
+       
         private string _Author;
         public string Author
         {
@@ -87,6 +122,7 @@ namespace BookStore.ViewModel
 
         public ICommand loadCommand { get; set; }
         public ICommand AddCommand { get; set; }
+        public ICommand EditCommand { get; set; }
 
         #endregion
 
@@ -95,6 +131,8 @@ namespace BookStore.ViewModel
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
+                ListType = new ObservableCollection<string>(CBook.Ins.ListType());
             }
                );
 
@@ -107,6 +145,31 @@ namespace BookStore.ViewModel
                 
                 var NewBook = new CBook { Name = Name, Author = Author, Theme = Theme, Type = Type, Count = int.Parse(Count) };
                 CBook.Ins.Add(NewBook);
+                ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
+                ListType = new ObservableCollection<string>(CBook.Ins.ListType());
+
+            }
+               );
+
+            EditCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                
+                if(string.IsNullOrEmpty(SelectedItem.Name)|| string.IsNullOrEmpty(SelectedItem.Author)|| string.IsNullOrEmpty(SelectedItem.Theme)|| string.IsNullOrEmpty(SelectedItem.Type))
+                {
+                    return;
+                }
+                else
+                {
+                    
+                    CBook.Ins.Update(SelectedItem);
+
+                    //load lại dữ liệu
+                    ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                    ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
+                    ListType = new ObservableCollection<string>(CBook.Ins.ListType());
+                }
+                
             }
                );
         }
