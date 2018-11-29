@@ -200,6 +200,7 @@
     <Compile Include="Model\MyClass\CRole.cs" />
     <Compile Include="Model\MyClass\CSalesman.cs" />
     <Compile Include="Model\MyClass\CWarehouse.cs" />
+    <Compile Include="Model\MyClass\Help.cs" />
     <Compile Include="Model\Output_Info.cs">
       <DependentUpon>BookStoreModel.tt</DependentUpon>
     </Compile>

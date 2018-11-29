@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace BookStore.Model.MyClass
 {
@@ -36,6 +37,7 @@ namespace BookStore.Model.MyClass
         private string _Type;
         private string _Content;
         private int _Count;
+        private BitmapImage _Image;
         //imgage
         private CBook_Price _Price;
 
@@ -51,6 +53,7 @@ namespace BookStore.Model.MyClass
         public string Content { get { return _Content; } set { _Content = value; } }
         public int Count { get { return _Count; } set { _Count = value; } }
         public CBook_Price Price { get { return _Price; } set { _Price = value; } }
+        public BitmapImage Image { get { return _Image; } set { _Image = value; } }
 
         #endregion
 
@@ -64,7 +67,19 @@ namespace BookStore.Model.MyClass
                 var sql = DataProvider.Ins.DB.Books;
                 foreach(var item in sql)
                 {
-                    var Book = new CBook { Id = item.Book_Id, Name = item.Book_Name, Author = item.Book_Author, Type = item.Book_Type, Theme = item.Book_Theme, Count = (int)item.Book_Count };
+                    CBook Book;
+                    if(item.Book_Image == null)
+                    {
+                        Book = new CBook { Id = item.Book_Id, Name = item.Book_Name, Author = item.Book_Author,
+                            Type = item.Book_Type, Theme = item.Book_Theme, Count = (int)item.Book_Count };
+                    }
+                    else
+                    {
+                        Book = new CBook { Id = item.Book_Id, Name = item.Book_Name, Author = item.Book_Author,
+                            Type = item.Book_Type, Theme = item.Book_Theme, Count = (int)item.Book_Count,
+                            Image = Help.ByteToImage(item.Book_Image) };
+                    }
+                    
                     List.Add(Book);
                 }
             }
@@ -84,7 +99,16 @@ namespace BookStore.Model.MyClass
         {
             try
             {
-                var Book = new Book { Book_Name = BookData.Name, Book_Author = BookData.Author, Book_Type = BookData.Type, Book_Theme = BookData.Theme, Book_Count = BookData.Count };
+                Book Book;
+                if (BookData.Image == null)
+                {
+                    Book = new Book { Book_Name = BookData.Name, Book_Author = BookData.Author, Book_Type = BookData.Type, Book_Theme = BookData.Theme, Book_Count = BookData.Count };
+                }
+                else
+                {
+                    Book = new Book { Book_Name = BookData.Name, Book_Author = BookData.Author, Book_Type = BookData.Type, Book_Theme = BookData.Theme, Book_Count = BookData.Count,Book_Image = Help.ImageToByte(BookData.Image) };
+                }
+               
                 DataProvider.Ins.DB.Books.Add(Book);
                 DataProvider.Ins.DB.SaveChanges();
                 return true;

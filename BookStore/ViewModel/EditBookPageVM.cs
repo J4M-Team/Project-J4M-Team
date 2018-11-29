@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Controls;
 using System.Windows;
+using Microsoft.Win32;
+using System.Windows.Media.Imaging;
+using System.IO;
 
 namespace BookStore.ViewModel
 {
@@ -17,6 +20,7 @@ namespace BookStore.ViewModel
     {
 
         #region data binding
+
         private ObservableCollection<CBook> _ListBook;
         public ObservableCollection<CBook> ListBook
         {
@@ -27,6 +31,7 @@ namespace BookStore.ViewModel
                 OnPropertyChanged(nameof(ListBook));
             }
         }
+
 
         private ObservableCollection<string> _ListTheme;
         public ObservableCollection<string> ListTheme
@@ -116,6 +121,17 @@ namespace BookStore.ViewModel
             }
         }
 
+        private BitmapImage _CoverImage;
+        public BitmapImage CoverImage
+        {
+            get { return _CoverImage; }
+            set
+            {
+                _CoverImage = value;
+                OnPropertyChanged(nameof(CoverImage));
+            }
+        }
+
         #endregion
 
         #region command binding
@@ -123,6 +139,14 @@ namespace BookStore.ViewModel
         public ICommand loadCommand { get; set; }
         public ICommand AddCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand ImageCommand { get; set; }
+        public ICommand SelectionChangedCommand { get; set; }
+
+        #endregion
+
+        #region global variables
+
+        public string FileName;
 
         #endregion
 
@@ -142,8 +166,8 @@ namespace BookStore.ViewModel
                 return true;
             }, (p) =>
             {
-                
-                var NewBook = new CBook { Name = Name, Author = Author, Theme = Theme, Type = Type, Count = int.Parse(Count) };
+
+                var NewBook = new CBook { Name = Name, Author = Author, Theme = Theme, Type = Type, Count = int.Parse(Count), Image = CoverImage };
                 CBook.Ins.Add(NewBook);
                 ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
                 ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
@@ -172,6 +196,40 @@ namespace BookStore.ViewModel
                 
             }
                );
+
+            ImageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+               
+                OpenFileDialog ofd = new OpenFileDialog() { Filter = "JPEG|*.jpg|PNG|*.png", ValidateNames = true, Multiselect = false };
+                
+                var dialogOk = ofd.ShowDialog();
+                if(dialogOk == true)
+                {
+                    FileName = ofd.FileName;
+                    CoverImage = new BitmapImage(new Uri(FileName));
+                }
+                
+            }
+               );
+
+            SelectionChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+
+                var querry = (from item in ListBook where item.Id == SelectedItem.Id select item.Image).First();
+                if (querry != null)
+                {
+                    CoverImage = querry;
+                }
+                else
+                {
+                    CoverImage = new BitmapImage(new Uri("pack://application:,,,/" + "./Image/Book.png"));
+                }
+
+            }
+               );
         }
+
+
+
     }
 }

@@ -28,76 +28,65 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
-            <materialDesign:Card Margin="10" FontSize="15">
-                <Grid>
-                    <TextBlock Text="Thêm sách" HorizontalAlignment="Center" Margin="10" FontSize="20"/>
-                    <StackPanel Margin="15,30,15,20">
-                        <TextBox
+            <StackPanel>
+                <materialDesign:Card Margin="10,10,0,0" FontSize="15" VerticalAlignment="Top">
+                    <Grid>
+                        <TextBlock Text="Thêm sách" HorizontalAlignment="Center" Margin="10" FontSize="20"/>
+                        <StackPanel Margin="15,30,15,20">
+                            <TextBox
                         materialDesign:HintAssist.Hint="Tên sách"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Margin="0,8"
                             Text="{Binding Name}">
-                        </TextBox>
-                        <TextBox
+                            </TextBox>
+                            <TextBox
                         materialDesign:HintAssist.Hint="Tác giả"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Margin="0,8"
                             Text="{Binding Author}">
-                        </TextBox>
-                        <ComboBox
+                            </TextBox>
+                            <ComboBox
                         materialDesign:HintAssist.Hint="Chủ đề"
                         IsEditable="True"
                         materialDesign:HintAssist.HintOpacity=".26" Margin="0,8"
                             Text="{Binding Theme}"
                             ItemsSource="{Binding ListTheme}" >
-                            <!--<ComboBoxItem>
-                                Học tập
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                Truyện
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                Tiểu thuyết
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                Tài liệu
-                            </ComboBoxItem>-->
-                        </ComboBox>
-                        <ComboBox
+                            </ComboBox>
+                            <ComboBox
                         materialDesign:HintAssist.Hint="Thể loại"
                         IsEditable="True"
                         materialDesign:HintAssist.HintOpacity=".26" Margin="0,8"
                             Text="{Binding Type}" ItemsSource="{Binding ListType}">
-                            <!--<ComboBoxItem>
-                                Kinh dị
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                Trinh thám
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                Tình cảm
-                            </ComboBoxItem>
-                            <ComboBoxItem>
-                                Học tập
-                            </ComboBoxItem>-->
-                        </ComboBox>
-                        <TextBox
+                            </ComboBox>
+                            <TextBox
                         materialDesign:HintAssist.Hint="Số lượng"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                         Margin="0,8" Text="{Binding Count}">
-                        </TextBox>
-                    </StackPanel>
-                </Grid>
-               
-            </materialDesign:Card>
+                            </TextBox>
+                        </StackPanel>
+                    </Grid>
+
+                </materialDesign:Card>
+                <materialDesign:Card Margin="10,10,0,0">
+                    <Grid>
+                        <Image Source="{Binding CoverImage}" Height="290"></Image>
+                        <Button Content="Ảnh" Width="70"
+                                Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                                VerticalAlignment="Top" HorizontalAlignment="Right"
+                                Margin="0,5,5,0"
+                                Command="{Binding ImageCommand}"></Button>
+                    </Grid>
+                </materialDesign:Card>
+            </StackPanel>
+           
             <Button Content="thêm" Width="100" 
                     VerticalAlignment="Bottom" 
-                    Margin="0,150"
+                    Margin="0,0,0,20"
                     Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
                     Command="{Binding AddCommand}"></Button>
         </Grid>
         <Grid Grid.Column="1">
-            <materialDesign:Card Margin="10">
+            <materialDesign:Card Margin="0,10,20,20" Width="750" HorizontalAlignment="Right">
                 <DataGrid
                     Margin="0 0 0 0"
                     ItemsSource="{Binding ListBook}"
@@ -107,6 +96,11 @@
                     materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                     materialDesign:DataGridAssist.ColumnHeaderPadding="8"
                     SelectedItem="{Binding SelectedItem}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
                     <DataGrid.Columns>
                         <DataGridTextColumn
                             Binding="{Binding Id}"
