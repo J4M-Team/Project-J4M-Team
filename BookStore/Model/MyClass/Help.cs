@@ -35,5 +35,39 @@ namespace BookStore.Model.MyClass
                 return image;
             }
         }
+        static public string StandardizeName(string str)
+        {
+
+            var fullname = str;
+            const string Space = " ";
+            var tokens = fullname.Split(new string[] { Space },
+                StringSplitOptions.RemoveEmptyEntries)
+                .Select(token =>
+                {
+                    token = token.Trim().ToLower();
+                    var firstChar = token.Substring(0, 1).ToUpper();
+                    var remaining = token.Substring(1, token.Length - 1);
+                    return firstChar + remaining;
+                });
+            bool isEmpty = !tokens.Any();
+            string resuft;
+            if (isEmpty)
+            {
+                resuft = "";
+            }
+            else
+            {
+                var builder = new System.Text.StringBuilder();
+                foreach (var token in tokens)
+                {
+                    builder.Append(token);
+                    builder.Append(Space);
+                }
+                builder.Remove(builder.Length - 1, 1);
+                resuft = builder.ToString();
+            }
+            return resuft;
+
+        }
     }
 }
