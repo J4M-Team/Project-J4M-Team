@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookStore"
         mc:Ignorable="d"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -13,7 +14,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        DataContext="{StaticResource BookVM}"
+        DataContext="{StaticResource BanHangMain2VM}"
         Title="Ban Hang" Height="600" Width="1080" Icon="Image/Book.png" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
@@ -35,22 +36,22 @@
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="LocalPrintShop"  Margin="15"/>
                             <TextBlock Text="In hoá đơn" VerticalAlignment="Center"/>
-                            <!--<i:Interaction.Triggers>
+                            <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding SearchBookCommand}"/>
+                                    <i:InvokeCommandAction Command="{Binding PrintCommand}"/>
                                 </i:EventTrigger>
-                            </i:Interaction.Triggers>-->
+                            </i:Interaction.Triggers>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Padding="1">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="RemoveShoppingCart"  Margin="15"/>
                             <TextBlock Text="Hủy hóa đơn" VerticalAlignment="Center"/>
-                            <!--<i:Interaction.Triggers>
+                            <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding BookCommand}"/>
+                                    <i:InvokeCommandAction Command="{Binding DeleteCommand}"/>
                                 </i:EventTrigger>
-                            </i:Interaction.Triggers>-->
+                            </i:Interaction.Triggers>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Padding="1">
