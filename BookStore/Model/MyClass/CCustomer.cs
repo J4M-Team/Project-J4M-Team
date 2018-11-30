@@ -55,9 +55,33 @@ namespace BookStore.Model.MyClass
 
         #region method
 
-       
+        public List<CCustomer> Load()
+        {
+            var List = new List<CCustomer>();
+            try
+            {
+                var sql = DataProvider.Ins.DB.Customers;
+                foreach (var item in sql)
+                {
+                    CCustomer Customer;
+                    Customer = new CCustomer
+                    {
+                        Id = item.Customer_Id,
+                        Name = item.Customer_Name,
+                        Address = item.Customer_Address,
+                        Email = item.Customer_Email,
+                        Phone = item.Customer_Phone,
+                    };
+                    List.Add(Customer);
+                }
+            }
+            catch
+            {
 
-       
+            }
+            return List;
+        }
+
 
         #endregion
 
