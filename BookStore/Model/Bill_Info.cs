@@ -20,5 +20,6 @@ namespace BookStore.Model
         public int Book_Count { get; set; }
     
         public virtual Bill Bill { get; set; }
+        public virtual Book Book { get; set; }
     }
 }
