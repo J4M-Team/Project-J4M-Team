@@ -70,14 +70,30 @@ namespace BookStore.Model.MyClass
                     CBook Book;
                     if(item.Book_Image == null)
                     {
-                        Book = new CBook { Id = item.Book_Id, Name = item.Book_Name, Author = item.Book_Author,
-                            Type = item.Book_Type, Theme = item.Book_Theme, Count = (int)item.Book_Count };
+                        BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/" + "./Image/Book.png"));
+                        Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Type = item.Book_Type,
+                            Theme = item.Book_Theme,
+                            Count = (int)item.Book_Count,
+                            Image = image
+                        };
                     }
                     else
                     {
-                        Book = new CBook { Id = item.Book_Id, Name = item.Book_Name, Author = item.Book_Author,
-                            Type = item.Book_Type, Theme = item.Book_Theme, Count = (int)item.Book_Count,
-                            Image = Help.ByteToImage(item.Book_Image) };
+                        Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Type = item.Book_Type,
+                            Theme = item.Book_Theme,
+                            Count = (int)item.Book_Count,
+                            Image = Help.ByteToImage(item.Book_Image)
+                        };
                     }
                     
                     List.Add(Book);
@@ -102,11 +118,26 @@ namespace BookStore.Model.MyClass
                 Book Book;
                 if (BookData.Image == null)
                 {
-                    Book = new Book { Book_Name = BookData.Name, Book_Author = BookData.Author, Book_Type = BookData.Type, Book_Theme = BookData.Theme, Book_Count = BookData.Count };
+                    Book = new Book
+                    {
+                        Book_Name = BookData.Name,
+                        Book_Author = BookData.Author,
+                        Book_Type = BookData.Type,
+                        Book_Theme = BookData.Theme,
+                        Book_Count = BookData.Count
+                    };
                 }
                 else
                 {
-                    Book = new Book { Book_Name = BookData.Name, Book_Author = BookData.Author, Book_Type = BookData.Type, Book_Theme = BookData.Theme, Book_Count = BookData.Count,Book_Image = Help.ImageToByte(BookData.Image) };
+                    Book = new Book
+                    {
+                        Book_Name = BookData.Name,
+                        Book_Author = BookData.Author,
+                        Book_Type = BookData.Type,
+                        Book_Theme = BookData.Theme,
+                        Book_Count = BookData.Count,
+                        Book_Image = Help.ImageToByte(BookData.Image)
+                    };
                 }
                
                 DataProvider.Ins.DB.Books.Add(Book);
@@ -138,7 +169,7 @@ namespace BookStore.Model.MyClass
                     BooktoUpdate.Book_Theme = BookData.Theme;
                     BooktoUpdate.Book_Author = BookData.Author;
                     BooktoUpdate.Book_Type = BookData.Type;
-
+                    BooktoUpdate.Book_Image = Help.ImageToByte(BookData.Image);
                     //lưu thay đổi
                     DataProvider.Ins.DB.SaveChanges();
                     return true;
@@ -189,6 +220,48 @@ namespace BookStore.Model.MyClass
                 foreach (var item in Type)
                 {
                     List.Add(item.Book_Type);
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
+
+        public BitmapImage ImageOfId(int Id)
+        {
+            BitmapImage result = new BitmapImage();
+            try
+            {
+                var data = DataProvider.Ins.DB.Books.Where(x => x.Book_Id == Id).Select(x=>x.Book_Image).First();
+                result = Help.ByteToImage(data);
+                return result;
+            }
+            catch
+            {
+
+            }
+            result = null;
+            return result;
+        }
+
+        /// <summary>
+        /// Hàm trả về danh sách tác giả trong cơ sở dữ liệu
+        /// </summary>
+        /// <returns></returns>
+        public List<string> ListAuthor()
+        {
+            List<string> List = new List<string>();
+            try
+            {
+                //Lấy ra danh sách loại
+                var data = (from item in DataProvider.Ins.DB.Books select new { item.Book_Author }).Distinct();
+
+                foreach (var item in data)
+                {
+                    List.Add(item.Book_Author);
                 }
             }
             catch

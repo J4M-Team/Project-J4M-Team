@@ -14,7 +14,8 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         ResizeMode="NoResize"
-        DataContext="{StaticResource LoginVM}"
+        DataContext="{StaticResource LoginVM}" 
+        Name="Login"
         Title="LoginWindow" Height="500" Width="350" WindowStartupLocation="CenterScreen" Icon="Image/Book.png">
     <Grid>
         <Rectangle Height="280" VerticalAlignment="Top">
@@ -48,7 +49,7 @@
                 Margin="0,120" 
                 Width="150"
                 Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Grid.ColumnSpan="3"
-                Command="{Binding LoginCommand}">
+                Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=Login}">
         </Button>
         <TextBlock Text="Please login your Account!"
                    HorizontalAlignment="Center"

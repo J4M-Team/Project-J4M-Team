@@ -185,15 +185,24 @@ namespace BookStore.ViewModel
                 }
                 else
                 {
-                    
-                    CBook.Ins.Update(SelectedItem);
+                    CBook Book = new CBook
+                    {
+                        Id = SelectedItem.Id,
+                        Name = SelectedItem.Name,
+                        Author = SelectedItem.Author,
+                        Theme = SelectedItem.Theme,
+                        Type = SelectedItem.Type,
+                        Image = CoverImage
+                    };
+                    CBook.Ins.Update(Book);
 
                     //load lại dữ liệu
                     ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
                     ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
                     ListType = new ObservableCollection<string>(CBook.Ins.ListType());
+                    // MessageBox.Show("chọn vào button");
                 }
-                
+
             }
                );
 
@@ -214,17 +223,25 @@ namespace BookStore.ViewModel
 
             SelectionChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-
-                var querry = (from item in ListBook where item.Id == SelectedItem.Id select item.Image).First();
-                if (querry != null)
+                // MessageBox.Show("chọn vào change");
+                if(ListBook!=null)
                 {
-                    CoverImage = querry;
+                    //Thêm vào lí do khi load lại màn hình nó nhày vào hàm này khi đó selecteditem bị rỗng => chương trình bị treo
+                    if (SelectedItem != null)
+                    {
+                        var querry = (from item in ListBook where item.Id == SelectedItem.Id select item.Image).First();
+                        if (querry != null)
+                        {
+                            CoverImage = querry;
+                        }
+                        else
+                        {
+                            CoverImage = new BitmapImage(new Uri("pack://application:,,,/" + "./Image/Book.png"));
+                        }
+                    }
+                    
                 }
-                else
-                {
-                    CoverImage = new BitmapImage(new Uri("pack://application:,,,/" + "./Image/Book.png"));
-                }
-
+                
             }
                );
         }

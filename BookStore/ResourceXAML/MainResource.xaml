@@ -5,4 +5,5 @@
     <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
     <viewmodel:BookViewModel x:Key="BookVM"></viewmodel:BookViewModel>
     <viewmodel:EditBookPageVM x:Key="EditBookPageVM"></viewmodel:EditBookPageVM>
+    <viewmodel:SearchPageVM x:Key="SearchPageVM"></viewmodel:SearchPageVM>
 </ResourceDictionary>

@@ -217,6 +217,7 @@
     <Compile Include="ViewModel\BookViewModel.cs" />
     <Compile Include="ViewModel\EditBookPageVM.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\SearchPageVM.cs" />
     <Page Include="AccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
