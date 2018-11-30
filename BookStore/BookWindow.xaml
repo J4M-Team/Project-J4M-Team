@@ -74,7 +74,7 @@
                     <ListViewItem Padding="1">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="AccountEdit" Margin="15"/>
-                            <TextBlock Text="Tài khoản" VerticalAlignment="Center"/>
+                            <TextBlock Text="Tài khoản TEST" VerticalAlignment="Center"/>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseLeftButtonDown">
                                     <i:InvokeCommandAction Command="{Binding AccountCommand}"/>
