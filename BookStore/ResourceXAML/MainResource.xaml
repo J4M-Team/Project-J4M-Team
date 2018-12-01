@@ -7,4 +7,5 @@
     <viewmodel:EditBookPageVM x:Key="EditBookPageVM"></viewmodel:EditBookPageVM>
     <viewmodel:SearchPageVM x:Key="SearchPageVM"></viewmodel:SearchPageVM>
     <viewmodel:BanHangMain2VM x:Key="BanHangMain2VM"></viewmodel:BanHangMain2VM>
+    <viewmodel:AccepBillPageVM x:Key="AccepBillPageVM"></viewmodel:AccepBillPageVM>
 </ResourceDictionary>

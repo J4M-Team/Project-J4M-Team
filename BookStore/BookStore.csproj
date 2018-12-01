@@ -95,6 +95,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AccepBillPage.xaml.cs">
+      <DependentUpon>AccepBillPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AccountPage.xaml.cs">
       <DependentUpon>AccountPage.xaml</DependentUpon>
     </Compile>
@@ -216,6 +219,7 @@
     <Compile Include="SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModel\AccepBillPageVM.cs" />
     <Compile Include="ViewModel\BanHangMain2VM.cs" />
     <Compile Include="ViewModel\BanHangMainVM.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
@@ -224,6 +228,10 @@
     <Compile Include="ViewModel\EditBookPageVM.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\SearchPageVM.cs" />
+    <Page Include="AccepBillPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="AccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

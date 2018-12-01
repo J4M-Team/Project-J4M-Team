@@ -74,7 +74,7 @@
                     <ListViewItem Padding="1">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="AccountEdit" Margin="15"/>
-                            <TextBlock Text="Tài khoản TEST" VerticalAlignment="Center"/>
+                            <TextBlock Text="Tài khoản" VerticalAlignment="Center"/>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseLeftButtonDown">
                                     <i:InvokeCommandAction Command="{Binding AccountCommand}"/>
@@ -86,6 +86,11 @@
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="MessageBulleted" Margin="15"/>
                             <TextBlock Text="Thông báo" VerticalAlignment="Center"/>
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="MouseLeftButtonDown">
+                                    <i:InvokeCommandAction Command="{Binding AccepBillCommand}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
                         </StackPanel>
                     </ListViewItem>
                     <ListViewItem Padding="1">
