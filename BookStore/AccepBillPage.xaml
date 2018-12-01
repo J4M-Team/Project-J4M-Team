@@ -30,51 +30,94 @@
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="50"/>
+                <RowDefinition Height="70"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="1">
-                <materialDesign:Card Width="650">
-                    <ListView ItemsSource="{Binding ListBill}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single">
-                        <ListView.View>
-                            <GridView>
-                                <GridViewColumn
+                
+                <StackPanel>
+                    <materialDesign:Card Width="650" Margin="0,20,0,0">
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBox Width="590" FontSize="15" Height="35"
+                                    x:Name="CommentTextBox"
+                                    materialDesign:HintAssist.Hint="Mã hóa đơn/Tên khách hàng" Text="{Binding FilterString,UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding SearchTextChangeCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            <Button Background="#FF3EA0C3" Width="60" BorderBrush="#FF3EA0C3" Command="{Binding SearchCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Magnify" Height="25" Width="25" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:Card>
+                    <materialDesign:Card Width="650" Margin="0,15,0,0">
+                        <ListView ItemsSource="{Binding ListBill}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" Name="ListBill" IsSynchronizedWithCurrentItem="True">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                            <Setter Property="IsSelected" Value="True"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn
                         DisplayMemberBinding="{Binding Id}"
                         Header="Mã hóa đơn" />
-                                <GridViewColumn
+                                    <GridViewColumn
                         DisplayMemberBinding="{Binding Customer.Name}"
                         Header="Tên khách hàng" />
-                                <GridViewColumn Header="Chi tiết hóa đơn">
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <!--<Button Content="chi tiết" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"></Button>-->
-                                            <ItemsControl ItemsSource="{Binding ListBook}">
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate>
-                                                        <StackPanel Orientation="Horizontal">
-                                                            <TextBlock Text="Tên sách: "></TextBlock>
-                                                            <TextBlock Text="{Binding Name}"></TextBlock>
-                                                            <TextBlock Text=", Số lượng: "></TextBlock>
-                                                            <TextBlock Text="{Binding Count}"></TextBlock>
-                                                        </StackPanel>
+                                    <GridViewColumn Header="Chi tiết hóa đơn">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <!--<Button Content="chi tiết" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"></Button>-->
+                                                <ItemsControl ItemsSource="{Binding ListBook}">
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate>
+                                                            <StackPanel Orientation="Horizontal">
+                                                                <TextBlock Text="Tên sách: "></TextBlock>
+                                                                <TextBlock Text="{Binding Name}"></TextBlock>
+                                                                <TextBlock Text=", Số lượng: "></TextBlock>
+                                                                <TextBlock Text="{Binding Count}"></TextBlock>
+                                                            </StackPanel>
 
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                                <GridViewColumn>
-                                    <GridViewColumn.CellTemplate>
-                                        <DataTemplate>
-                                            <Button Content="Xác nhận" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Margin="10,0,0,0"
-                                                    Command="{Binding Path=DataContext.AccepCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}}"></Button>
-                                        </DataTemplate>
-                                    </GridViewColumn.CellTemplate>
-                                </GridViewColumn>
-                            </GridView>
-                        </ListView.View>
-                    </ListView>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="Xác nhận" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Margin="30,0,0,0"
+                                                    Command="{Binding Path=DataContext.AccepCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}} }"
+                                                    CommandParameter="{Binding}"></Button>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </materialDesign:Card>
+                </StackPanel>
+            </Grid>
+            <Grid Grid.Row="0">
+                <materialDesign:Card
+                    Background="#03a9f4"
+                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                    Width="650"
+                    Padding="8"
+                    UniformCornerRadius="6"
+                    Margin="0,20,0,0">
+                    <TextBlock TextWrapping="Wrap" Text="Danh sách hóa đơn vừa thanh toán" FontSize="16" HorizontalAlignment="Center"></TextBlock>
                 </materialDesign:Card>
             </Grid>
         </Grid>
@@ -82,3 +125,4 @@
         
     </Grid>
 </Page>
+<!--RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}}-->

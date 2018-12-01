@@ -7,13 +7,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using System.Windows.Data;
+using System.ComponentModel;
 
 namespace BookStore.ViewModel
 {
     public class AccepBillPageVM:BaseViewModel
     {
         #region data binding
-
+        /// <summary>
+        /// Lưu List hiển thị lên List
+        /// </summary>
         private ObservableCollection<CBill> _ListBill;
         public ObservableCollection<CBill> ListBill
         {
@@ -22,6 +26,20 @@ namespace BookStore.ViewModel
             {
                 _ListBill = value;
                 OnPropertyChanged(nameof(ListBill));
+            }
+        }
+      
+        /// <summary>
+        /// Lưu List load từ cơ sở dữ liệu
+        /// </summary>
+        private ObservableCollection<CBill> _ListBillData;
+        public ObservableCollection<CBill> ListBillData
+        {
+            get { return _ListBillData; }
+            set
+            {
+                _ListBillData = value;
+                OnPropertyChanged(nameof(ListBillData));
             }
         }
 
@@ -42,14 +60,30 @@ namespace BookStore.ViewModel
 
         public ICommand loadCommand { get; set; }
         public ICommand AccepCommand { get; set; }
+        public ICommand SearchCommand { get; set; }
+        public ICommand SearchTextChangeCommand { get; set; }
 
         #endregion
+      
+        private string _FilterString;
+        public string FilterString
+        {
+            get { return _FilterString; }
+            set
+            {
+                _FilterString = value;                             
+                OnPropertyChanged(nameof(FilterString));
+            }
+        }
+       
 
         public AccepBillPageVM()
         {
+                    
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                ListBill = new ObservableCollection<CBill>(CBill.Ins.ListNewBill());
+            {               
+                ListBillData = new ObservableCollection<CBill>(CBill.Ins.ListNewBill());
+                ListBill = ListBillData;
             }
                );
 
@@ -57,7 +91,11 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItem != null)
                 {
-                    MessageBox.Show(SelectedItem.Id.ToString());
+                    //Xóa hóa đơn khỏi dach sách cần xử lí
+                    CBill.Ins.RemoveBillInOutputinfo(SelectedItem.Id);
+
+                    //load lại bảng
+                   // ListBill = new ObservableCollection<CBill>(CBill.Ins.ListNewBill());
                 }
                 else
                 {
@@ -66,6 +104,61 @@ namespace BookStore.ViewModel
                
             }
                );
+
+            SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                
+            }
+               );
+
+            SearchTextChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+
+                if (string.IsNullOrEmpty(FilterString))
+                {
+                    ListBill = ListBillData;
+                }
+                else
+                {
+                    int Id;
+                    //Tìm theo ID
+                    if (int.TryParse(FilterString, out Id) == true)
+                    {
+                        var data = ListBillData.Where(x => x.Id == Id).Select(x => x);
+                        if (data.Count() > 0)
+                        {
+                            //Tạo list với kết quả trả về là Id
+                            ListBill = new ObservableCollection<CBill>(data);
+                        }
+                        else
+                        {
+                            //Tạo list rỗng
+                            ListBill = new ObservableCollection<CBill>();
+                        }
+                    }
+                    //Tìm theo tên khách hàng
+                    else
+                    {
+                        var data = ListBillData.Where(x => x.Customer.Name.ToLower().Contains(FilterString.ToLower()) == true).Select(x => x);
+                        if (data.Count() > 0)
+                        {
+                            //Tạo list với kết quả trả về là tên khách hàng
+                            ListBill = new ObservableCollection<CBill>(data);
+                        }
+                        else
+                        {
+                            //Tạo list rỗng
+                            ListBill = new ObservableCollection<CBill>();
+                        }
+                    }
+
+                }
+
+            }
+               );
         }
+
+        
+
     }
 }

@@ -115,6 +115,33 @@ namespace BookStore.Model.MyClass
             return List;
         }
 
+        public bool RemoveBillInOutputinfo(int Bill_Id)
+        {
+            try
+            {
+                //Tìm
+                Output_Info BilltoDelete = DataProvider.Ins.DB.Output_Info.Find(Bill_Id);
+                if (BilltoDelete != null)
+                {
+                    //Xóa
+                    DataProvider.Ins.DB.Output_Info.Remove(BilltoDelete);
+                    //Lưu thay đổi
+                    DataProvider.Ins.DB.SaveChanges();
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+                
+            }
+            return false;
+        }
+
         #endregion
     }
 }
