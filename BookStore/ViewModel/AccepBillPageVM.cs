@@ -121,45 +121,54 @@ namespace BookStore.ViewModel
 
         private void Search()
         {
-            if (string.IsNullOrEmpty(FilterString))
+            if (ListBillData.Count>0)
             {
-                ListBill = ListBillData;
+
+                if (string.IsNullOrEmpty(FilterString))
+                {
+                    ListBill = ListBillData;
+                }
+                else
+                {
+                    int Id;
+                    //Tìm theo ID
+                    if (int.TryParse(FilterString, out Id) == true)
+                    {
+                        var data = ListBillData.Where(x => x.Id == Id).Select(x => x);
+                        if (data.Count() > 0)
+                        {
+                            //Tạo list với kết quả trả về là Id
+                            ListBill = new ObservableCollection<CBill>(data);
+                        }
+                        else
+                        {
+                            //Tạo list rỗng
+                            ListBill = new ObservableCollection<CBill>();
+                        }
+                    }
+                    //Tìm theo tên khách hàng
+                    else
+                    {
+                        var data = ListBillData.Where(x => x.Customer.Name.ToLower().Contains(FilterString.ToLower()) == true).Select(x => x);
+                        if (data.Count() > 0)
+                        {
+                            //Tạo list với kết quả trả về là tên khách hàng
+                            ListBill = new ObservableCollection<CBill>(data);
+                        }
+                        else
+                        {
+                            //Tạo list rỗng
+                            ListBill = new ObservableCollection<CBill>();
+                        }
+                    }
+
+                }
             }
             else
             {
-                int Id;
-                //Tìm theo ID
-                if (int.TryParse(FilterString, out Id) == true)
-                {
-                    var data = ListBillData.Where(x => x.Id == Id).Select(x => x);
-                    if (data.Count() > 0)
-                    {
-                        //Tạo list với kết quả trả về là Id
-                        ListBill = new ObservableCollection<CBill>(data);
-                    }
-                    else
-                    {
-                        //Tạo list rỗng
-                        ListBill = new ObservableCollection<CBill>();
-                    }
-                }
-                //Tìm theo tên khách hàng
-                else
-                {
-                    var data = ListBillData.Where(x => x.Customer.Name.ToLower().Contains(FilterString.ToLower()) == true).Select(x => x);
-                    if (data.Count() > 0)
-                    {
-                        //Tạo list với kết quả trả về là tên khách hàng
-                        ListBill = new ObservableCollection<CBill>(data);
-                    }
-                    else
-                    {
-                        //Tạo list rỗng
-                        ListBill = new ObservableCollection<CBill>();
-                    }
-                }
-
+                ListBill = new ObservableCollection<CBill>();
             }
+           
         }
 
         
