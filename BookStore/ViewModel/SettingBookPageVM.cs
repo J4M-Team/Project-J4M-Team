@@ -96,7 +96,7 @@ namespace BookStore.ViewModel
 
         public SettingBookPageVM()
         {
-            //Lỗi chưa fixx
+           
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 //lấy data từ cơ sở dữ liệu

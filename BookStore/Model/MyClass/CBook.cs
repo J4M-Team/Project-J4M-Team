@@ -369,18 +369,44 @@ namespace BookStore.Model.MyClass
         public List<CBook> ListPriceBook()
         {
             List<CBook> List = new List<CBook>();
-
-
             try
             {
-                //Lấy ra dữ liệu
-                var data = from item1 in DataProvider.Ins.DB.Book_Input_Price
-                           join item2 in DataProvider.Ins.DB.Book_Output_Price on item1.Book_Id equals item2.Book_Id
-                           select new { item1.Book_Id, item1.Book.Book_Name, item1.Book.Book_Author, item1.Input_Price, item2.Output_Price,item1.Book.Book_Count };
+                //Lấy ra danh sách giá mới nhất ở bảng outputprice
+                var OutputPrice = from item in DataProvider.Ins.DB.Book_Output_Price
+                                  group item by item.Book_Id into Group
+                                  from item2 in Group
+                                  where item2.Date_Set == Group.Max(x => x.Date_Set)
+                                  select new { item2.Book_Id, item2.Date_Set, item2.Output_Price };
+
+                //Lấy ra danh sách giá mới nhất ở bảng inputprice
+                var InputPrice = from item in DataProvider.Ins.DB.Book_Input_Price
+                                 group item by item.Book_Id into Group
+                                 from item2 in Group
+                                 where item2.Date_Set == Group.Max(x => x.Date_Set)
+                                 select new { item2.Book_Id, item2.Date_Set, item2.Input_Price };
+
+                //join 3 bảng lại nếu như giá chưa được cài đặt thì trả về là 0
+                var data = from book in DataProvider.Ins.DB.Books
+                           join output in OutputPrice on book.Book_Id equals output.Book_Id into outputtable
+                           join input in InputPrice on book.Book_Id equals input.Book_Id into inputable
+                           from inp in inputable.DefaultIfEmpty()
+                           from outp in outputtable.DefaultIfEmpty()
+                           select new
+                           {
+                               book.Book_Id,
+                               book.Book_Name,
+                               book.Book_Author,
+                               book.Book_Count,
+                               input = inp == null ? 0 : inp.Input_Price,
+                               output = outp == null ? 0 : outp.Output_Price
+                           };
+
+
                 foreach (var item in data)
                 {
-                    CBook_Price price = new CBook_Price { InputPrice = (float)item.Input_Price, OutputPrice = (float)item.Output_Price };
-                    CBook Book = new CBook { Id = item.Book_Id, Name = item.Book_Name, Author = item.Book_Author, Price = price, Count = (int)item.Book_Count };
+
+                    CBook_Price price = new CBook_Price { OutputPrice = (float)item.output, InputPrice = (float)item.input };
+                    CBook Book = new CBook { Id = item.Book_Id, Name = item.Book_Name, Author = item.Book_Author, Count = (int)item.Book_Count, Price = price };
                     List.Add(Book);
                 }
                 return List;
