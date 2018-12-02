@@ -122,6 +122,9 @@
     <Compile Include="BookPage.xaml.cs">
       <DependentUpon>BookPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManagementWindow.xaml.cs">
+      <DependentUpon>ManagementWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\Bill.cs">
       <DependentUpon>BookStoreModel.tt</DependentUpon>
     </Compile>
@@ -219,6 +222,12 @@
     <Compile Include="SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingBookPage.xaml.cs">
+      <DependentUpon>SettingBookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="SettingPage.xaml.cs">
+      <DependentUpon>SettingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\AccepBillPageVM.cs" />
     <Compile Include="ViewModel\BanHangMain2VM.cs" />
     <Compile Include="ViewModel\BanHangMainVM.cs" />
@@ -227,7 +236,10 @@
     <Compile Include="ViewModel\DeleteBillVMcs.cs" />
     <Compile Include="ViewModel\EditBookPageVM.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\ManagementWindowVM.cs" />
     <Compile Include="ViewModel\SearchPageVM.cs" />
+    <Compile Include="ViewModel\SettingBookPageVM.cs" />
+    <Compile Include="ViewModel\SettingPageVM.cs" />
     <Page Include="AccepBillPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -276,11 +288,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="ManagementWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ResourceXAML\MainResource.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SearchPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingBookPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

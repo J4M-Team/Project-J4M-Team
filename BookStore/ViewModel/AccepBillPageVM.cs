@@ -91,6 +91,9 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItem != null)
                 {
+                    //Thêm vào lịch sử
+                    //CWarehouse.Ins_Warehouse.AddHistoryOutput(SelectedItem.Id, 5);
+
                     //Xóa hóa đơn khỏi dach sách cần xử lí
                     CBill.Ins.RemoveBillInOutputinfo(SelectedItem.Id);
 
@@ -119,6 +122,9 @@ namespace BookStore.ViewModel
                );
         }
 
+        /// <summary>
+        /// Hàm tìm kiếm theo tên khách hàng hoặc theo id Bill
+        /// </summary>
         private void Search()
         {
             if (ListBillData.Count>0)

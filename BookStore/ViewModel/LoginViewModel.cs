@@ -18,11 +18,8 @@ namespace BookStore.ViewModel
             get { return _UserName; }
             set
             {
-
-
                 _UserName = value;
                 OnPropertyChanged(nameof(UserName));
-
             }
         }
         
@@ -35,6 +32,11 @@ namespace BookStore.ViewModel
                 if (UserName == "1")
                 {
                     BookWindow wd = new BookWindow();
+                    wd.ShowDialog();
+                }
+                else if (UserName == "2")
+                {
+                    ManagementWindow wd = new ManagementWindow();
                     wd.ShowDialog();
                 }
                 else
