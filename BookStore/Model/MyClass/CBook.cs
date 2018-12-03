@@ -433,27 +433,38 @@ namespace BookStore.Model.MyClass
                     return false;
                 }
                 else
-
                 {
                     //Tìm sách trong danh sách sách
                     var data = DataProvider.Ins.DB.Books.Find(Book_Id);
                     if (data != null)
                     {
-                        //Kiểm tra xem giá có giống với giá tạo sau cùng hay không
-                        var lastPrice = DataProvider.Ins.DB.Book_Input_Price.Where(x => x.Book_Id == Book_Id && x.Date_Set == DataProvider.Ins.DB.Book_Input_Price.Where(y => y.Book_Id == Book_Id).Max(y => y.Date_Set)).First();
-                        if (lastPrice != null)
+                        //Kiểm tra xem giá có được cài đặt chưa nếu chưa thì thêm mới                       
+                        if (DataProvider.Ins.DB.Book_Input_Price.Where(x => x.Book_Id == Book_Id).Count() > 0)
                         {
-                            if (lastPrice.Input_Price == NewPrice)
+                            //Kiểm tra xem giá có giống với giá tạo sau cùng hay không
+                            var lastPrice = DataProvider.Ins.DB.Book_Input_Price.Where(x => x.Book_Id == Book_Id && x.Date_Set == DataProvider.Ins.DB.Book_Input_Price.Where(y => y.Book_Id == Book_Id).Max(y => y.Date_Set)).First();
+                            if (lastPrice != null)
                             {
-                                return false;
+                                if (lastPrice.Input_Price == NewPrice)
+                                {
+                                    return false;
+                                }
+                                else
+                                {
+                                    //Thêm mới
+                                    goto addnew;
+                                }
                             }
                             else
                             {
-                                //Thêm mới
                                 goto addnew;
                             }
                         }
-
+                        else
+                        {
+                            goto addnew;
+                        }
+                                              
 #pragma warning disable CS0164 // This label has not been referenced
                     addnew:
 #pragma warning restore CS0164 // This label has not been referenced
@@ -499,20 +510,29 @@ namespace BookStore.Model.MyClass
                     var find = DataProvider.Ins.DB.Books.Find(Book_Id);
                     if (find != null)
                     {
-                        //Kiểm tra xem giá có giống với giá tạo sau cùng hay không
-                        var lastPrice = DataProvider.Ins.DB.Book_Output_Price.Where(x => x.Book_Id == Book_Id && x.Date_Set == DataProvider.Ins.DB.Book_Output_Price.Where(y => y.Book_Id == Book_Id).Max(y => y.Date_Set)).First();
-                        if (lastPrice != null)
+                        //Kiểm tra xem giá có được cài đặt chưa nếu chưa thì thêm mới                       
+                        if (DataProvider.Ins.DB.Book_Output_Price.Where(x => x.Book_Id == Book_Id).Count() > 0)
                         {
-                            if (lastPrice.Output_Price == NewPrice)
+                            //Kiểm tra xem giá có giống với giá tạo sau cùng hay không
+                            var lastPrice = DataProvider.Ins.DB.Book_Output_Price.Where(x => x.Book_Id == Book_Id && x.Date_Set == DataProvider.Ins.DB.Book_Output_Price.Where(y => y.Book_Id == Book_Id).Max(y => y.Date_Set)).First();
+                            if (lastPrice != null)
                             {
-                                return false;
-                            }
-                            else
-                            {
-                                //Thêm mới
-                                goto addnew;
+                                if (lastPrice.Output_Price == NewPrice)
+                                {
+                                    return false;
+                                }
+                                else
+                                {
+                                    //Thêm mới
+                                    goto addnew;
+                                }
                             }
                         }
+                        else
+                        {
+                            goto addnew;
+                        }
+                            
 #pragma warning disable CS0164 // This label has not been referenced
                     addnew:
 #pragma warning restore CS0164 // This label has not been referenced
