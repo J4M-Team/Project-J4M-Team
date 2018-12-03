@@ -439,7 +439,25 @@ namespace BookStore.Model.MyClass
                     var data = DataProvider.Ins.DB.Books.Find(Book_Id);
                     if (data != null)
                     {
-                        //Tạo giá mới
+                        //Kiểm tra xem giá có giống với giá tạo sau cùng hay không
+                        var lastPrice = DataProvider.Ins.DB.Book_Input_Price.Where(x => x.Book_Id == Book_Id && x.Date_Set == DataProvider.Ins.DB.Book_Input_Price.Where(y => y.Book_Id == Book_Id).Max(y => y.Date_Set)).First();
+                        if (lastPrice != null)
+                        {
+                            if (lastPrice.Input_Price == NewPrice)
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                //Thêm mới
+                                goto addnew;
+                            }
+                        }
+
+#pragma warning disable CS0164 // This label has not been referenced
+                    addnew:
+#pragma warning restore CS0164 // This label has not been referenced
+                              //Tạo giá mới
                         Book_Input_Price newPrice = new Book_Input_Price { Book_Id = Book_Id, Input_Price = NewPrice, Date_Set = DateTime.Now };
                         //Thêm vào
                         DataProvider.Ins.DB.Book_Input_Price.Add(newPrice);
@@ -481,6 +499,23 @@ namespace BookStore.Model.MyClass
                     var find = DataProvider.Ins.DB.Books.Find(Book_Id);
                     if (find != null)
                     {
+                        //Kiểm tra xem giá có giống với giá tạo sau cùng hay không
+                        var lastPrice = DataProvider.Ins.DB.Book_Output_Price.Where(x => x.Book_Id == Book_Id && x.Date_Set == DataProvider.Ins.DB.Book_Output_Price.Where(y => y.Book_Id == Book_Id).Max(y => y.Date_Set)).First();
+                        if (lastPrice != null)
+                        {
+                            if (lastPrice.Output_Price == NewPrice)
+                            {
+                                return false;
+                            }
+                            else
+                            {
+                                //Thêm mới
+                                goto addnew;
+                            }
+                        }
+#pragma warning disable CS0164 // This label has not been referenced
+                    addnew:
+#pragma warning restore CS0164 // This label has not been referenced
                         //Tạo mới
                         Book_Output_Price newPrice = new Book_Output_Price { Book_Id = Book_Id, Output_Price = NewPrice, Date_Set = DateTime.Now };
                         //Thêm

@@ -104,33 +104,16 @@ namespace BookStore.ViewModel
                 ListBook = DataListBook;
             }
                );
-            //Lỗi chưa fixx
+           
             EditCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                
+
                 if (SelectedItem != null)
                 {
-                    //Thay đổi
-                    //Kiểm tra có thay đổi so với dữ liệu ban đầu hay không
-                    //Lấy ra giá ban đầu trong cơ sở dữ liệu
-                    float OldInputPrice = DataListBook.Where(x => x.Id == SelectedItem.Id).Select(x => x.Price.InputPrice).First();
-                    float OldOutputPrice = DataListBook.Where(x => x.Id == SelectedItem.Id).Select(x => x.Price.OutputPrice).First();
+                    CBook.Ins.ChangeInputPrice(SelectedItem.Id, SelectedItem.Price.InputPrice);
+                    CBook.Ins.ChangeOutputPrice(SelectedItem.Id, SelectedItem.Price.OutputPrice);
 
-                    //Kiểm tra
-                    if(SelectedItem.Price.InputPrice != OldInputPrice)
-                    {
-                        CBook.Ins.ChangeInputPrice(SelectedItem.Id, SelectedItem.Price.InputPrice);
-                    }
-
-                    if(SelectedItem.Price.OutputPrice != OldOutputPrice)
-                    {
-                        CBook.Ins.ChangeOutputPrice(SelectedItem.Id, SelectedItem.Price.OutputPrice);
-                    }
-                                      
-                    //Cập nhật lại data
-                    DataListBook = new ObservableCollection<CBook>(CBook.Ins.ListPriceBook());
-                    //Load lại
-                    Search();
+                    //Không cần phải load lại data vì dữ liệu trên giao diện đã thay đổi rồi
                 }
             }
                );
@@ -197,7 +180,6 @@ namespace BookStore.ViewModel
                             ListBook = new ObservableCollection<CBook>();
                         }
                     }
-
                 }
             }
             else
@@ -206,8 +188,5 @@ namespace BookStore.ViewModel
             }
 
         }
-
-
-
     }
 }
