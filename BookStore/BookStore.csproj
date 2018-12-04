@@ -104,6 +104,7 @@
     <Compile Include="BanHangMain.xaml.cs">
       <DependentUpon>BanHangMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BindingProxy.cs" />
     <Compile Include="BookWindow.xaml.cs">
       <DependentUpon>BookWindow.xaml</DependentUpon>
     </Compile>
@@ -177,6 +178,9 @@
       <DependentUpon>BookStoreModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Model\DataProvider.cs" />
+    <Compile Include="Model\Decentralization.cs">
+      <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Model\Employee.cs">
       <DependentUpon>BookStoreModel.tt</DependentUpon>
     </Compile>
@@ -225,6 +229,9 @@
     <Compile Include="SettingBookPage.xaml.cs">
       <DependentUpon>SettingBookPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingEmployeePage.xaml.cs">
+      <DependentUpon>SettingEmployeePage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
@@ -239,6 +246,7 @@
     <Compile Include="ViewModel\ManagementWindowVM.cs" />
     <Compile Include="ViewModel\SearchPageVM.cs" />
     <Compile Include="ViewModel\SettingBookPageVM.cs" />
+    <Compile Include="ViewModel\SettingEmployeePageVM.cs" />
     <Compile Include="ViewModel\SettingPageVM.cs" />
     <Page Include="AccepBillPage.xaml">
       <SubType>Designer</SubType>
@@ -301,6 +309,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingBookPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingEmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

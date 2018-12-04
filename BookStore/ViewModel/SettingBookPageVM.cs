@@ -165,7 +165,7 @@ namespace BookStore.ViewModel
                             ListBook = new ObservableCollection<CBook>();
                         }
                     }
-                    //Tìm theo tên khách hàng
+                    //Tìm theo tên sách
                     else
                     {
                         var data = DataListBook.Where(x => x.Name.ToLower().Contains(FilterString.ToLower()) == true).Select(x => x);

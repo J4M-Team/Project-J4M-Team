@@ -25,6 +25,7 @@
           <Property Name="Bill_Id" Type="int" Nullable="false" />
           <Property Name="Book_Id" Type="int" Nullable="false" />
           <Property Name="Book_Count" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" />
         </EntityType>
         <EntityType Name="Bill_Remove">
           <Key>
@@ -118,6 +119,13 @@
           <Property Name="Vip_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Customer_Id" Type="int" />
         </EntityType>
+        <EntityType Name="Decentralization">
+          <Key>
+            <PropertyRef Name="Decentralization_Id" />
+          </Key>
+          <Property Name="Decentralization_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Describe" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Employee_Id" />
@@ -157,6 +165,7 @@
           <Property Name="Role_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Role_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Role_Salary" Type="float" Nullable="false" />
+          <Property Name="Decentralization" Type="int" />
         </EntityType>
         <EntityType Name="Evaluate">
           <Key>
@@ -404,6 +413,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Employee_Role_Decentralization">
+          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="0..1" />
+          <End Role="Employee_Role" Type="Self.Employee_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Decentralization">
+              <PropertyRef Name="Decentralization_Id" />
+            </Principal>
+            <Dependent Role="Employee_Role">
+              <PropertyRef Name="Decentralization" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Evaluate_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
           <End Role="Evaluate" Type="Self.Evaluate" Multiplicity="*" />
@@ -477,6 +498,7 @@
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_Types" EntityType="Self.Customer_Types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_Vip" EntityType="Self.Customer_Vip" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Decentralization" EntityType="Self.Decentralization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee_Account" EntityType="Self.Employee_Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee_Info" EntityType="Self.Employee_Info" Schema="dbo" store:Type="Tables" />
@@ -554,6 +576,10 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Employee_Info" EntitySet="Employee_Info" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role_Decentralization" Association="Self.FK_Employee_Role_Decentralization">
+            <End Role="Decentralization" EntitySet="Decentralization" />
+            <End Role="Employee_Role" EntitySet="Employee_Role" />
+          </AssociationSet>
           <AssociationSet Name="FK_Evaluate_Customer" Association="Self.FK_Evaluate_Customer">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Evaluate" EntitySet="Evaluate" />
@@ -592,6 +618,7 @@
           <EntitySet Name="Customers" EntityType="BookStoreModel.Customer" />
           <EntitySet Name="Customer_Types" EntityType="BookStoreModel.Customer_Types" />
           <EntitySet Name="Customer_Vip" EntityType="BookStoreModel.Customer_Vip" />
+          <EntitySet Name="Decentralizations" EntityType="BookStoreModel.Decentralization" />
           <EntitySet Name="Employees" EntityType="BookStoreModel.Employee" />
           <EntitySet Name="Employee_Account" EntityType="BookStoreModel.Employee_Account" />
           <EntitySet Name="Employee_Info" EntityType="BookStoreModel.Employee_Info" />
@@ -669,6 +696,10 @@
             <End Role="Customer" EntitySet="Customers" />
             <End Role="Evaluate_Store" EntitySet="Evaluate_Store" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role_Decentralization" Association="BookStoreModel.FK_Employee_Role_Decentralization">
+            <End Role="Decentralization" EntitySet="Decentralizations" />
+            <End Role="Employee_Role" EntitySet="Employee_Role" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_Account_Employee" Association="BookStoreModel.FK_Employee_Account_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Employee_Account" EntitySet="Employee_Account" />
@@ -716,6 +747,7 @@
           <Property Name="Bill_Id" Type="Int32" Nullable="false" />
           <Property Name="Book_Id" Type="Int32" Nullable="false" />
           <Property Name="Book_Count" Type="Int32" Nullable="false" />
+          <Property Name="Price" Type="Double" />
           <NavigationProperty Name="Bill" Relationship="BookStoreModel.FK_Bill_Info_Bill" FromRole="Bill_Info" ToRole="Bill" />
           <NavigationProperty Name="Book" Relationship="BookStoreModel.FK_Bill_Info_Book" FromRole="Bill_Info" ToRole="Book" />
         </EntityType>
@@ -831,6 +863,14 @@
           <Property Name="Customer_Id" Type="Int32" />
           <NavigationProperty Name="Customer" Relationship="BookStoreModel.FK_Customer_Vip_Customer" FromRole="Customer_Vip" ToRole="Customer" />
         </EntityType>
+        <EntityType Name="Decentralization">
+          <Key>
+            <PropertyRef Name="Decentralization_Id" />
+          </Key>
+          <Property Name="Decentralization_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Describe" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee_Role" Relationship="BookStoreModel.FK_Employee_Role_Decentralization" FromRole="Decentralization" ToRole="Employee_Role" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Employee_Id" />
@@ -880,6 +920,8 @@
           <Property Name="Role_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Role_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Role_Salary" Type="Double" Nullable="false" />
+          <Property Name="Decentralization" Type="Int32" />
+          <NavigationProperty Name="Decentralization1" Relationship="BookStoreModel.FK_Employee_Role_Decentralization" FromRole="Employee_Role" ToRole="Decentralization" />
           <NavigationProperty Name="Employees" Relationship="BookStoreModel.FK_Employee_Employee_Role" FromRole="Employee_Role" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Evaluate">
@@ -1133,6 +1175,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Employee_Role_Decentralization">
+          <End Type="BookStoreModel.Decentralization" Role="Decentralization" Multiplicity="0..1" />
+          <End Type="BookStoreModel.Employee_Role" Role="Employee_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Decentralization">
+              <PropertyRef Name="Decentralization_Id" />
+            </Principal>
+            <Dependent Role="Employee_Role">
+              <PropertyRef Name="Decentralization" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_Account_Employee">
           <End Type="BookStoreModel.Employee" Role="Employee" Multiplicity="1" />
           <End Type="BookStoreModel.Employee_Account" Role="Employee_Account" Multiplicity="*" />
@@ -1193,7 +1247,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1215,6 +1269,7 @@
           <EntitySetMapping Name="Bill_Info">
             <EntityTypeMapping TypeName="BookStoreModel.Bill_Info">
               <MappingFragment StoreEntitySet="Bill_Info">
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
                 <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
                 <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
@@ -1324,6 +1379,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Decentralizations">
+            <EntityTypeMapping TypeName="BookStoreModel.Decentralization">
+              <MappingFragment StoreEntitySet="Decentralization">
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+                <ScalarProperty Name="Decentralization_Id" ColumnName="Decentralization_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="BookStoreModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
@@ -1362,6 +1425,7 @@
           <EntitySetMapping Name="Employee_Role">
             <EntityTypeMapping TypeName="BookStoreModel.Employee_Role">
               <MappingFragment StoreEntitySet="Employee_Role">
+                <ScalarProperty Name="Decentralization" ColumnName="Decentralization" />
                 <ScalarProperty Name="Role_Salary" ColumnName="Role_Salary" />
                 <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
                 <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />

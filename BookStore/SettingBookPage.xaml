@@ -102,7 +102,7 @@
                             Binding="{Binding Price.OutputPrice}"
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                             Header="giá bán"/>
-                            <DataGridTemplateColumn>
+                            <DataGridTemplateColumn Visibility="{Binding aa}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button x:Name="ButtonEdit" Content="Cập nhật" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
@@ -123,13 +123,13 @@
                         Background="#03a9f4"
                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                        
-                        Padding="8" Width="auto" Margin="10,0,10,0">
+                        Padding="8" Width="auto" Margin="5,0,5,0">
                         <TextBlock HorizontalAlignment="Center"
                             FontSize="16" Text="Lịch sử giá nhập">
                         </TextBlock>
                     </materialDesign:Card>
                     <ListView
-                        ItemsSource="{Binding InputHistory}">
+                        ItemsSource="{Binding InputHistory}" MaxHeight="200">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn
@@ -150,13 +150,13 @@
                         Background="#03a9f4"
                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                         Width="auto"
-                        Padding="8" Margin="10,0,10,0">
+                        Padding="8" Margin="5,0,5,0">
                         <TextBlock HorizontalAlignment="Center"
                             FontSize="16" Text="Lịch sử giá bán">
                         </TextBlock>
                     </materialDesign:Card>
                     <ListView
-                        ItemsSource="{Binding OutputHistory}">
+                        ItemsSource="{Binding OutputHistory}" MaxHeight="200">
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn

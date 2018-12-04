@@ -11,4 +11,5 @@
     <viewmodel:ManagementWindowVM x:Key="ManagementWindowVM"></viewmodel:ManagementWindowVM>
     <viewmodel:SettingPageVM x:Key="SettingPageVM"></viewmodel:SettingPageVM>
     <viewmodel:SettingBookPageVM x:Key="SettingBookPageVM"></viewmodel:SettingBookPageVM>
+    <viewmodel:SettingEmployeePageVM x:Key="SettingEmployeePageVM"></viewmodel:SettingEmployeePageVM>
 </ResourceDictionary>

@@ -12,21 +12,18 @@ namespace BookStore.Model
     using System;
     using System.Collections.Generic;
     
-    public partial class Employee_Role
+    public partial class Decentralization
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Employee_Role()
+        public Decentralization()
         {
-            this.Employees = new HashSet<Employee>();
+            this.Employee_Role = new HashSet<Employee_Role>();
         }
     
-        public int Role_Id { get; set; }
-        public string Role_Name { get; set; }
-        public double Role_Salary { get; set; }
-        public Nullable<int> Decentralization { get; set; }
+        public int Decentralization_Id { get; set; }
+        public string Describe { get; set; }
     
-        public virtual Decentralization Decentralization1 { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Employee> Employees { get; set; }
+        public virtual ICollection<Employee_Role> Employee_Role { get; set; }
     }
 }

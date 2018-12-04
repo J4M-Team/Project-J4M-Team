@@ -18,6 +18,7 @@ namespace BookStore.Model
         public int Bill_Id { get; set; }
         public int Book_Id { get; set; }
         public int Book_Count { get; set; }
+        public Nullable<double> Price { get; set; }
     
         public virtual Bill Bill { get; set; }
         public virtual Book Book { get; set; }

@@ -17,6 +17,11 @@
       DataContext="{StaticResource SettingPageVM}"
       d:DesignHeight="750" d:DesignWidth="1150"
       Title="SetPriceBookPage">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -25,14 +30,24 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <StackPanel Orientation="Horizontal" Background="WhiteSmoke">
-                <Button Content="cài đặt giá sách" Command="{Binding PriceCommand}"
-                        Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3"></Button>
-                <Button Content="cài đặt lương nhân viên" Command="{Binding Price2Command}"
-                        Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3"></Button>
+                <Button Command="{Binding PriceCommand}"
+                        Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Width="170">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="BookSecure"  Foreground="Black"/>
+                        <TextBlock Text="Cài đặt giá sách" Margin="5,0,0,0" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
+                <Button Command="{Binding Price2Command}"
+                        Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Width="170">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="AccountMultiple" Foreground="Black" Margin="5,0,0,0"/>
+                        <TextBlock Text="Cài đặt nhân viên" Margin="3,0,0,0" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
                 <Button Content="cài đặt"
                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3"></Button>
             </StackPanel>
-            <Grid Name="GridCursor" Width="100" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="{Binding GridCursorMargin}"></Grid>
+            <Grid Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="{Binding GridCursorMargin}"></Grid>
         </Grid>
         <Grid Grid.Row="1">
             <Frame NavigationUIVisibility="Hidden" Content="{Binding FramePage}"></Frame>

@@ -5,26 +5,27 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="33a536d29ba04d6ebdb0a86d00210df2" Name="Diagram1">
-        <EntityTypeShape EntityType="BookStoreModel.Bill" Width="1.5" PointX="8.25" PointY="12.5" />
-        <EntityTypeShape EntityType="BookStoreModel.Bill_Info" Width="1.5" PointX="10.5" PointY="15.125" />
-        <EntityTypeShape EntityType="BookStoreModel.Bill_Remove" Width="1.5" PointX="10.5" PointY="20.25" />
-        <EntityTypeShape EntityType="BookStoreModel.Book" Width="1.5" PointX="8.25" PointY="17.5" />
-        <EntityTypeShape EntityType="BookStoreModel.Book_Input" Width="1.5" PointX="5.25" PointY="17" />
-        <EntityTypeShape EntityType="BookStoreModel.Book_Input_Price" Width="1.5" PointX="10.5" PointY="23.125" />
-        <EntityTypeShape EntityType="BookStoreModel.Book_Output" Width="1.5" PointX="13.5" PointY="13.125" />
-        <EntityTypeShape EntityType="BookStoreModel.Book_Output_Price" Width="1.5" PointX="10.5" PointY="25.875" />
-        <EntityTypeShape EntityType="BookStoreModel.Book_Query" Width="1.5" PointX="10.5" PointY="9.625" />
-        <EntityTypeShape EntityType="BookStoreModel.Customer" Width="1.5" PointX="3" PointY="7.625" />
-        <EntityTypeShape EntityType="BookStoreModel.Customer_Types" Width="1.5" PointX="0.75" PointY="8.375" />
-        <EntityTypeShape EntityType="BookStoreModel.Customer_Vip" Width="1.5" PointX="5.25" PointY="3.75" />
-        <EntityTypeShape EntityType="BookStoreModel.Employee" Width="1.5" PointX="3" PointY="12.25" />
-        <EntityTypeShape EntityType="BookStoreModel.Employee_Account" Width="1.5" PointX="5.25" PointY="27" />
-        <EntityTypeShape EntityType="BookStoreModel.Employee_Info" Width="1.5" PointX="5.25" PointY="24.125" />
-        <EntityTypeShape EntityType="BookStoreModel.Employee_Role" Width="1.5" PointX="0.75" PointY="13.375" />
-        <EntityTypeShape EntityType="BookStoreModel.Evaluate" Width="1.5" PointX="5.25" PointY="10" />
-        <EntityTypeShape EntityType="BookStoreModel.Evaluate_Store" Width="1.5" PointX="5.25" PointY="7.125" />
-        <EntityTypeShape EntityType="BookStoreModel.Output_Info" Width="1.5" PointX="12.5" PointY="11.5" />
-        <EntityTypeShape EntityType="BookStoreModel.PayWage_History" Width="1.5" PointX="5.25" PointY="13.5" />
+        <EntityTypeShape EntityType="BookStoreModel.Bill" Width="1.5" PointX="10.5" PointY="12.625" />
+        <EntityTypeShape EntityType="BookStoreModel.Bill_Info" Width="1.5" PointX="12.75" PointY="15.125" />
+        <EntityTypeShape EntityType="BookStoreModel.Bill_Remove" Width="1.5" PointX="12.75" PointY="20.625" />
+        <EntityTypeShape EntityType="BookStoreModel.Book" Width="1.5" PointX="10.5" PointY="17.625" />
+        <EntityTypeShape EntityType="BookStoreModel.Book_Input" Width="1.5" PointX="7.5" PointY="13.125" />
+        <EntityTypeShape EntityType="BookStoreModel.Book_Input_Price" Width="1.5" PointX="12.75" PointY="8.75" />
+        <EntityTypeShape EntityType="BookStoreModel.Book_Output" Width="1.5" PointX="15.75" PointY="13.25" />
+        <EntityTypeShape EntityType="BookStoreModel.Book_Output_Price" Width="1.5" PointX="12.75" PointY="26" />
+        <EntityTypeShape EntityType="BookStoreModel.Book_Query" Width="1.5" PointX="12.75" PointY="23.5" />
+        <EntityTypeShape EntityType="BookStoreModel.Customer" Width="1.5" PointX="5.25" PointY="7.75" />
+        <EntityTypeShape EntityType="BookStoreModel.Customer_Types" Width="1.5" PointX="3" PointY="8.5" />
+        <EntityTypeShape EntityType="BookStoreModel.Customer_Vip" Width="1.5" PointX="7.5" PointY="16.875" />
+        <EntityTypeShape EntityType="BookStoreModel.Decentralization" Width="1.5" PointX="0.75" PointY="13.5" />
+        <EntityTypeShape EntityType="BookStoreModel.Employee" Width="1.5" PointX="5.25" PointY="12.25" />
+        <EntityTypeShape EntityType="BookStoreModel.Employee_Account" Width="1.5" PointX="7.5" PointY="21.5" />
+        <EntityTypeShape EntityType="BookStoreModel.Employee_Info" Width="1.5" PointX="7.5" PointY="26.875" />
+        <EntityTypeShape EntityType="BookStoreModel.Employee_Role" Width="1.5" PointX="3" PointY="13.25" />
+        <EntityTypeShape EntityType="BookStoreModel.Evaluate" Width="1.5" PointX="7.5" PointY="9.125" />
+        <EntityTypeShape EntityType="BookStoreModel.Evaluate_Store" Width="1.5" PointX="7.5" PointY="6.125" />
+        <EntityTypeShape EntityType="BookStoreModel.Output_Info" Width="1.5" PointX="12.75" PointY="12.375" />
+        <EntityTypeShape EntityType="BookStoreModel.PayWage_History" Width="1.5" PointX="7.5" PointY="24.125" />
         <EntityTypeShape EntityType="BookStoreModel.Salary_Bonus" Width="1.5" PointX="0.75" PointY="0.75" />
         <AssociationConnector Association="BookStoreModel.FK_Bill_Customer" />
         <AssociationConnector Association="BookStoreModel.FK_Bill_Employee" />
@@ -43,6 +44,7 @@
         <AssociationConnector Association="BookStoreModel.FK_Customer_Vip_Customer" />
         <AssociationConnector Association="BookStoreModel.FK_Evaluate_Customer" />
         <AssociationConnector Association="BookStoreModel.FK_Evaluate_Store_Customer" />
+        <AssociationConnector Association="BookStoreModel.FK_Employee_Role_Decentralization" />
         <AssociationConnector Association="BookStoreModel.FK_Employee_Account_Employee" />
         <AssociationConnector Association="BookStoreModel.FK_Employee_Employee_Role" />
         <AssociationConnector Association="BookStoreModel.FK_Employee_Info_Employee" />
