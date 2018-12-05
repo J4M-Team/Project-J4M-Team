@@ -114,8 +114,59 @@
                     </DataGrid>
                 </materialDesign:Card>
             </Grid>
-            
+
         </Grid>
-       
+        <Grid Grid.Column="1">
+            <!-- form thêm loại nhân viên với-->
+            <materialDesign:Card Width="300" Height="290" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="30,40,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="30"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Grid Grid.Row="0" Background="#03a9f4">
+                        <TextBlock Text="Thêm loại nhân viên" FontWeight="Medium" Foreground="White" FontSize="17"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <Button                        
+                            Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                            Width="40" Height="40"
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Margin="0,0,20,-20"
+                            Command="{Binding AddRoleCommand}">
+                            <materialDesign:PackIcon Kind="AccountPlus"/>
+                        </Button>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="257*"/>
+                            <ColumnDefinition Width="42*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Margin="10,10,10.2,4.6" Grid.ColumnSpan="2">
+                            <StackPanel>
+                                <TextBlock Text="Loại nhân viên" FontWeight="Medium" FontSize="15"></TextBlock>
+                                <TextBox  materialDesign:HintAssist.Hint="Nhân viên bán hàng" FontSize="15" Margin="5,10,20,10" Text="{Binding EmployeeRole}"/>
+                                <TextBlock Text="Quyền hạn" FontWeight="Medium" FontSize="15"></TextBlock>
+                                <StackPanel>
+
+                                    <ComboBox
+                                        Margin="5,10,0,10"
+                                        HorizontalAlignment="Left" ItemsSource="{Binding ListDecentralization}" FontSize="15"  Text="{Binding ComboBoxSelectedItem}">
+                                    </ComboBox>
+                                </StackPanel>
+                                <TextBlock Text="Mức lương" FontWeight="Medium" FontSize="15"></TextBlock>
+                                <TextBox  materialDesign:HintAssist.Hint="25000" FontSize="15" Margin="5,10,20,0" Text="{Binding EmployeeSalary}"/>
+
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                    <Grid Grid.Row="2" Background="#03a9f4"></Grid>
+                </Grid>
+
+
+            </materialDesign:Card>
+        </Grid>
+
     </Grid>
 </Page>

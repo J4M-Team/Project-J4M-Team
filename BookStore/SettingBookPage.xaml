@@ -123,7 +123,7 @@
                         Background="#03a9f4"
                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                        
-                        Padding="8" Width="auto" Margin="5,0,5,0">
+                        Padding="8" Width="auto" Margin="5,0,5.2,0">
                         <TextBlock HorizontalAlignment="Center"
                             FontSize="16" Text="Lịch sử giá nhập">
                         </TextBlock>

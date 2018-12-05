@@ -25,6 +25,16 @@ namespace BookStore.ViewModel
                 OnPropertyChanged(nameof(ListRole));
             }
         }
+        private ObservableCollection<string> _ListDecentralization;
+        public ObservableCollection<string> ListDecentralization
+        {
+            get { return _ListDecentralization; }
+            set
+            {
+                _ListDecentralization = value;
+                OnPropertyChanged(nameof(ListDecentralization));
+            }
+        }
 
         private CRole _SelectedItem;
         public CRole SelectedItem
@@ -34,6 +44,41 @@ namespace BookStore.ViewModel
             {
                 _SelectedItem = value;
                 OnPropertyChanged(nameof(SelectedItem));
+            }
+        }
+
+        //Tên loại nhân viên mới
+        private string _EmployeeRole;
+        public string EmployeeRole
+        {
+            get { return _EmployeeRole; }
+            set
+            {
+                _EmployeeRole = value;
+                OnPropertyChanged(nameof(EmployeeRole));
+            }
+        }
+
+        //Lương của loại nhân viên mới
+        private string _EmployeeSalary;
+        public string EmployeeSalary
+        {
+            get { return _EmployeeSalary; }
+            set
+            {
+                _EmployeeSalary = value;
+                OnPropertyChanged(nameof(EmployeeSalary));
+            }
+        }
+
+        private string _ComboBoxSelectedItem;
+        public string ComboBoxSelectedItem
+        {
+            get { return _ComboBoxSelectedItem; }
+            set
+            {
+                _ComboBoxSelectedItem = value;
+                OnPropertyChanged(nameof(ComboBoxSelectedItem));
             }
         }
 
@@ -86,6 +131,7 @@ namespace BookStore.ViewModel
         public ICommand loadCommand { get; set; }
         public ICommand CheckCommand { get; set; }
         public ICommand EditCommand { get; set; }
+        public ICommand AddRoleCommand { get; set; }
 
         #endregion
 
@@ -100,7 +146,10 @@ namespace BookStore.ViewModel
                 IsChecked = false;
 
                 //lấy data từ cơ sở dữ liệu
-                ListRole = new ObservableCollection<CRole>(CRole.Ins.ListRole());            
+                ListRole = new ObservableCollection<CRole>(CRole.Ins.ListRole());
+
+                //Thêm data vào combobox
+                ListDecentralization = new ObservableCollection<string>(CRole.Ins.ListDecentralization());
             }
                );
 
@@ -128,6 +177,37 @@ namespace BookStore.ViewModel
                     CRole.Ins.ChangeSalary(SelectedItem);
                     
                 }          
+            }
+               );
+
+            AddRoleCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (string.IsNullOrEmpty(EmployeeRole) || string.IsNullOrEmpty(EmployeeSalary) || string.IsNullOrEmpty(ComboBoxSelectedItem))
+                {
+                    return;
+                }
+                else
+                {
+                    //Kiểm tra
+                    float RoleSalary;
+
+                    if(float.TryParse(EmployeeSalary,out RoleSalary) == true)
+                    {
+                        //Tạo mới CRole
+                        CRole Role = new CRole { Name = EmployeeRole, Salary = RoleSalary, Decentralization = ComboBoxSelectedItem };
+
+                        //Thêm vào cơ sở dữ liệu
+                        CRole.Ins.AddRole(Role);
+
+                        //load lại bảng
+                        ListRole = new ObservableCollection<CRole>(CRole.Ins.ListRole());
+                    }
+                    else
+                    {
+                        return;
+                    }
+                }
+                
             }
                );
         }

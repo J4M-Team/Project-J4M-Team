@@ -140,6 +140,79 @@ namespace BookStore.Model.MyClass
             return false;
         }
 
+        /// <summary>
+        /// Hàm trả về danh sách quyền của nhân viên
+        /// </summary>
+        /// <returns></returns>
+        public List<string> ListDecentralization()
+        {
+            List<string> List = new List<string>();
+            try
+            {
+                var data = DataProvider.Ins.DB.Decentralizations.Select(x => x.Describe);
+                if (data.Count() > 0)
+                {
+                    foreach(var item in data)
+                    {
+                        List.Add(item);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        public bool AddRole(CRole newRole)
+        {
+            
+            try
+            {
+                if (newRole.Salary > 0)
+                {
+                    //Kiểm tra xem loại nhân viên đó có tồn tại trong cơ sở dữ liệu hay chưa
+                    var find = DataProvider.Ins.DB.Employee_Role.Where(x => x.Role_Name.ToLower() == newRole.Name.ToLower());
+                    if (find.Count() == 0)
+                    {
+                        //Tìm kiếm id tương ứng với loại quyền của nhân viên
+                        var IdDecentralization = DataProvider.Ins.DB.Decentralizations.Where(x => x.Describe.ToLower() == newRole.Decentralization.ToLower()).First();
+                        if (IdDecentralization != null)
+                        {
+                            //Tạo mới Role
+                            Employee_Role Role = new Employee_Role { Role_Name = newRole.Name, Role_Salary = newRole.Salary, Decentralization = IdDecentralization.Decentralization_Id };
+
+                            //Thêm
+                            DataProvider.Ins.DB.Employee_Role.Add(Role);
+
+                            //Lưu thay đổi
+                            DataProvider.Ins.DB.SaveChanges();
+                            return true;
+                        }
+                        else
+                        {
+                            return false;
+                        }
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+                
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
         #endregion
     }
 }
