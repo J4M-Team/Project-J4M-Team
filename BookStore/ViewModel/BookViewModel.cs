@@ -31,6 +31,7 @@ namespace BookStore.ViewModel
         public ICommand AccountCommand { get; set; }//Hiển thị màn hình thông tin tài khoản
         public ICommand EditBookCommand { get; set; }//Hiển thị màn hình thêm sách
         public ICommand SearchBookCommand { get; set; }//Hiển thị màn hình tìm kiếm sách
+        public ICommand AccepBillCommand { get; set; }//Hiển thị màn hình duyệt hóa đơn
 
         public BookViewModel()
         {
@@ -42,7 +43,7 @@ namespace BookStore.ViewModel
 
             AccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                FramePage = new AccountPage();
+                FramePage = new AccountPage();               
             }
                );
 
@@ -57,6 +58,12 @@ namespace BookStore.ViewModel
                 FramePage = new SearchPage();
             }
               );
+
+            AccepBillCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                FramePage = new AccepBillPage();
+            }
+               );
         }
     }
 }

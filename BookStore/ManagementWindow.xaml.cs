@@ -15,15 +15,13 @@ using System.Windows.Shapes;
 namespace BookStore
 {
     /// <summary>
-    /// Interaction logic for BookWindow.xaml
+    /// Interaction logic for ManagementWindow.xaml
     /// </summary>
-    public partial class BookWindow : Window
+    public partial class ManagementWindow : Window
     {
-        public BookWindow()
+        public ManagementWindow()
         {
             InitializeComponent();
         }
-
-        
     }
 }

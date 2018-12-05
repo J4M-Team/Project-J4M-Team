@@ -105,7 +105,10 @@
                     <DataTemplate>
                         <Grid Height="320" Margin="0,0,0,0" Width="200">
                             <StackPanel Orientation="Vertical">
-                                <Image Source="{Binding Image}" Height="200" Width="150" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,15,0,0"/>
+                                
+                                    <Image Source="{Binding Image}" Height="200" Width="150" VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,15,0,0"/>
+                                
+                                
                                 <Grid Margin="20,5,0,0">
                                     <StackPanel>
                                         <TextBlock Text="{Binding Name}"

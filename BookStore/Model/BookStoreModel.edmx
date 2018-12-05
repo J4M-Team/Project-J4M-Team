@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="BookStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="BookStoreModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Bill">
           <Key>
             <PropertyRef Name="Bill_Id" />
@@ -25,6 +25,7 @@
           <Property Name="Bill_Id" Type="int" Nullable="false" />
           <Property Name="Book_Id" Type="int" Nullable="false" />
           <Property Name="Book_Count" Type="int" Nullable="false" />
+          <Property Name="Price" Type="float" />
         </EntityType>
         <EntityType Name="Bill_Remove">
           <Key>
@@ -118,6 +119,13 @@
           <Property Name="Vip_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Customer_Id" Type="int" />
         </EntityType>
+        <EntityType Name="Decentralization">
+          <Key>
+            <PropertyRef Name="Decentralization_Id" />
+          </Key>
+          <Property Name="Decentralization_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Describe" Type="nvarchar" MaxLength="100" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Employee_Id" />
@@ -157,6 +165,7 @@
           <Property Name="Role_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Role_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Role_Salary" Type="float" Nullable="false" />
+          <Property Name="Decentralization" Type="int" />
         </EntityType>
         <EntityType Name="Evaluate">
           <Key>
@@ -236,6 +245,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Bill_Info_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Bill_Info" Type="Self.Bill_Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_Id" />
+            </Principal>
+            <Dependent Role="Bill_Info">
+              <PropertyRef Name="Book_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Bill_Remove_Bill">
           <End Role="Bill" Type="Self.Bill" Multiplicity="0..1" />
           <End Role="Bill_Remove" Type="Self.Bill_Remove" Multiplicity="*" />
@@ -389,6 +410,18 @@
             </Principal>
             <Dependent Role="Employee_Info">
               <PropertyRef Name="Employee_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_Role_Decentralization">
+          <End Role="Decentralization" Type="Self.Decentralization" Multiplicity="0..1" />
+          <End Role="Employee_Role" Type="Self.Employee_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Decentralization">
+              <PropertyRef Name="Decentralization_Id" />
+            </Principal>
+            <Dependent Role="Employee_Role">
+              <PropertyRef Name="Decentralization" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -465,6 +498,7 @@
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_Types" EntityType="Self.Customer_Types" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_Vip" EntityType="Self.Customer_Vip" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Decentralization" EntityType="Self.Decentralization" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee_Account" EntityType="Self.Employee_Account" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee_Info" EntityType="Self.Employee_Info" Schema="dbo" store:Type="Tables" />
@@ -486,6 +520,10 @@
             <End Role="Bill" EntitySet="Bill" />
             <End Role="Bill_Info" EntitySet="Bill_Info" />
           </AssociationSet>
+          <AssociationSet Name="FK_Bill_Info_Book" Association="Self.FK_Bill_Info_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Bill_Info" EntitySet="Bill_Info" />
+          </AssociationSet>
           <AssociationSet Name="FK_Bill_Remove_Bill" Association="Self.FK_Bill_Remove_Bill">
             <End Role="Bill" EntitySet="Bill" />
             <End Role="Bill_Remove" EntitySet="Bill_Remove" />
@@ -538,6 +576,10 @@
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Employee_Info" EntitySet="Employee_Info" />
           </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role_Decentralization" Association="Self.FK_Employee_Role_Decentralization">
+            <End Role="Decentralization" EntitySet="Decentralization" />
+            <End Role="Employee_Role" EntitySet="Employee_Role" />
+          </AssociationSet>
           <AssociationSet Name="FK_Evaluate_Customer" Association="Self.FK_Evaluate_Customer">
             <End Role="Customer" EntitySet="Customer" />
             <End Role="Evaluate" EntitySet="Evaluate" />
@@ -559,11 +601,126 @@
             <End Role="PayWage_History" EntitySet="PayWage_History" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BookStoreModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="BookStoreEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Bills" EntityType="BookStoreModel.Bill" />
+          <EntitySet Name="Bill_Info" EntityType="BookStoreModel.Bill_Info" />
+          <EntitySet Name="Bill_Remove" EntityType="BookStoreModel.Bill_Remove" />
+          <EntitySet Name="Books" EntityType="BookStoreModel.Book" />
+          <EntitySet Name="Book_Input" EntityType="BookStoreModel.Book_Input" />
+          <EntitySet Name="Book_Input_Price" EntityType="BookStoreModel.Book_Input_Price" />
+          <EntitySet Name="Book_Output" EntityType="BookStoreModel.Book_Output" />
+          <EntitySet Name="Book_Output_Price" EntityType="BookStoreModel.Book_Output_Price" />
+          <EntitySet Name="Book_Query" EntityType="BookStoreModel.Book_Query" />
+          <EntitySet Name="Customers" EntityType="BookStoreModel.Customer" />
+          <EntitySet Name="Customer_Types" EntityType="BookStoreModel.Customer_Types" />
+          <EntitySet Name="Customer_Vip" EntityType="BookStoreModel.Customer_Vip" />
+          <EntitySet Name="Decentralizations" EntityType="BookStoreModel.Decentralization" />
+          <EntitySet Name="Employees" EntityType="BookStoreModel.Employee" />
+          <EntitySet Name="Employee_Account" EntityType="BookStoreModel.Employee_Account" />
+          <EntitySet Name="Employee_Info" EntityType="BookStoreModel.Employee_Info" />
+          <EntitySet Name="Employee_Role" EntityType="BookStoreModel.Employee_Role" />
+          <EntitySet Name="Evaluates" EntityType="BookStoreModel.Evaluate" />
+          <EntitySet Name="Evaluate_Store" EntityType="BookStoreModel.Evaluate_Store" />
+          <EntitySet Name="Output_Info" EntityType="BookStoreModel.Output_Info" />
+          <EntitySet Name="PayWage_History" EntityType="BookStoreModel.PayWage_History" />
+          <EntitySet Name="Salary_Bonus" EntityType="BookStoreModel.Salary_Bonus" />
+          <AssociationSet Name="FK_Bill_Customer" Association="BookStoreModel.FK_Bill_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Employee" Association="BookStoreModel.FK_Bill_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Bill" EntitySet="Bills" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Info_Bill" Association="BookStoreModel.FK_Bill_Info_Bill">
+            <End Role="Bill" EntitySet="Bills" />
+            <End Role="Bill_Info" EntitySet="Bill_Info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Remove_Bill" Association="BookStoreModel.FK_Bill_Remove_Bill">
+            <End Role="Bill" EntitySet="Bills" />
+            <End Role="Bill_Remove" EntitySet="Bill_Remove" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Output_Bill" Association="BookStoreModel.FK_Book_Output_Bill">
+            <End Role="Bill" EntitySet="Bills" />
+            <End Role="Book_Output" EntitySet="Book_Output" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Output_Info_Bill" Association="BookStoreModel.FK_Output_Info_Bill">
+            <End Role="Bill" EntitySet="Bills" />
+            <End Role="Output_Info" EntitySet="Output_Info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Bill_Info_Book" Association="BookStoreModel.FK_Bill_Info_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Bill_Info" EntitySet="Bill_Info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Input_Book" Association="BookStoreModel.FK_Book_Input_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Book_Input" EntitySet="Book_Input" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Input_Price_Book" Association="BookStoreModel.FK_Book_Input_Price_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Book_Input_Price" EntitySet="Book_Input_Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Output_Price_Book" Association="BookStoreModel.FK_Book_Output_Price_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Book_Output_Price" EntitySet="Book_Output_Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Query_Book" Association="BookStoreModel.FK_Book_Query_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Book_Query" EntitySet="Book_Query" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Input_Employee" Association="BookStoreModel.FK_Book_Input_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Book_Input" EntitySet="Book_Input" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Output_Employee" Association="BookStoreModel.FK_Book_Output_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Book_Output" EntitySet="Book_Output" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Customer_Types" Association="BookStoreModel.FK_Customer_Customer_Types">
+            <End Role="Customer_Types" EntitySet="Customer_Types" />
+            <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Vip_Customer" Association="BookStoreModel.FK_Customer_Vip_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Customer_Vip" EntitySet="Customer_Vip" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evaluate_Customer" Association="BookStoreModel.FK_Evaluate_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Evaluate" EntitySet="Evaluates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evaluate_Store_Customer" Association="BookStoreModel.FK_Evaluate_Store_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="Evaluate_Store" EntitySet="Evaluate_Store" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Role_Decentralization" Association="BookStoreModel.FK_Employee_Role_Decentralization">
+            <End Role="Decentralization" EntitySet="Decentralizations" />
+            <End Role="Employee_Role" EntitySet="Employee_Role" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Account_Employee" Association="BookStoreModel.FK_Employee_Account_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Employee_Account" EntitySet="Employee_Account" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Employee_Role" Association="BookStoreModel.FK_Employee_Employee_Role">
+            <End Role="Employee_Role" EntitySet="Employee_Role" />
+            <End Role="Employee" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_Info_Employee" Association="BookStoreModel.FK_Employee_Info_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Employee_Info" EntitySet="Employee_Info" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Evaluate_Employee" Association="BookStoreModel.FK_Evaluate_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Evaluate" EntitySet="Evaluates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PayWage_History_Employee" Association="BookStoreModel.FK_PayWage_History_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="PayWage_History" EntitySet="PayWage_History" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Bill">
           <Key>
             <PropertyRef Name="Bill_Id" />
@@ -575,12 +732,12 @@
           <Property Name="Bill_Type" Type="Int32" Nullable="false" />
           <Property Name="Bill_Promotion" Type="Double" />
           <Property Name="Bill_Date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Bill_Customer" FromRole="Bill" ToRole="Customer" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Bill_Employee" FromRole="Bill" ToRole="Employee" />
-          <NavigationProperty Name="Bill_Info" Relationship="Self.FK_Bill_Info_Bill" FromRole="Bill" ToRole="Bill_Info" />
-          <NavigationProperty Name="Bill_Remove" Relationship="Self.FK_Bill_Remove_Bill" FromRole="Bill" ToRole="Bill_Remove" />
-          <NavigationProperty Name="Book_Output" Relationship="Self.FK_Book_Output_Bill" FromRole="Bill" ToRole="Book_Output" />
-          <NavigationProperty Name="Output_Info" Relationship="Self.FK_Output_Info_Bill" FromRole="Bill" ToRole="Output_Info" />
+          <NavigationProperty Name="Customer" Relationship="BookStoreModel.FK_Bill_Customer" FromRole="Bill" ToRole="Customer" />
+          <NavigationProperty Name="Employee" Relationship="BookStoreModel.FK_Bill_Employee" FromRole="Bill" ToRole="Employee" />
+          <NavigationProperty Name="Bill_Info" Relationship="BookStoreModel.FK_Bill_Info_Bill" FromRole="Bill" ToRole="Bill_Info" />
+          <NavigationProperty Name="Bill_Remove" Relationship="BookStoreModel.FK_Bill_Remove_Bill" FromRole="Bill" ToRole="Bill_Remove" />
+          <NavigationProperty Name="Book_Output" Relationship="BookStoreModel.FK_Book_Output_Bill" FromRole="Bill" ToRole="Book_Output" />
+          <NavigationProperty Name="Output_Info" Relationship="BookStoreModel.FK_Output_Info_Bill" FromRole="Bill" ToRole="Output_Info" />
         </EntityType>
         <EntityType Name="Bill_Info">
           <Key>
@@ -590,7 +747,9 @@
           <Property Name="Bill_Id" Type="Int32" Nullable="false" />
           <Property Name="Book_Id" Type="Int32" Nullable="false" />
           <Property Name="Book_Count" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Bill" Relationship="Self.FK_Bill_Info_Bill" FromRole="Bill_Info" ToRole="Bill" />
+          <Property Name="Price" Type="Double" />
+          <NavigationProperty Name="Bill" Relationship="BookStoreModel.FK_Bill_Info_Bill" FromRole="Bill_Info" ToRole="Bill" />
+          <NavigationProperty Name="Book" Relationship="BookStoreModel.FK_Bill_Info_Book" FromRole="Bill_Info" ToRole="Book" />
         </EntityType>
         <EntityType Name="Bill_Remove">
           <Key>
@@ -599,24 +758,25 @@
           <Property Name="Bill_Remove_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Bill_Id" Type="Int32" />
           <Property Name="Bill_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="Bill" Relationship="Self.FK_Bill_Remove_Bill" FromRole="Bill_Remove" ToRole="Bill" />
+          <NavigationProperty Name="Bill" Relationship="BookStoreModel.FK_Bill_Remove_Bill" FromRole="Bill_Remove" ToRole="Bill" />
         </EntityType>
         <EntityType Name="Book">
           <Key>
             <PropertyRef Name="Book_Id" />
           </Key>
           <Property Name="Book_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Book_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Book_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Book_Author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Book_Theme" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Book_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Book_Content" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
           <Property Name="Book_Image" Type="Binary" MaxLength="Max" FixedLength="false" />
           <Property Name="Book_Count" Type="Int32" />
-          <NavigationProperty Name="Book_Input" Relationship="Self.FK_Book_Input_Book" FromRole="Book" ToRole="Book_Input" />
-          <NavigationProperty Name="Book_Input_Price" Relationship="Self.FK_Book_Input_Price_Book" FromRole="Book" ToRole="Book_Input_Price" />
-          <NavigationProperty Name="Book_Output_Price" Relationship="Self.FK_Book_Output_Price_Book" FromRole="Book" ToRole="Book_Output_Price" />
-          <NavigationProperty Name="Book_Query" Relationship="Self.FK_Book_Query_Book" FromRole="Book" ToRole="Book_Query" />
+          <NavigationProperty Name="Bill_Info" Relationship="BookStoreModel.FK_Bill_Info_Book" FromRole="Book" ToRole="Bill_Info" />
+          <NavigationProperty Name="Book_Input" Relationship="BookStoreModel.FK_Book_Input_Book" FromRole="Book" ToRole="Book_Input" />
+          <NavigationProperty Name="Book_Input_Price" Relationship="BookStoreModel.FK_Book_Input_Price_Book" FromRole="Book" ToRole="Book_Input_Price" />
+          <NavigationProperty Name="Book_Output_Price" Relationship="BookStoreModel.FK_Book_Output_Price_Book" FromRole="Book" ToRole="Book_Output_Price" />
+          <NavigationProperty Name="Book_Query" Relationship="BookStoreModel.FK_Book_Query_Book" FromRole="Book" ToRole="Book_Query" />
         </EntityType>
         <EntityType Name="Book_Input">
           <Key>
@@ -627,8 +787,8 @@
           <Property Name="Book_Id" Type="Int32" Nullable="false" />
           <Property Name="Book_Count" Type="Int32" Nullable="false" />
           <Property Name="Input_Date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Book" Relationship="Self.FK_Book_Input_Book" FromRole="Book_Input" ToRole="Book" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Book_Input_Employee" FromRole="Book_Input" ToRole="Employee" />
+          <NavigationProperty Name="Book" Relationship="BookStoreModel.FK_Book_Input_Book" FromRole="Book_Input" ToRole="Book" />
+          <NavigationProperty Name="Employee" Relationship="BookStoreModel.FK_Book_Input_Employee" FromRole="Book_Input" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Book_Input_Price">
           <Key>
@@ -638,7 +798,7 @@
           <Property Name="Book_Id" Type="Int32" Nullable="false" />
           <Property Name="Date_Set" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Input_Price" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Book" Relationship="Self.FK_Book_Input_Price_Book" FromRole="Book_Input_Price" ToRole="Book" />
+          <NavigationProperty Name="Book" Relationship="BookStoreModel.FK_Book_Input_Price_Book" FromRole="Book_Input_Price" ToRole="Book" />
         </EntityType>
         <EntityType Name="Book_Output">
           <Key>
@@ -648,8 +808,8 @@
           <Property Name="Bill_Id" Type="Int32" Nullable="false" />
           <Property Name="Employee_Id" Type="Int32" Nullable="false" />
           <Property Name="Output_Date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Bill" Relationship="Self.FK_Book_Output_Bill" FromRole="Book_Output" ToRole="Bill" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Book_Output_Employee" FromRole="Book_Output" ToRole="Employee" />
+          <NavigationProperty Name="Bill" Relationship="BookStoreModel.FK_Book_Output_Bill" FromRole="Book_Output" ToRole="Bill" />
+          <NavigationProperty Name="Employee" Relationship="BookStoreModel.FK_Book_Output_Employee" FromRole="Book_Output" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Book_Output_Price">
           <Key>
@@ -659,7 +819,7 @@
           <Property Name="Book_Id" Type="Int32" Nullable="false" />
           <Property Name="Date_Set" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Output_Price" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Book" Relationship="Self.FK_Book_Output_Price_Book" FromRole="Book_Output_Price" ToRole="Book" />
+          <NavigationProperty Name="Book" Relationship="BookStoreModel.FK_Book_Output_Price_Book" FromRole="Book_Output_Price" ToRole="Book" />
         </EntityType>
         <EntityType Name="Book_Query">
           <Key>
@@ -668,32 +828,32 @@
           <Property Name="Query_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Book_Id" Type="Int32" Nullable="false" />
           <Property Name="Query_Date" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Book" Relationship="Self.FK_Book_Query_Book" FromRole="Book_Query" ToRole="Book" />
+          <NavigationProperty Name="Book" Relationship="BookStoreModel.FK_Book_Query_Book" FromRole="Book_Query" ToRole="Book" />
         </EntityType>
         <EntityType Name="Customer">
           <Key>
             <PropertyRef Name="Customer_Id" />
           </Key>
           <Property Name="Customer_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Customer_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Customer_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Customer_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Customer_Phone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" />
           <Property Name="Customer_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Types_Id" Type="Int32" />
-          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Customer" FromRole="Customer" ToRole="Bill" />
-          <NavigationProperty Name="Customer_Types" Relationship="Self.FK_Customer_Customer_Types" FromRole="Customer" ToRole="Customer_Types" />
-          <NavigationProperty Name="Customer_Vip" Relationship="Self.FK_Customer_Vip_Customer" FromRole="Customer" ToRole="Customer_Vip" />
-          <NavigationProperty Name="Evaluates" Relationship="Self.FK_Evaluate_Customer" FromRole="Customer" ToRole="Evaluate" />
-          <NavigationProperty Name="Evaluate_Store" Relationship="Self.FK_Evaluate_Store_Customer" FromRole="Customer" ToRole="Evaluate_Store" />
+          <NavigationProperty Name="Bills" Relationship="BookStoreModel.FK_Bill_Customer" FromRole="Customer" ToRole="Bill" />
+          <NavigationProperty Name="Customer_Types" Relationship="BookStoreModel.FK_Customer_Customer_Types" FromRole="Customer" ToRole="Customer_Types" />
+          <NavigationProperty Name="Customer_Vip" Relationship="BookStoreModel.FK_Customer_Vip_Customer" FromRole="Customer" ToRole="Customer_Vip" />
+          <NavigationProperty Name="Evaluates" Relationship="BookStoreModel.FK_Evaluate_Customer" FromRole="Customer" ToRole="Evaluate" />
+          <NavigationProperty Name="Evaluate_Store" Relationship="BookStoreModel.FK_Evaluate_Store_Customer" FromRole="Customer" ToRole="Evaluate_Store" />
         </EntityType>
         <EntityType Name="Customer_Types">
           <Key>
             <PropertyRef Name="Types_Id" />
           </Key>
           <Property Name="Types_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Types_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Types_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Types_Promotion" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Customers" Relationship="Self.FK_Customer_Customer_Types" FromRole="Customer_Types" ToRole="Customer" />
+          <NavigationProperty Name="Customers" Relationship="BookStoreModel.FK_Customer_Customer_Types" FromRole="Customer_Types" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Customer_Vip">
           <Key>
@@ -701,38 +861,46 @@
           </Key>
           <Property Name="Vip_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Customer_Id" Type="Int32" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Customer_Vip_Customer" FromRole="Customer_Vip" ToRole="Customer" />
+          <NavigationProperty Name="Customer" Relationship="BookStoreModel.FK_Customer_Vip_Customer" FromRole="Customer_Vip" ToRole="Customer" />
+        </EntityType>
+        <EntityType Name="Decentralization">
+          <Key>
+            <PropertyRef Name="Decentralization_Id" />
+          </Key>
+          <Property Name="Decentralization_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Describe" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee_Role" Relationship="BookStoreModel.FK_Employee_Role_Decentralization" FromRole="Decentralization" ToRole="Employee_Role" />
         </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Employee_Id" />
           </Key>
           <Property Name="Employee_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Employee_Identity" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Employee_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Employee_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Employee_Phone" Type="String" MaxLength="11" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Employee_Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Employee_Identity" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Employee_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Employee_Address" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Employee_Phone" Type="String" Nullable="false" MaxLength="11" FixedLength="false" Unicode="false" />
+          <Property Name="Employee_Email" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Role_Id" Type="Int32" />
           <Property Name="Employee_BirthDay" Type="DateTime" Precision="0" />
-          <NavigationProperty Name="Bills" Relationship="Self.FK_Bill_Employee" FromRole="Employee" ToRole="Bill" />
-          <NavigationProperty Name="Book_Input" Relationship="Self.FK_Book_Input_Employee" FromRole="Employee" ToRole="Book_Input" />
-          <NavigationProperty Name="Book_Output" Relationship="Self.FK_Book_Output_Employee" FromRole="Employee" ToRole="Book_Output" />
-          <NavigationProperty Name="Employee_Account" Relationship="Self.FK_Employee_Account_Employee" FromRole="Employee" ToRole="Employee_Account" />
-          <NavigationProperty Name="Employee_Role" Relationship="Self.FK_Employee_Employee_Role" FromRole="Employee" ToRole="Employee_Role" />
-          <NavigationProperty Name="Employee_Info" Relationship="Self.FK_Employee_Info_Employee" FromRole="Employee" ToRole="Employee_Info" />
-          <NavigationProperty Name="Evaluates" Relationship="Self.FK_Evaluate_Employee" FromRole="Employee" ToRole="Evaluate" />
-          <NavigationProperty Name="PayWage_History" Relationship="Self.FK_PayWage_History_Employee" FromRole="Employee" ToRole="PayWage_History" />
+          <NavigationProperty Name="Bills" Relationship="BookStoreModel.FK_Bill_Employee" FromRole="Employee" ToRole="Bill" />
+          <NavigationProperty Name="Book_Input" Relationship="BookStoreModel.FK_Book_Input_Employee" FromRole="Employee" ToRole="Book_Input" />
+          <NavigationProperty Name="Book_Output" Relationship="BookStoreModel.FK_Book_Output_Employee" FromRole="Employee" ToRole="Book_Output" />
+          <NavigationProperty Name="Employee_Account" Relationship="BookStoreModel.FK_Employee_Account_Employee" FromRole="Employee" ToRole="Employee_Account" />
+          <NavigationProperty Name="Employee_Role" Relationship="BookStoreModel.FK_Employee_Employee_Role" FromRole="Employee" ToRole="Employee_Role" />
+          <NavigationProperty Name="Employee_Info" Relationship="BookStoreModel.FK_Employee_Info_Employee" FromRole="Employee" ToRole="Employee_Info" />
+          <NavigationProperty Name="Evaluates" Relationship="BookStoreModel.FK_Evaluate_Employee" FromRole="Employee" ToRole="Evaluate" />
+          <NavigationProperty Name="PayWage_History" Relationship="BookStoreModel.FK_PayWage_History_Employee" FromRole="Employee" ToRole="PayWage_History" />
         </EntityType>
         <EntityType Name="Employee_Account">
           <Key>
             <PropertyRef Name="Account_Id" />
           </Key>
           <Property Name="Account_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Account_User" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Account_Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Account_User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Account_Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Employee_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Account_Employee" FromRole="Employee_Account" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="BookStoreModel.FK_Employee_Account_Employee" FromRole="Employee_Account" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Employee_Info">
           <Key>
@@ -743,16 +911,18 @@
           <Property Name="Date_Start" Type="DateTime" Nullable="false" Precision="0" />
           <Property Name="Sum_Date" Type="Int32" />
           <Property Name="Date_In_Month" Type="Int32" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_Info_Employee" FromRole="Employee_Info" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="BookStoreModel.FK_Employee_Info_Employee" FromRole="Employee_Info" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Employee_Role">
           <Key>
             <PropertyRef Name="Role_Id" />
           </Key>
           <Property Name="Role_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Role_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Role_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Role_Salary" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Employees" Relationship="Self.FK_Employee_Employee_Role" FromRole="Employee_Role" ToRole="Employee" />
+          <Property Name="Decentralization" Type="Int32" />
+          <NavigationProperty Name="Decentralization1" Relationship="BookStoreModel.FK_Employee_Role_Decentralization" FromRole="Employee_Role" ToRole="Decentralization" />
+          <NavigationProperty Name="Employees" Relationship="BookStoreModel.FK_Employee_Employee_Role" FromRole="Employee_Role" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Evaluate">
           <Key>
@@ -763,8 +933,8 @@
           <Property Name="Employee_Id" Type="Int32" Nullable="false" />
           <Property Name="Evaluate_Content" Type="Int32" />
           <Property Name="Evaluate_Date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Evaluate_Customer" FromRole="Evaluate" ToRole="Customer" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_Evaluate_Employee" FromRole="Evaluate" ToRole="Employee" />
+          <NavigationProperty Name="Customer" Relationship="BookStoreModel.FK_Evaluate_Customer" FromRole="Evaluate" ToRole="Customer" />
+          <NavigationProperty Name="Employee" Relationship="BookStoreModel.FK_Evaluate_Employee" FromRole="Evaluate" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Evaluate_Store">
           <Key>
@@ -774,14 +944,14 @@
           <Property Name="Customer_Id" Type="Int32" Nullable="false" />
           <Property Name="Evaluate_Store_Content" Type="Int32" />
           <Property Name="Evaluate_Store_Date" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="Customer" Relationship="Self.FK_Evaluate_Store_Customer" FromRole="Evaluate_Store" ToRole="Customer" />
+          <NavigationProperty Name="Customer" Relationship="BookStoreModel.FK_Evaluate_Store_Customer" FromRole="Evaluate_Store" ToRole="Customer" />
         </EntityType>
         <EntityType Name="Output_Info">
           <Key>
             <PropertyRef Name="Bill_Id" />
           </Key>
           <Property Name="Bill_Id" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Bill" Relationship="Self.FK_Output_Info_Bill" FromRole="Output_Info" ToRole="Bill" />
+          <NavigationProperty Name="Bill" Relationship="BookStoreModel.FK_Output_Info_Bill" FromRole="Output_Info" ToRole="Bill" />
         </EntityType>
         <EntityType Name="PayWage_History">
           <Key>
@@ -791,19 +961,19 @@
           <Property Name="Employee_Id" Type="Int32" Nullable="false" />
           <Property Name="PayWage_Date" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Employee_Salary" Type="Double" Nullable="false" />
-          <NavigationProperty Name="Employee" Relationship="Self.FK_PayWage_History_Employee" FromRole="PayWage_History" ToRole="Employee" />
+          <NavigationProperty Name="Employee" Relationship="BookStoreModel.FK_PayWage_History_Employee" FromRole="PayWage_History" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Salary_Bonus">
           <Key>
             <PropertyRef Name="Bonus_Id" />
           </Key>
           <Property Name="Bonus_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Bonus_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Bonus_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Bonus_Money" Type="Double" />
         </EntityType>
         <Association Name="FK_Bill_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <End Type="BookStoreModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="BookStoreModel.Bill" Role="Bill" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="Customer_Id" />
@@ -814,8 +984,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bill_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="Bill" Type="Self.Bill" Multiplicity="*" />
+          <End Type="BookStoreModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="BookStoreModel.Bill" Role="Bill" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Employee_Id" />
@@ -826,8 +996,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bill_Info_Bill">
-          <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
-          <End Role="Bill_Info" Type="Self.Bill_Info" Multiplicity="*" />
+          <End Type="BookStoreModel.Bill" Role="Bill" Multiplicity="1" />
+          <End Type="BookStoreModel.Bill_Info" Role="Bill_Info" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Bill">
               <PropertyRef Name="Bill_Id" />
@@ -838,8 +1008,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Bill_Remove_Bill">
-          <End Role="Bill" Type="Self.Bill" Multiplicity="0..1" />
-          <End Role="Bill_Remove" Type="Self.Bill_Remove" Multiplicity="*" />
+          <End Type="BookStoreModel.Bill" Role="Bill" Multiplicity="0..1" />
+          <End Type="BookStoreModel.Bill_Remove" Role="Bill_Remove" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Bill">
               <PropertyRef Name="Bill_Id" />
@@ -850,8 +1020,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Book_Output_Bill">
-          <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
-          <End Role="Book_Output" Type="Self.Book_Output" Multiplicity="*" />
+          <End Type="BookStoreModel.Bill" Role="Bill" Multiplicity="1" />
+          <End Type="BookStoreModel.Book_Output" Role="Book_Output" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Bill">
               <PropertyRef Name="Bill_Id" />
@@ -862,8 +1032,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Output_Info_Bill">
-          <End Role="Bill" Type="Self.Bill" Multiplicity="1" />
-          <End Role="Output_Info" Type="Self.Output_Info" Multiplicity="0..1" />
+          <End Type="BookStoreModel.Bill" Role="Bill" Multiplicity="1" />
+          <End Type="BookStoreModel.Output_Info" Role="Output_Info" Multiplicity="0..1" />
           <ReferentialConstraint>
             <Principal Role="Bill">
               <PropertyRef Name="Bill_Id" />
@@ -873,9 +1043,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Bill_Info_Book">
+          <End Type="BookStoreModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="BookStoreModel.Bill_Info" Role="Bill_Info" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_Id" />
+            </Principal>
+            <Dependent Role="Bill_Info">
+              <PropertyRef Name="Book_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Book_Input_Book">
-          <End Role="Book" Type="Self.Book" Multiplicity="1" />
-          <End Role="Book_Input" Type="Self.Book_Input" Multiplicity="*" />
+          <End Type="BookStoreModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="BookStoreModel.Book_Input" Role="Book_Input" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Book">
               <PropertyRef Name="Book_Id" />
@@ -886,8 +1068,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Book_Input_Price_Book">
-          <End Role="Book" Type="Self.Book" Multiplicity="1" />
-          <End Role="Book_Input_Price" Type="Self.Book_Input_Price" Multiplicity="*" />
+          <End Type="BookStoreModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="BookStoreModel.Book_Input_Price" Role="Book_Input_Price" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Book">
               <PropertyRef Name="Book_Id" />
@@ -898,8 +1080,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Book_Output_Price_Book">
-          <End Role="Book" Type="Self.Book" Multiplicity="1" />
-          <End Role="Book_Output_Price" Type="Self.Book_Output_Price" Multiplicity="*" />
+          <End Type="BookStoreModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="BookStoreModel.Book_Output_Price" Role="Book_Output_Price" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Book">
               <PropertyRef Name="Book_Id" />
@@ -910,8 +1092,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Book_Query_Book">
-          <End Role="Book" Type="Self.Book" Multiplicity="1" />
-          <End Role="Book_Query" Type="Self.Book_Query" Multiplicity="*" />
+          <End Type="BookStoreModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="BookStoreModel.Book_Query" Role="Book_Query" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Book">
               <PropertyRef Name="Book_Id" />
@@ -922,8 +1104,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Book_Input_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="Book_Input" Type="Self.Book_Input" Multiplicity="*" />
+          <End Type="BookStoreModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="BookStoreModel.Book_Input" Role="Book_Input" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Employee_Id" />
@@ -934,8 +1116,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Book_Output_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="Book_Output" Type="Self.Book_Output" Multiplicity="*" />
+          <End Type="BookStoreModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="BookStoreModel.Book_Output" Role="Book_Output" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Employee_Id" />
@@ -946,8 +1128,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Customer_Customer_Types">
-          <End Role="Customer_Types" Type="Self.Customer_Types" Multiplicity="0..1" />
-          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <End Type="BookStoreModel.Customer_Types" Role="Customer_Types" Multiplicity="0..1" />
+          <End Type="BookStoreModel.Customer" Role="Customer" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer_Types">
               <PropertyRef Name="Types_Id" />
@@ -958,8 +1140,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Customer_Vip_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
-          <End Role="Customer_Vip" Type="Self.Customer_Vip" Multiplicity="*" />
+          <End Type="BookStoreModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="BookStoreModel.Customer_Vip" Role="Customer_Vip" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="Customer_Id" />
@@ -970,8 +1152,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Evaluate_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Evaluate" Type="Self.Evaluate" Multiplicity="*" />
+          <End Type="BookStoreModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="BookStoreModel.Evaluate" Role="Evaluate" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="Customer_Id" />
@@ -982,8 +1164,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Evaluate_Store_Customer">
-          <End Role="Customer" Type="Self.Customer" Multiplicity="1" />
-          <End Role="Evaluate_Store" Type="Self.Evaluate_Store" Multiplicity="*" />
+          <End Type="BookStoreModel.Customer" Role="Customer" Multiplicity="1" />
+          <End Type="BookStoreModel.Evaluate_Store" Role="Evaluate_Store" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Customer">
               <PropertyRef Name="Customer_Id" />
@@ -993,9 +1175,21 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Employee_Role_Decentralization">
+          <End Type="BookStoreModel.Decentralization" Role="Decentralization" Multiplicity="0..1" />
+          <End Type="BookStoreModel.Employee_Role" Role="Employee_Role" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Decentralization">
+              <PropertyRef Name="Decentralization_Id" />
+            </Principal>
+            <Dependent Role="Employee_Role">
+              <PropertyRef Name="Decentralization" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_Account_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="Employee_Account" Type="Self.Employee_Account" Multiplicity="*" />
+          <End Type="BookStoreModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="BookStoreModel.Employee_Account" Role="Employee_Account" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Employee_Id" />
@@ -1006,8 +1200,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Employee_Employee_Role">
-          <End Role="Employee_Role" Type="Self.Employee_Role" Multiplicity="0..1" />
-          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <End Type="BookStoreModel.Employee_Role" Role="Employee_Role" Multiplicity="0..1" />
+          <End Type="BookStoreModel.Employee" Role="Employee" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee_Role">
               <PropertyRef Name="Role_Id" />
@@ -1018,8 +1212,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Employee_Info_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="Employee_Info" Type="Self.Employee_Info" Multiplicity="*" />
+          <End Type="BookStoreModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="BookStoreModel.Employee_Info" Role="Employee_Info" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Employee_Id" />
@@ -1030,8 +1224,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_Evaluate_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="Evaluate" Type="Self.Evaluate" Multiplicity="*" />
+          <End Type="BookStoreModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="BookStoreModel.Evaluate" Role="Evaluate" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Employee_Id" />
@@ -1042,8 +1236,8 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_PayWage_History_Employee">
-          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
-          <End Role="PayWage_History" Type="Self.PayWage_History" Multiplicity="*" />
+          <End Type="BookStoreModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="BookStoreModel.PayWage_History" Role="PayWage_History" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Employee">
               <PropertyRef Name="Employee_Id" />
@@ -1053,114 +1247,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="BookStoreEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Bills" EntityType="Self.Bill" />
-          <EntitySet Name="Bill_Info" EntityType="Self.Bill_Info" />
-          <EntitySet Name="Bill_Remove" EntityType="Self.Bill_Remove" />
-          <EntitySet Name="Books" EntityType="Self.Book" />
-          <EntitySet Name="Book_Input" EntityType="Self.Book_Input" />
-          <EntitySet Name="Book_Input_Price" EntityType="Self.Book_Input_Price" />
-          <EntitySet Name="Book_Output" EntityType="Self.Book_Output" />
-          <EntitySet Name="Book_Output_Price" EntityType="Self.Book_Output_Price" />
-          <EntitySet Name="Book_Query" EntityType="Self.Book_Query" />
-          <EntitySet Name="Customers" EntityType="Self.Customer" />
-          <EntitySet Name="Customer_Types" EntityType="Self.Customer_Types" />
-          <EntitySet Name="Customer_Vip" EntityType="Self.Customer_Vip" />
-          <EntitySet Name="Employees" EntityType="Self.Employee" />
-          <EntitySet Name="Employee_Account" EntityType="Self.Employee_Account" />
-          <EntitySet Name="Employee_Info" EntityType="Self.Employee_Info" />
-          <EntitySet Name="Employee_Role" EntityType="Self.Employee_Role" />
-          <EntitySet Name="Evaluates" EntityType="Self.Evaluate" />
-          <EntitySet Name="Evaluate_Store" EntityType="Self.Evaluate_Store" />
-          <EntitySet Name="Output_Info" EntityType="Self.Output_Info" />
-          <EntitySet Name="PayWage_History" EntityType="Self.PayWage_History" />
-          <EntitySet Name="Salary_Bonus" EntityType="Self.Salary_Bonus" />
-          <AssociationSet Name="FK_Bill_Customer" Association="Self.FK_Bill_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Bill" EntitySet="Bills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Bill_Employee" Association="Self.FK_Bill_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Bill" EntitySet="Bills" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Bill_Info_Bill" Association="Self.FK_Bill_Info_Bill">
-            <End Role="Bill" EntitySet="Bills" />
-            <End Role="Bill_Info" EntitySet="Bill_Info" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Bill_Remove_Bill" Association="Self.FK_Bill_Remove_Bill">
-            <End Role="Bill" EntitySet="Bills" />
-            <End Role="Bill_Remove" EntitySet="Bill_Remove" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Book_Output_Bill" Association="Self.FK_Book_Output_Bill">
-            <End Role="Bill" EntitySet="Bills" />
-            <End Role="Book_Output" EntitySet="Book_Output" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Output_Info_Bill" Association="Self.FK_Output_Info_Bill">
-            <End Role="Bill" EntitySet="Bills" />
-            <End Role="Output_Info" EntitySet="Output_Info" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Book_Input_Book" Association="Self.FK_Book_Input_Book">
-            <End Role="Book" EntitySet="Books" />
-            <End Role="Book_Input" EntitySet="Book_Input" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Book_Input_Price_Book" Association="Self.FK_Book_Input_Price_Book">
-            <End Role="Book" EntitySet="Books" />
-            <End Role="Book_Input_Price" EntitySet="Book_Input_Price" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Book_Output_Price_Book" Association="Self.FK_Book_Output_Price_Book">
-            <End Role="Book" EntitySet="Books" />
-            <End Role="Book_Output_Price" EntitySet="Book_Output_Price" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Book_Query_Book" Association="Self.FK_Book_Query_Book">
-            <End Role="Book" EntitySet="Books" />
-            <End Role="Book_Query" EntitySet="Book_Query" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Book_Input_Employee" Association="Self.FK_Book_Input_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Book_Input" EntitySet="Book_Input" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Book_Output_Employee" Association="Self.FK_Book_Output_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Book_Output" EntitySet="Book_Output" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Customer_Customer_Types" Association="Self.FK_Customer_Customer_Types">
-            <End Role="Customer_Types" EntitySet="Customer_Types" />
-            <End Role="Customer" EntitySet="Customers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Customer_Vip_Customer" Association="Self.FK_Customer_Vip_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Customer_Vip" EntitySet="Customer_Vip" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Evaluate_Customer" Association="Self.FK_Evaluate_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Evaluate" EntitySet="Evaluates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Evaluate_Store_Customer" Association="Self.FK_Evaluate_Store_Customer">
-            <End Role="Customer" EntitySet="Customers" />
-            <End Role="Evaluate_Store" EntitySet="Evaluate_Store" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Employee_Account_Employee" Association="Self.FK_Employee_Account_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Employee_Account" EntitySet="Employee_Account" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Employee_Employee_Role" Association="Self.FK_Employee_Employee_Role">
-            <End Role="Employee_Role" EntitySet="Employee_Role" />
-            <End Role="Employee" EntitySet="Employees" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Employee_Info_Employee" Association="Self.FK_Employee_Info_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Employee_Info" EntitySet="Employee_Info" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Evaluate_Employee" Association="Self.FK_Evaluate_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="Evaluate" EntitySet="Evaluates" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PayWage_History_Employee" Association="Self.FK_PayWage_History_Employee">
-            <End Role="Employee" EntitySet="Employees" />
-            <End Role="PayWage_History" EntitySet="PayWage_History" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -1169,190 +1256,200 @@
           <EntitySetMapping Name="Bills">
             <EntityTypeMapping TypeName="BookStoreModel.Bill">
               <MappingFragment StoreEntitySet="Bill">
-                <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
-                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
-                <ScalarProperty Name="Bill_Total_Money" ColumnName="Bill_Total_Money" />
-                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
-                <ScalarProperty Name="Bill_Type" ColumnName="Bill_Type" />
-                <ScalarProperty Name="Bill_Promotion" ColumnName="Bill_Promotion" />
                 <ScalarProperty Name="Bill_Date" ColumnName="Bill_Date" />
+                <ScalarProperty Name="Bill_Promotion" ColumnName="Bill_Promotion" />
+                <ScalarProperty Name="Bill_Type" ColumnName="Bill_Type" />
+                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+                <ScalarProperty Name="Bill_Total_Money" ColumnName="Bill_Total_Money" />
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Bill_Info">
             <EntityTypeMapping TypeName="BookStoreModel.Bill_Info">
               <MappingFragment StoreEntitySet="Bill_Info">
-                <ScalarProperty Name="Bill_Info_Id" ColumnName="Bill_Info_Id" />
-                <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
-                <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
                 <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
+                <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
+                <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
+                <ScalarProperty Name="Bill_Info_Id" ColumnName="Bill_Info_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Bill_Remove">
             <EntityTypeMapping TypeName="BookStoreModel.Bill_Remove">
               <MappingFragment StoreEntitySet="Bill_Remove">
-                <ScalarProperty Name="Bill_Remove_Id" ColumnName="Bill_Remove_Id" />
-                <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
                 <ScalarProperty Name="Bill_Status" ColumnName="Bill_Status" />
+                <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
+                <ScalarProperty Name="Bill_Remove_Id" ColumnName="Bill_Remove_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Books">
             <EntityTypeMapping TypeName="BookStoreModel.Book">
               <MappingFragment StoreEntitySet="Book">
-                <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
-                <ScalarProperty Name="Book_Name" ColumnName="Book_Name" />
-                <ScalarProperty Name="Book_Author" ColumnName="Book_Author" />
-                <ScalarProperty Name="Book_Theme" ColumnName="Book_Theme" />
-                <ScalarProperty Name="Book_Type" ColumnName="Book_Type" />
-                <ScalarProperty Name="Book_Content" ColumnName="Book_Content" />
-                <ScalarProperty Name="Book_Image" ColumnName="Book_Image" />
                 <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
+                <ScalarProperty Name="Book_Image" ColumnName="Book_Image" />
+                <ScalarProperty Name="Book_Content" ColumnName="Book_Content" />
+                <ScalarProperty Name="Book_Type" ColumnName="Book_Type" />
+                <ScalarProperty Name="Book_Theme" ColumnName="Book_Theme" />
+                <ScalarProperty Name="Book_Author" ColumnName="Book_Author" />
+                <ScalarProperty Name="Book_Name" ColumnName="Book_Name" />
+                <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Book_Input">
             <EntityTypeMapping TypeName="BookStoreModel.Book_Input">
               <MappingFragment StoreEntitySet="Book_Input">
-                <ScalarProperty Name="Input_Id" ColumnName="Input_Id" />
-                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
-                <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
-                <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
                 <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
+                <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
+                <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Input_Id" ColumnName="Input_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Book_Input_Price">
             <EntityTypeMapping TypeName="BookStoreModel.Book_Input_Price">
               <MappingFragment StoreEntitySet="Book_Input_Price">
-                <ScalarProperty Name="Input_Price_Id" ColumnName="Input_Price_Id" />
-                <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
-                <ScalarProperty Name="Date_Set" ColumnName="Date_Set" />
                 <ScalarProperty Name="Input_Price" ColumnName="Input_Price" />
+                <ScalarProperty Name="Date_Set" ColumnName="Date_Set" />
+                <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
+                <ScalarProperty Name="Input_Price_Id" ColumnName="Input_Price_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Book_Output">
             <EntityTypeMapping TypeName="BookStoreModel.Book_Output">
               <MappingFragment StoreEntitySet="Book_Output">
-                <ScalarProperty Name="Output_Id" ColumnName="Output_Id" />
-                <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
-                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
                 <ScalarProperty Name="Output_Date" ColumnName="Output_Date" />
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
+                <ScalarProperty Name="Output_Id" ColumnName="Output_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Book_Output_Price">
             <EntityTypeMapping TypeName="BookStoreModel.Book_Output_Price">
               <MappingFragment StoreEntitySet="Book_Output_Price">
-                <ScalarProperty Name="Output_Price_Id" ColumnName="Output_Price_Id" />
-                <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
-                <ScalarProperty Name="Date_Set" ColumnName="Date_Set" />
                 <ScalarProperty Name="Output_Price" ColumnName="Output_Price" />
+                <ScalarProperty Name="Date_Set" ColumnName="Date_Set" />
+                <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
+                <ScalarProperty Name="Output_Price_Id" ColumnName="Output_Price_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Book_Query">
             <EntityTypeMapping TypeName="BookStoreModel.Book_Query">
               <MappingFragment StoreEntitySet="Book_Query">
-                <ScalarProperty Name="Query_Id" ColumnName="Query_Id" />
-                <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
                 <ScalarProperty Name="Query_Date" ColumnName="Query_Date" />
+                <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
+                <ScalarProperty Name="Query_Id" ColumnName="Query_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="BookStoreModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
-                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
-                <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
-                <ScalarProperty Name="Customer_Address" ColumnName="Customer_Address" />
-                <ScalarProperty Name="Customer_Phone" ColumnName="Customer_Phone" />
-                <ScalarProperty Name="Customer_Email" ColumnName="Customer_Email" />
                 <ScalarProperty Name="Types_Id" ColumnName="Types_Id" />
+                <ScalarProperty Name="Customer_Email" ColumnName="Customer_Email" />
+                <ScalarProperty Name="Customer_Phone" ColumnName="Customer_Phone" />
+                <ScalarProperty Name="Customer_Address" ColumnName="Customer_Address" />
+                <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
+                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customer_Types">
             <EntityTypeMapping TypeName="BookStoreModel.Customer_Types">
               <MappingFragment StoreEntitySet="Customer_Types">
-                <ScalarProperty Name="Types_Id" ColumnName="Types_Id" />
-                <ScalarProperty Name="Types_Name" ColumnName="Types_Name" />
                 <ScalarProperty Name="Types_Promotion" ColumnName="Types_Promotion" />
+                <ScalarProperty Name="Types_Name" ColumnName="Types_Name" />
+                <ScalarProperty Name="Types_Id" ColumnName="Types_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Customer_Vip">
             <EntityTypeMapping TypeName="BookStoreModel.Customer_Vip">
               <MappingFragment StoreEntitySet="Customer_Vip">
-                <ScalarProperty Name="Vip_Id" ColumnName="Vip_Id" />
                 <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+                <ScalarProperty Name="Vip_Id" ColumnName="Vip_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Decentralizations">
+            <EntityTypeMapping TypeName="BookStoreModel.Decentralization">
+              <MappingFragment StoreEntitySet="Decentralization">
+                <ScalarProperty Name="Describe" ColumnName="Describe" />
+                <ScalarProperty Name="Decentralization_Id" ColumnName="Decentralization_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employees">
             <EntityTypeMapping TypeName="BookStoreModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
-                <ScalarProperty Name="Employee_Identity" ColumnName="Employee_Identity" />
-                <ScalarProperty Name="Employee_Name" ColumnName="Employee_Name" />
-                <ScalarProperty Name="Employee_Address" ColumnName="Employee_Address" />
-                <ScalarProperty Name="Employee_Phone" ColumnName="Employee_Phone" />
-                <ScalarProperty Name="Employee_Email" ColumnName="Employee_Email" />
-                <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
                 <ScalarProperty Name="Employee_BirthDay" ColumnName="Employee_BirthDay" />
+                <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+                <ScalarProperty Name="Employee_Email" ColumnName="Employee_Email" />
+                <ScalarProperty Name="Employee_Phone" ColumnName="Employee_Phone" />
+                <ScalarProperty Name="Employee_Address" ColumnName="Employee_Address" />
+                <ScalarProperty Name="Employee_Name" ColumnName="Employee_Name" />
+                <ScalarProperty Name="Employee_Identity" ColumnName="Employee_Identity" />
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employee_Account">
             <EntityTypeMapping TypeName="BookStoreModel.Employee_Account">
               <MappingFragment StoreEntitySet="Employee_Account">
-                <ScalarProperty Name="Account_Id" ColumnName="Account_Id" />
-                <ScalarProperty Name="Account_User" ColumnName="Account_User" />
-                <ScalarProperty Name="Account_Password" ColumnName="Account_Password" />
                 <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Account_Password" ColumnName="Account_Password" />
+                <ScalarProperty Name="Account_User" ColumnName="Account_User" />
+                <ScalarProperty Name="Account_Id" ColumnName="Account_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employee_Info">
             <EntityTypeMapping TypeName="BookStoreModel.Employee_Info">
               <MappingFragment StoreEntitySet="Employee_Info">
-                <ScalarProperty Name="Emplouee_Info_Id" ColumnName="Emplouee_Info_Id" />
-                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
-                <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
-                <ScalarProperty Name="Sum_Date" ColumnName="Sum_Date" />
                 <ScalarProperty Name="Date_In_Month" ColumnName="Date_In_Month" />
+                <ScalarProperty Name="Sum_Date" ColumnName="Sum_Date" />
+                <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Emplouee_Info_Id" ColumnName="Emplouee_Info_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Employee_Role">
             <EntityTypeMapping TypeName="BookStoreModel.Employee_Role">
               <MappingFragment StoreEntitySet="Employee_Role">
-                <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
-                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+                <ScalarProperty Name="Decentralization" ColumnName="Decentralization" />
                 <ScalarProperty Name="Role_Salary" ColumnName="Role_Salary" />
+                <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+                <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Evaluates">
             <EntityTypeMapping TypeName="BookStoreModel.Evaluate">
               <MappingFragment StoreEntitySet="Evaluate">
-                <ScalarProperty Name="Evaluate_Id" ColumnName="Evaluate_Id" />
-                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
-                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
-                <ScalarProperty Name="Evaluate_Content" ColumnName="Evaluate_Content" />
                 <ScalarProperty Name="Evaluate_Date" ColumnName="Evaluate_Date" />
+                <ScalarProperty Name="Evaluate_Content" ColumnName="Evaluate_Content" />
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+                <ScalarProperty Name="Evaluate_Id" ColumnName="Evaluate_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Evaluate_Store">
             <EntityTypeMapping TypeName="BookStoreModel.Evaluate_Store">
               <MappingFragment StoreEntitySet="Evaluate_Store">
-                <ScalarProperty Name="Evaluate_Store_Id" ColumnName="Evaluate_Store_Id" />
-                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
-                <ScalarProperty Name="Evaluate_Store_Content" ColumnName="Evaluate_Store_Content" />
                 <ScalarProperty Name="Evaluate_Store_Date" ColumnName="Evaluate_Store_Date" />
+                <ScalarProperty Name="Evaluate_Store_Content" ColumnName="Evaluate_Store_Content" />
+                <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+                <ScalarProperty Name="Evaluate_Store_Id" ColumnName="Evaluate_Store_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1366,19 +1463,19 @@
           <EntitySetMapping Name="PayWage_History">
             <EntityTypeMapping TypeName="BookStoreModel.PayWage_History">
               <MappingFragment StoreEntitySet="PayWage_History">
-                <ScalarProperty Name="PayWage_Id" ColumnName="PayWage_Id" />
-                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
-                <ScalarProperty Name="PayWage_Date" ColumnName="PayWage_Date" />
                 <ScalarProperty Name="Employee_Salary" ColumnName="Employee_Salary" />
+                <ScalarProperty Name="PayWage_Date" ColumnName="PayWage_Date" />
+                <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+                <ScalarProperty Name="PayWage_Id" ColumnName="PayWage_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="Salary_Bonus">
             <EntityTypeMapping TypeName="BookStoreModel.Salary_Bonus">
               <MappingFragment StoreEntitySet="Salary_Bonus">
-                <ScalarProperty Name="Bonus_Id" ColumnName="Bonus_Id" />
-                <ScalarProperty Name="Bonus_Name" ColumnName="Bonus_Name" />
                 <ScalarProperty Name="Bonus_Money" ColumnName="Bonus_Money" />
+                <ScalarProperty Name="Bonus_Name" ColumnName="Bonus_Name" />
+                <ScalarProperty Name="Bonus_Id" ColumnName="Bonus_Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

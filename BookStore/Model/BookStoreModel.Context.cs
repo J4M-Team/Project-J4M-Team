@@ -37,6 +37,7 @@ namespace BookStore.Model
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Customer_Types> Customer_Types { get; set; }
         public virtual DbSet<Customer_Vip> Customer_Vip { get; set; }
+        public virtual DbSet<Decentralization> Decentralizations { get; set; }
         public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Employee_Account> Employee_Account { get; set; }
         public virtual DbSet<Employee_Info> Employee_Info { get; set; }

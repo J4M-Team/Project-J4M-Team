@@ -11,15 +11,40 @@ namespace BookStore.ViewModel
     public class LoginViewModel : BaseViewModel
     {
         public ICommand LoginCommand { get; set; }
-       // public string txt
+        // public string txt
+        private string _UserName;
+        public string UserName
+        {
+            get { return _UserName; }
+            set
+            {
+                _UserName = value;
+                OnPropertyChanged(nameof(UserName));
+            }
+        }
+        
 
         public LoginViewModel()
         {
             LoginCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 p.Hide();
-                BookWindow wd = new BookWindow();
-                wd.ShowDialog();
+                if (UserName == "1")
+                {
+                    BookWindow wd = new BookWindow();
+                    wd.ShowDialog();
+                }
+                else if (UserName == "2")
+                {
+                    ManagementWindow wd = new ManagementWindow();
+                    wd.ShowDialog();
+                }
+                else
+                {
+                    BanHangMain wd = new BanHangMain();
+                    wd.ShowDialog();
+                }
+                
                 p.Show();
             }
                 );

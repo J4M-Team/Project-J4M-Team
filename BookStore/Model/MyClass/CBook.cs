@@ -59,6 +59,10 @@ namespace BookStore.Model.MyClass
 
         #region method
 
+        /// <summary>
+        /// Hàm trả về danh sách toàn bộ sách trong cơ sở dữ liệu
+        /// </summary>
+        /// <returns></returns>
         public List<CBook> Load()
         {
             var List = new List<CBook>();
@@ -208,6 +212,10 @@ namespace BookStore.Model.MyClass
             return List;
         }
 
+        /// <summary>
+        /// Hàm trả về danh sách thể loại của sách trong cơ sở dữ liệu
+        /// </summary>
+        /// <returns></returns>
         public List<string> ListType()
         {
             var List = new List<string>();
@@ -269,6 +277,342 @@ namespace BookStore.Model.MyClass
 
             }
 
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm giảm số lượng của sách trong kho
+        /// </summary>
+        /// <param name="Book_Id">mã sách cần giảm</param>
+        /// <param name="Quantity">số lượng giảm</param>
+        /// <returns></returns>
+        public bool DecreaseNumberOfBook(int Book_Id, int Quantity)
+        {
+            try
+            {
+                //Tìm kiếm sách
+                var data = DataProvider.Ins.DB.Books.Find(Book_Id);
+                if (data != null)
+                {
+                    //Lấy ra số lượng trong kho
+                    int oldQuantity = (int)data.Book_Count;
+
+                    //Kiểm tra nếu lớn hơn thì tiến hành trừ
+                    if (oldQuantity >= Quantity)
+                    {
+                        int newQuantity = oldQuantity - Quantity;
+                        //Cập nhật lại số lượng mới
+                        data.Book_Count = newQuantity;
+                        //lưu lại
+                        DataProvider.Ins.DB.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm thêm số lượng sách trong kho
+        /// </summary>
+        /// <param name="Book_Id">mã sách cần thêm</param>
+        /// <param name="Quantity">Số lượng sách cần thêm</param>
+        /// <returns></returns>
+        public bool IncreaseNumberOfBook(int Book_Id, int Quantity)
+        {
+            try
+            {
+                //Tìm kiếm sách
+                var data = DataProvider.Ins.DB.Books.Find(Book_Id);
+                if (data != null)
+                {
+                    //Lấy ra số lượng trong kho
+                    int oldQuantity = (int)data.Book_Count;
+
+                    //Thêm số lượng
+                    int newQuantity = oldQuantity + Quantity;
+
+                    //Cập nhật lại số lượng mới
+                    data.Book_Count = newQuantity;
+                    //lưu lại
+                    DataProvider.Ins.DB.SaveChanges();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm trả về danh sách giá nhập và giá bán của toàn bộ sách trong kho
+        /// </summary>
+        /// <returns></returns>
+        public List<CBook> ListPriceBook()
+        {
+            List<CBook> List = new List<CBook>();
+            try
+            {
+                //Lấy ra danh sách giá mới nhất ở bảng outputprice
+                var OutputPrice = from item in DataProvider.Ins.DB.Book_Output_Price
+                                  group item by item.Book_Id into Group
+                                  from item2 in Group
+                                  where item2.Date_Set == Group.Max(x => x.Date_Set)
+                                  select new { item2.Book_Id, item2.Date_Set, item2.Output_Price };
+
+                //Lấy ra danh sách giá mới nhất ở bảng inputprice
+                var InputPrice = from item in DataProvider.Ins.DB.Book_Input_Price
+                                 group item by item.Book_Id into Group
+                                 from item2 in Group
+                                 where item2.Date_Set == Group.Max(x => x.Date_Set)
+                                 select new { item2.Book_Id, item2.Date_Set, item2.Input_Price };
+
+                //join 3 bảng lại nếu như giá chưa được cài đặt thì trả về là 0
+                var data = from book in DataProvider.Ins.DB.Books
+                           join output in OutputPrice on book.Book_Id equals output.Book_Id into outputtable
+                           join input in InputPrice on book.Book_Id equals input.Book_Id into inputable
+                           from inp in inputable.DefaultIfEmpty()
+                           from outp in outputtable.DefaultIfEmpty()
+                           select new
+                           {
+                               book.Book_Id,
+                               book.Book_Name,
+                               book.Book_Author,
+                               book.Book_Count,
+                               input = inp == null ? 0 : inp.Input_Price,
+                               output = outp == null ? 0 : outp.Output_Price
+                           };
+
+
+                foreach (var item in data)
+                {
+
+                    CBook_Price price = new CBook_Price { OutputPrice = (float)item.output, InputPrice = (float)item.input };
+                    CBook Book = new CBook { Id = item.Book_Id, Name = item.Book_Name, Author = item.Book_Author, Count = (int)item.Book_Count, Price = price };
+                    List.Add(Book);
+                }
+                return List;
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm thay đổi giá nhập của sách 
+        /// </summary>
+        /// <param name="Book_Id">id sách</param>
+        /// <param name="NewPrice">giá mới</param>
+        /// <returns></returns>
+        public bool ChangeInputPrice(int Book_Id, float NewPrice)
+        {
+            try
+            {
+                if (NewPrice <= 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    //Tìm sách trong danh sách sách
+                    var data = DataProvider.Ins.DB.Books.Find(Book_Id);
+                    if (data != null)
+                    {
+                        //Kiểm tra xem giá có được cài đặt chưa nếu chưa thì thêm mới                       
+                        if (DataProvider.Ins.DB.Book_Input_Price.Where(x => x.Book_Id == Book_Id).Count() > 0)
+                        {
+                            //Kiểm tra xem giá có giống với giá tạo sau cùng hay không
+                            var lastPrice = DataProvider.Ins.DB.Book_Input_Price.Where(x => x.Book_Id == Book_Id && x.Date_Set == DataProvider.Ins.DB.Book_Input_Price.Where(y => y.Book_Id == Book_Id).Max(y => y.Date_Set)).First();
+                            if (lastPrice != null)
+                            {
+                                if (lastPrice.Input_Price == NewPrice)
+                                {
+                                    return false;
+                                }
+                                else
+                                {
+                                    //Thêm mới
+                                    goto addnew;
+                                }
+                            }
+                            else
+                            {
+                                goto addnew;
+                            }
+                        }
+                        else
+                        {
+                            goto addnew;
+                        }
+                                              
+#pragma warning disable CS0164 // This label has not been referenced
+                    addnew:
+#pragma warning restore CS0164 // This label has not been referenced
+                              //Tạo giá mới
+                        Book_Input_Price newPrice = new Book_Input_Price { Book_Id = Book_Id, Input_Price = NewPrice, Date_Set = DateTime.Now };
+                        //Thêm vào
+                        DataProvider.Ins.DB.Book_Input_Price.Add(newPrice);
+                        //Lưu lại
+                        DataProvider.Ins.DB.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm thay đổi giá bán của sách
+        /// </summary>
+        /// <param name="Book_Id">id sách</param>
+        /// <param name="NewPrice">giá mới</param>
+        /// <returns></returns>
+        public bool ChangeOutputPrice(int Book_Id, float NewPrice)
+        {
+            try
+            {
+                if (NewPrice <= 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    //Tìm sách trong cơ sở dữ liệu
+                    var find = DataProvider.Ins.DB.Books.Find(Book_Id);
+                    if (find != null)
+                    {
+                        //Kiểm tra xem giá có được cài đặt chưa nếu chưa thì thêm mới                       
+                        if (DataProvider.Ins.DB.Book_Output_Price.Where(x => x.Book_Id == Book_Id).Count() > 0)
+                        {
+                            //Kiểm tra xem giá có giống với giá tạo sau cùng hay không
+                            var lastPrice = DataProvider.Ins.DB.Book_Output_Price.Where(x => x.Book_Id == Book_Id && x.Date_Set == DataProvider.Ins.DB.Book_Output_Price.Where(y => y.Book_Id == Book_Id).Max(y => y.Date_Set)).First();
+                            if (lastPrice != null)
+                            {
+                                if (lastPrice.Output_Price == NewPrice)
+                                {
+                                    return false;
+                                }
+                                else
+                                {
+                                    //Thêm mới
+                                    goto addnew;
+                                }
+                            }
+                        }
+                        else
+                        {
+                            goto addnew;
+                        }
+                            
+#pragma warning disable CS0164 // This label has not been referenced
+                    addnew:
+#pragma warning restore CS0164 // This label has not been referenced
+                        //Tạo mới
+                        Book_Output_Price newPrice = new Book_Output_Price { Book_Id = Book_Id, Output_Price = NewPrice, Date_Set = DateTime.Now };
+                        //Thêm
+                        DataProvider.Ins.DB.Book_Output_Price.Add(newPrice);
+                        //Lưu
+                        DataProvider.Ins.DB.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm trả về List lịch sử thay đổi giá bán của sách
+        /// </summary>
+        /// <param name="Book_Id"></param>
+        /// <returns></returns>
+        public List<CBook>ListHistoryOutputPrice(int Book_Id)
+        {
+            List<CBook> List = new List<CBook>();
+            try
+            {
+                //Lấy ra danh sách
+                var data = DataProvider.Ins.DB.Book_Output_Price.Where(x => x.Book_Id == Book_Id);
+                if (data != null)
+                {
+                    foreach (var item in data)
+                    {
+                        CBook_Price price = new CBook_Price { OutputPrice = (float)item.Output_Price, Output_Date_Set = item.Date_Set };
+                        CBook Book = new CBook { Id = item.Book_Id,Price=price };
+                        List.Add(Book);
+                    }
+                }             
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
+        /// hàm trả về List lịch sử thay đổi giá nhập của sách
+        /// </summary>
+        /// <param name="Book_Id"></param>
+        /// <returns></returns>
+        public List<CBook> ListHistoryInputPrice(int Book_Id)
+        {
+            List<CBook> List = new List<CBook>();
+            try
+            {
+                //Lấy ra danh sách
+                var data = DataProvider.Ins.DB.Book_Input_Price.Where(x => x.Book_Id == Book_Id);
+                if (data != null)
+                {
+                    foreach (var item in data)
+                    {
+                        CBook_Price price = new CBook_Price { InputPrice = (float)item.Input_Price, Input_Date_Set = item.Date_Set };
+                        CBook Book = new CBook { Id = item.Book_Id, Price = price };
+                        List.Add(Book);
+                    }
+                }
+
+            }
+            catch
+            {
+
+            }
             return List;
         }
 

@@ -6,4 +6,10 @@
     <viewmodel:BookViewModel x:Key="BookVM"></viewmodel:BookViewModel>
     <viewmodel:EditBookPageVM x:Key="EditBookPageVM"></viewmodel:EditBookPageVM>
     <viewmodel:SearchPageVM x:Key="SearchPageVM"></viewmodel:SearchPageVM>
+    <viewmodel:BanHangMain2VM x:Key="BanHangMain2VM"></viewmodel:BanHangMain2VM>
+    <viewmodel:AccepBillPageVM x:Key="AccepBillPageVM"></viewmodel:AccepBillPageVM>
+    <viewmodel:ManagementWindowVM x:Key="ManagementWindowVM"></viewmodel:ManagementWindowVM>
+    <viewmodel:SettingPageVM x:Key="SettingPageVM"></viewmodel:SettingPageVM>
+    <viewmodel:SettingBookPageVM x:Key="SettingBookPageVM"></viewmodel:SettingBookPageVM>
+    <viewmodel:SettingEmployeePageVM x:Key="SettingEmployeePageVM"></viewmodel:SettingEmployeePageVM>
 </ResourceDictionary>

@@ -185,22 +185,25 @@ namespace BookStore.ViewModel
                 }
                 else
                 {
-                    CBook Book = new CBook
+                    if (SelectedItem != null)
                     {
-                        Id = SelectedItem.Id,
-                        Name = SelectedItem.Name,
-                        Author = SelectedItem.Author,
-                        Theme = SelectedItem.Theme,
-                        Type = SelectedItem.Type,
-                        Image = CoverImage
-                    };
-                    CBook.Ins.Update(Book);
+                        CBook Book = new CBook
+                        {
+                            Id = SelectedItem.Id,
+                            Name = SelectedItem.Name,
+                            Author = SelectedItem.Author,
+                            Theme = SelectedItem.Theme,
+                            Type = SelectedItem.Type,
+                            Image = CoverImage
+                        };
+                        CBook.Ins.Update(Book);
 
-                    //load lại dữ liệu
-                    ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
-                    ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
-                    ListType = new ObservableCollection<string>(CBook.Ins.ListType());
-                    // MessageBox.Show("chọn vào button");
+                        //load lại dữ liệu
+                        ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                        ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
+                        ListType = new ObservableCollection<string>(CBook.Ins.ListType());
+                        // MessageBox.Show("chọn vào button");
+                    }
                 }
 
             }

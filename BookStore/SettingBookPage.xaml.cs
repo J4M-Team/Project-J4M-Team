@@ -10,20 +10,19 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace BookStore
 {
     /// <summary>
-    /// Interaction logic for BookWindow.xaml
+    /// Interaction logic for SettingBookPage.xaml
     /// </summary>
-    public partial class BookWindow : Window
+    public partial class SettingBookPage : Page
     {
-        public BookWindow()
+        public SettingBookPage()
         {
             InitializeComponent();
         }
-
-        
     }
 }

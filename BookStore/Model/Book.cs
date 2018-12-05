@@ -17,6 +17,7 @@ namespace BookStore.Model
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Book()
         {
+            this.Bill_Info = new HashSet<Bill_Info>();
             this.Book_Input = new HashSet<Book_Input>();
             this.Book_Input_Price = new HashSet<Book_Input_Price>();
             this.Book_Output_Price = new HashSet<Book_Output_Price>();
@@ -32,6 +33,8 @@ namespace BookStore.Model
         public byte[] Book_Image { get; set; }
         public Nullable<int> Book_Count { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Bill_Info> Bill_Info { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book_Input> Book_Input { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
