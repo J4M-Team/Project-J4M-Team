@@ -101,6 +101,9 @@
     <Compile Include="AccountPage.xaml.cs">
       <DependentUpon>AccountPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddBookBillInformation.xaml.cs">
+      <DependentUpon>AddBookBillInformation.xaml</DependentUpon>
+    </Compile>
     <Compile Include="BanHangMain.xaml.cs">
       <DependentUpon>BanHangMain.xaml</DependentUpon>
     </Compile>
@@ -242,6 +245,7 @@
     <Compile Include="ViewModel\BookViewModel.cs" />
     <Compile Include="ViewModel\DeleteBillVMcs.cs" />
     <Compile Include="ViewModel\EditBookPageVM.cs" />
+    <Compile Include="ViewModel\InHoaDonVM.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
     <Compile Include="ViewModel\ManagementWindowVM.cs" />
     <Compile Include="ViewModel\SearchPageVM.cs" />
@@ -253,6 +257,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AccountPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddBookBillInformation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

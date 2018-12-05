@@ -12,4 +12,5 @@
     <viewmodel:SettingPageVM x:Key="SettingPageVM"></viewmodel:SettingPageVM>
     <viewmodel:SettingBookPageVM x:Key="SettingBookPageVM"></viewmodel:SettingBookPageVM>
     <viewmodel:SettingEmployeePageVM x:Key="SettingEmployeePageVM"></viewmodel:SettingEmployeePageVM>
+    <viewmodel:InHoaDonVM x:Key="InHoaDonVM"></viewmodel:InHoaDonVM>
 </ResourceDictionary>

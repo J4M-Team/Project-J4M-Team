@@ -14,39 +14,82 @@
       Background="White"
       FontFamily="{DynamicResource MaterialDesignFont}"
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="InHoaDonPage">
+      Title="InHoaDonPage"
+      DataContext ="{StaticResource InHoaDonVM}">
 
     <Grid>
-        <Label Content="HOÁ ĐƠN" HorizontalAlignment="Center" FontSize="18" Foreground="Gray"/>
-        <Grid HorizontalAlignment="Left" Width="400" VerticalAlignment="Top" Height="350">
-            <StackPanel  Margin="40">
-                <Label Content="THÔNG TIN KHÁC HÀNG" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="13" />
-                <TextBox
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="50"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <Label Content="HOÁ ĐƠN" HorizontalAlignment="Center" FontSize="18" Foreground="Gray"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition>
+
+                </ColumnDefinition>
+                <ColumnDefinition>
+
+                </ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid>
+                    <StackPanel>
+                        <Label Content="THÔNG TIN KHÁC HÀNG" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="13" />
+                        <TextBox
                     Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
+                    IsReadOnly="True"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Center"
                     AcceptsReturn="True"
                     TextWrapping="Wrap"
                     Width="200"
-                    Margin="20,10"
+                    Margin="5,5"
                     materialDesign:HintAssist.Hint="Tên khách hàng"
              />
 
-                <TextBox
+                        <TextBox
                     Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Center"
                     AcceptsReturn="True"
                     TextWrapping="Wrap"
                     Width="200"
-                    Margin="20,10"
+                    Margin="5,5"
                     materialDesign:HintAssist.Hint="Số điện thoại"/>
-            </StackPanel>
-        </Grid>
-        <Grid HorizontalAlignment="Right" Width="400"  VerticalAlignment="Top" Height="350">
-            <StackPanel  Margin="40">
-                <Label Content="THÔNG TIN SÁCH" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="13" />
-                <TextBox
+                        <TextBox
+                    Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    AcceptsReturn="True"
+                    TextWrapping="Wrap"
+                    Width="200"
+                    Margin="5,5"
+                    materialDesign:HintAssist.Hint="Địa chỉ"
+             />
+                        <TextBox
+                    Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
+                    VerticalAlignment="Top"
+                    HorizontalAlignment="Center"
+                    AcceptsReturn="True"
+                    TextWrapping="Wrap"
+                    Width="200"
+                    Margin="5,5"
+                    materialDesign:HintAssist.Hint="Email"
+             />
+                    </StackPanel>
+                </Grid>
+
+            </Grid>
+            <Grid Grid.Column="1">
+                <!--<Grid>
+                    <StackPanel  Margin="40">
+                        <Label Content="THÔNG TIN SÁCH" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="13" />
+                        <TextBox
                     Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Center"
@@ -57,7 +100,7 @@
                     materialDesign:HintAssist.Hint="Tên sách"
              />
 
-                <TextBox
+                        <TextBox
                     Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Center"
@@ -66,7 +109,7 @@
                     Width="200"
                     Margin="20,10"
                     materialDesign:HintAssist.Hint="Số lượng sách"/>
-                <TextBox
+                        <TextBox
                     Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Center"
@@ -75,11 +118,82 @@
                     Width="200"
                     Margin="20,10"
                     materialDesign:HintAssist.Hint="Giá/Sản phẩm"/>
-            </StackPanel>
+                    </StackPanel>
+                </Grid>-->
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition  Height="*"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="50"></RowDefinition>
+                     </Grid.RowDefinitions>
+                    <Grid Grid.Row="0">
+                        <Label Content="THÔNG TIN HOÁ ĐƠN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="13" />
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <ListView ItemsSource="{Binding ListBill}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" Name="ListBill" IsSynchronizedWithCurrentItem="True">
+                            <ListView.ItemContainerStyle>
+                                <Style TargetType="{x:Type ListViewItem}">
+                                    <Style.Triggers>
+                                        <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                            <Setter Property="IsSelected" Value="True"/>
+                                        </Trigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </ListView.ItemContainerStyle>
+                            <ListView.View>
+                                <GridView>
+                                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Id}"
+                        Header="Mã Sách" />
+                                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Customer.Name}"
+                        Header="Tên Sách" />
+                                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Customer.Name}"
+                        Header="Giá" />
+                                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Customer.Name}"
+                        Header="Số lượng" />
+                                    <GridViewColumn
+                        DisplayMemberBinding="{Binding Customer.Name}"
+                        Header="Thành tiền" />
+                                    <GridViewColumn>
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <Button Content="XOÁ" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Margin="30,0,0,0"
+                                                    Command="{Binding Path=DataContext.AccepCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}} }"
+                                                    CommandParameter="{Binding}"></Button>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+
+
+                                </GridView>
+                            </ListView.View>
+                        </ListView>
+                    </Grid>
+                    <Grid Grid.Row="2">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock FontSize="18" Foreground="Gray" Text="Tổng tiền:"></TextBlock>
+                            <TextBlock  FontSize="18" Foreground="Gray" Text="{Binding}"></TextBlock>
+                        </StackPanel>
+
+                    </Grid>
+                    <Grid Grid.Row="3">
+                        <Button   Command="{Binding AddBookCommand}"  Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"  Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Content="THÊM SÁCH" Margin="0,0,0,0" BorderThickness="7"></Button>
+
+                    </Grid>
+                    
+                </Grid>
+                <!-- List anh sach san pham-->
+            </Grid>
         </Grid>
-        <Grid VerticalAlignment="Bottom" Height="100" Width="800" Margin="0,0,0,0">
-            <Button  Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Content="THANH TOÁN" Margin="0,0,0,0" BorderThickness="7"/>
-            
+        <Grid Grid.Row="2">
+            <Button     Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Content="THANH TOÁN" Margin="0,0,0,0" BorderThickness="7"
+                       />
+
         </Grid>
     </Grid>
 </Page>

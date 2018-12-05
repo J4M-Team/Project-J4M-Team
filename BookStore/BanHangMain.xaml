@@ -76,12 +76,7 @@
                             </i:Interaction.Triggers>-->
                         </StackPanel>
                     </ListViewItem>
-                    <ListViewItem Padding="1">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="MessageBulleted" Margin="15"/>
-                            <TextBlock Text="Thông báo" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </ListViewItem>
+                  
                     <ListViewItem Padding="1">
                         <StackPanel Orientation="Horizontal">
                             <materialDesign:PackIcon Kind="ExitToApp" Margin="15"/>
