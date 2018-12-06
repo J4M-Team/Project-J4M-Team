@@ -616,6 +616,42 @@ namespace BookStore.Model.MyClass
             return List;
         }
 
+        /// <summary>
+        /// Hàm kiếm tra xem sách đã tồn tại trong cơ sở dữ liệu chưa, kiểm tra theo tên sách và tên tác giả
+        /// </summary>
+        /// <param name="Book"></param>
+        /// <returns></returns>
+        public bool isExist(CBook Book)
+        {
+
+            try
+            {
+                if (!string.IsNullOrEmpty(Book.Name) && !string.IsNullOrEmpty(Book.Author))
+                {
+                    //Tìm theo tên và tác giả
+                    var find = DataProvider.Ins.DB.Books.Where(x => x.Book_Name.ToLower() == Book.Name.ToLower() && x.Book_Author.ToLower() == Book.Author.ToLower());
+
+                    if (find.Count() > 0)
+                    {
+                        //Đã tồn tại
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }          
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
         #endregion
     }
 }
