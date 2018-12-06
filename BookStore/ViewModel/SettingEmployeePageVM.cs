@@ -71,6 +71,7 @@ namespace BookStore.ViewModel
             }
         }
 
+        //Quyên hạn của loại nhân viên mới
         private string _ComboBoxSelectedItem;
         public string ComboBoxSelectedItem
         {
@@ -111,6 +112,18 @@ namespace BookStore.ViewModel
             }
         }
 
+        //Thuộc tính isreadOnly của cột hiển thị loại nhân viên
+        private bool _NameReadOnly;
+        public bool NameReadOnly
+        {
+            get { return _NameReadOnly; }
+            set
+            {
+                _NameReadOnly = value;
+                OnPropertyChanged(nameof(NameReadOnly));
+            }
+        }
+
         //Thuộc tính ẩn của cột button
         private Visibility _EditColumnVisibility;
         public Visibility EditColumnVisibility
@@ -122,6 +135,31 @@ namespace BookStore.ViewModel
                 OnPropertyChanged(nameof(EditColumnVisibility));
             }
         }
+
+        //Thuộc tính ẩn cột quyền hạn mới (combobox)
+        private Visibility _ComboboxColumnVisibility;
+        public Visibility ComboboxColumnVisibility
+        {
+            get { return _ComboboxColumnVisibility; }
+            set
+            {
+                _ComboboxColumnVisibility = value;
+                OnPropertyChanged(nameof(ComboboxColumnVisibility));
+            }
+        }
+
+        //Thuộc tính ẩn cột quyền hạn cũ (textbox)
+        private Visibility _TextBlockColumnVisibility;
+        public Visibility TextBlockColumnVisibility
+        {
+            get { return _TextBlockColumnVisibility; }
+            set
+            {
+                _TextBlockColumnVisibility = value;
+                OnPropertyChanged(nameof(TextBlockColumnVisibility));
+            }
+        }
+
 
         #endregion
 
@@ -135,12 +173,24 @@ namespace BookStore.ViewModel
 
         #endregion
 
+        #region method
+
         public SettingEmployeePageVM()
         {
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                //Không cho chỉnh sửa
+                SalaryReadOnly = true;
+                NameReadOnly = true;
+
                 //Ẩn cột chỉnh sửa
                 EditColumnVisibility = Visibility.Hidden;
+
+                //Ẩn cột Combobox trong datagrid
+                ComboboxColumnVisibility = Visibility.Hidden;
+
+                //Hiện cột text
+                TextBlockColumnVisibility = Visibility.Visible;
 
                 //Ẩn chỉnh sửa
                 IsChecked = false;
@@ -150,6 +200,8 @@ namespace BookStore.ViewModel
 
                 //Thêm data vào combobox
                 ListDecentralization = new ObservableCollection<string>(CRole.Ins.ListDecentralization());
+
+                
             }
                );
 
@@ -158,13 +210,27 @@ namespace BookStore.ViewModel
                 
                 if (IsChecked == true)
                 {
+                    //Hiện cột button
                     EditColumnVisibility = Visibility.Visible;
+
+                    //Hiện cột combobox
+                    ComboboxColumnVisibility = Visibility.Visible;
+
+                    //ẩn cột text
+                    TextBlockColumnVisibility = Visibility.Hidden;
+
                     SalaryReadOnly = false;
+
+                    NameReadOnly = false;
                 }
                 else
                 {
-                    EditColumnVisibility = Visibility.Hidden;                   
+                    //Ẩn cột button và cột combobox, hiện cột text
+                    EditColumnVisibility = Visibility.Hidden;
+                    ComboboxColumnVisibility = Visibility.Hidden;
+                    TextBlockColumnVisibility = Visibility.Visible;
                     SalaryReadOnly = true;
+                    NameReadOnly = true;
                 }
                               
             }
@@ -174,8 +240,7 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItem != null)
                 {
-                    CRole.Ins.ChangeSalary(SelectedItem);
-                    
+                    CRole.Ins.UpdateRole(SelectedItem);              
                 }          
             }
                );
@@ -211,5 +276,7 @@ namespace BookStore.ViewModel
             }
                );
         }
+
+        #endregion
     }
 }

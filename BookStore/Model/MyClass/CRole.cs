@@ -93,35 +93,47 @@ namespace BookStore.Model.MyClass
         }
        
         /// <summary>
-        /// Hàm cập nhật lương mới cho nhân viên
+        /// Hàm cập nhật loại nhân viên
         /// </summary>
         /// <param name="Role"></param>
         /// <returns></returns>
-        public bool ChangeSalary(CRole Role)
+        public bool UpdateRole(CRole Role)
         {
             try
             {
-                if (Role.Salary > 0)
+                if (Role.Salary > 0 && !string.IsNullOrEmpty(Role.Name) && !string.IsNullOrEmpty(Role.Decentralization))
                 {
                     //Tìm đối tượng cần update theo khóa chính
                     var find = DataProvider.Ins.DB.Employee_Role.Find(Role.Id);
                     if (find != null)
                     {
+                        //Tìm id tương ứng của quyền hạn nhân viên trong bảng Decentralization
+                        var findId = DataProvider.Ins.DB.Decentralizations.Where(x => x.Describe.ToLower() == Role.Decentralization.ToLower()).Select(x => x.Decentralization_Id).FirstOrDefault();
+                        
                         //Kiểm tra nếu lương mới bằng lương cũ thì không cập nhật
                         if (find.Role_Salary != Role.Salary)
                         {
                             //Cập nhật giá mới
-                            find.Role_Salary = Role.Salary;
-
-                            //Lưu lại thay đổi
-                            DataProvider.Ins.DB.SaveChanges();
-
-                            return true;
+                            find.Role_Salary = Role.Salary;                                                
                         }
-                        else
+
+                        //Kiểm tra nếu tên mới bằng tên cũ thì không cập nhật
+                        if (find.Role_Name.ToLower() != Role.Name.ToLower())
                         {
-                            return false;
+                            find.Role_Name = Role.Name;
                         }
+
+                        if (findId != 0)
+                        {
+                            //Kiểm tra nếu id_Decentralization bằng id cũ thì không cập nhật
+                            if (find.Decentralization != findId)
+                            {
+                                find.Decentralization = findId;
+                            }
+                        }
+
+                        //Lưu thay đổi
+                        DataProvider.Ins.DB.SaveChanges();                                                
                     }
                     else
                     {

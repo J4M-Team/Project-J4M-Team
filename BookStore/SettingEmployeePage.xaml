@@ -75,7 +75,9 @@
                             <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding Name}"
                             Header="Loại nhân viên"
-                            IsReadOnly="True" Width="150" MinWidth="150">
+                            IsReadOnly="{Binding Data.NameReadOnly,Source={StaticResource proxy}}"
+                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
+                            Width="150" MinWidth="150">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
@@ -83,15 +85,26 @@
                                 </DataGridTextColumn.ElementStyle>
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Decentralization}"
-                            Header="Quyền hạn"                           
-                            IsReadOnly="True" Width="149" MinWidth="149">
+                                Binding="{Binding Decentralization}"
+                                Header="Quyền hạn" 
+                                Visibility="{Binding Data.TextBlockColumnVisibility,Source={StaticResource proxy}}"
+                                IsReadOnly="True" Width="149" MinWidth="149">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
                                     </Style>
                                 </DataGridTextColumn.ElementStyle>
                             </materialDesign:MaterialDataGridTextColumn>
+
+                            <materialDesign:MaterialDataGridComboBoxColumn
+                                MinWidth="149"
+                                Header="Quyền hạn"
+                                Visibility="{Binding Data.ComboboxColumnVisibility,Source={StaticResource proxy}}"
+                                SelectedItemBinding="{Binding Decentralization,UpdateSourceTrigger=PropertyChanged}"                             
+                                ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.ListDecentralization}">
+                                
+                            </materialDesign:MaterialDataGridComboBoxColumn>
+                            
                             <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding Count}"
                             IsReadOnly="True"
