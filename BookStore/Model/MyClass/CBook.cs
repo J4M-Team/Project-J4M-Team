@@ -46,7 +46,7 @@ namespace BookStore.Model.MyClass
 
         #region public properties
 
-        public int Id { get { return _Id; } set { _Id = value; } }
+        public int Id { get { return _Id; } set { _Id = value;OnPropertyChanged(nameof(Id)); } }
         public string Name { get { return _Name; } set { _Name = value;OnPropertyChanged(nameof(Name)); } }
         public string Author { get { return _Author; } set { _Author = value;OnPropertyChanged(nameof(Author)); } }
         public string Theme { get { return _Theme; } set { _Theme = value; } }
@@ -658,6 +658,29 @@ namespace BookStore.Model.MyClass
 
             }
             return 0;
+        }
+
+        /// <summary>
+        /// Hàm trả về số lượng sách có trong kho của sách theo id
+        /// </summary>
+        /// <param name="Book_Id"></param>
+        /// <returns></returns>
+        public int InventoryNumber(int Book_Id)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Books.Find(Book_Id);
+                if (find != null)
+                {
+                    return (int)find.Book_Count;
+                }
+            }
+            catch
+            {
+
+            }
+            //Trả về -1 nếu không còn sách tồn trong kho
+            return -1;
         }
         #endregion
     }

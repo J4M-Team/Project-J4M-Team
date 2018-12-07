@@ -110,6 +110,7 @@ namespace BookStore.ViewModel
         public ICommand loadCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand SelectionChangedCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
 
         #endregion
 
@@ -125,6 +126,20 @@ namespace BookStore.ViewModel
             }
                );
 
+            DeleteCommand = new RelayCommand<object>((p) => {
+                if (SelectedItem == null)
+                {
+                    return false;
+                }
+                return true;
+            }, 
+            (p) =>
+            {
+                //Xóa theo index
+                ListBook.RemoveAt(SelectedIndex);
+            }
+               );
+
             SelectionChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 if (SelectedItem != null)
@@ -136,21 +151,72 @@ namespace BookStore.ViewModel
             }
                );
 
+            AddCommand = new RelayCommand<object>((p) => {
+                //Kiểm tra danh sách đã có dữ liệu
+                if (ListBook.Count() == 0)
+                {
+                    return false;
+                }
+                return true;
+            },
+            (p) =>
+            {
+                //Duyệt từng phần tử trong list và thêm vào số lượng
+                foreach(var item in ListBook)
+                {
+                    CBook.Ins.IncreaseNumberOfBook(item.Id, item.Count);
+                }
+            }
+               );
+
             EditCommand = new RelayCommand<object>((p) => 
             {
                 if (SelectedItem == null)
                 {
                     return false;
                 }
+                //Kiểm tra chưa nhập đủ thông tin
+                if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Author) || string.IsNullOrEmpty(Count))
+                {
+                    return false;
+                }
+
+                //Kiểm tra thông tin nhập vào ở cột số lượng, lượng nhập tối thiểu, tồn kho tối thiểu không phải là số
+                int ICount;
+                int IMinCount;
+                int IMinExist;
+
+                if (int.TryParse(Count, out ICount) == false || int.TryParse(MinCount, out IMinCount) == false || int.TryParse(MinExist, out IMinExist) == false)
+                {
+                    return false;
+                }
+
+                //Tạo sách mới 
+                CBook Book = new CBook { Name = Name, Author = Author, Count = ICount };
+
+                //Kiểm tra sách có tồn tại trong kho hay chưa
+                int Book_Id = CBook.Ins.isExist(Book);
+                if (Book_Id == 0)
+                {
+                    return false;
+                }
+
+                //Kiểm tra thỏa mãn điều kiện lượng nhập tối thiểu, lượng tồn tối thiểu
+
+               
                 return true;
             }, 
             (p) =>
             {
                 if (SelectedItem != null)
                 {
-                    System.Windows.MessageBox.Show($"{SelectedItem.Name} {SelectedItem.Author} {SelectedIndex} fsfsf {ListBook[SelectedIndex].Name}");
+                    CBook Book = new CBook { Name = Name, Author = Author };
+                    //Sửa lại id sách
+                    ListBook[SelectedIndex].Id = CBook.Ins.isExist(Book);
 
                     ListBook[SelectedIndex].Name = Name;
+                    ListBook[SelectedIndex].Author = Author;
+                    ListBook[SelectedIndex].Count = int.Parse(Count);                   
                 }
             }
                );
@@ -183,7 +249,17 @@ namespace BookStore.ViewModel
                     return false;
                 }
 
-                //Kiểm tra thỏa mãn điều kiện lượng nhập tối thiểu, lượng tồn tối thiểu
+                //Kiểm tra thỏa mãn điều kiện lượng nhập tối thiểu
+                if (ICount < IMinCount)
+                {
+                    return false;
+                }
+
+                //Kiểm tra thỏa mãn điều kiện lượng tồn tối thiểu
+                if (CBook.Ins.InventoryNumber(Book_Id) > IMinExist)
+                {
+                    return false;
+                }
 
                 //Kiểm tra xem có tồn tại trong List đã nhập bên dưới chưa
                 if (ListBook.Count > 0)

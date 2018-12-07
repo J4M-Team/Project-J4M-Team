@@ -68,7 +68,7 @@
                             <StackPanel HorizontalAlignment="Center" Orientation="Horizontal">
                                 <Button Content="Thêm" Width="100" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Margin="0,15,10,0" Command="{Binding AddListCommand}"></Button>
                                 <Button Content="Chỉnh sửa" Width="100" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Margin="10,15,10,0" Command="{Binding EditCommand}"></Button>
-                                <Button Content="Xóa" Width="100" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Margin="10,15,0,0" Command="{Binding }"></Button>
+                                <Button Content="Xóa" Width="100" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Margin="10,15,0,0" Command="{Binding DeleteCommand}"></Button>
                             </StackPanel>
                             
                         </StackPanel>
