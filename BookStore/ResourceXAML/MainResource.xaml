@@ -14,4 +14,5 @@
     <viewmodel:SettingEmployeePageVM x:Key="SettingEmployeePageVM"></viewmodel:SettingEmployeePageVM>
     <viewmodel:InHoaDonVM x:Key="InHoaDonVM"></viewmodel:InHoaDonVM>
     <viewmodel:AddNewBookWindowVM x:Key="AddNewBookWindowVM"></viewmodel:AddNewBookWindowVM>
+    <viewmodel:IncreaseBookWindowVM x:Key="IncreaseBookWindowVM"></viewmodel:IncreaseBookWindowVM>
 </ResourceDictionary>

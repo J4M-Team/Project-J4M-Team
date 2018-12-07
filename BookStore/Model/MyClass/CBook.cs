@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookStore.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace BookStore.Model.MyClass
 {
-    public class CBook
+    public class CBook:BaseViewModel
     {
         #region design pattern singleton
 
@@ -46,12 +47,12 @@ namespace BookStore.Model.MyClass
         #region public properties
 
         public int Id { get { return _Id; } set { _Id = value; } }
-        public string Name { get { return _Name; } set { _Name = value; } }
-        public string Author { get { return _Author; } set { _Author = value; } }
+        public string Name { get { return _Name; } set { _Name = value;OnPropertyChanged(nameof(Name)); } }
+        public string Author { get { return _Author; } set { _Author = value;OnPropertyChanged(nameof(Author)); } }
         public string Theme { get { return _Theme; } set { _Theme = value; } }
         public string Type { get { return _Type; } set { _Type = value; } }
         public string Content { get { return _Content; } set { _Content = value; } }
-        public int Count { get { return _Count; } set { _Count = value; } }
+        public int Count { get { return _Count; } set { _Count = value; OnPropertyChanged(nameof(Count)); } }
         public CBook_Price Price { get { return _Price; } set { _Price = value; } }
         public BitmapImage Image { get { return _Image; } set { _Image = value; } }
 
@@ -146,6 +147,12 @@ namespace BookStore.Model.MyClass
                
                 DataProvider.Ins.DB.Books.Add(Book);
                 DataProvider.Ins.DB.SaveChanges();
+
+                //Tìm id sách vừa mới được tạo theo tên
+                var Book_Id = DataProvider.Ins.DB.Books.Where(x => x.Book_Name.ToLower() == BookData.Name.ToLower()).Select(x => x.Book_Id).First();
+                //Thêm giá nhập sách
+                this.ChangeInputPrice(Book_Id, BookData.Price.InputPrice);
+
                 return true;
             }
             catch
@@ -620,8 +627,8 @@ namespace BookStore.Model.MyClass
         /// Hàm kiếm tra xem sách đã tồn tại trong cơ sở dữ liệu chưa, kiểm tra theo tên sách và tên tác giả
         /// </summary>
         /// <param name="Book"></param>
-        /// <returns></returns>
-        public bool isExist(CBook Book)
+        /// <returns>trả về Id sách</returns>
+        public int isExist(CBook Book)
         {
 
             try
@@ -634,23 +641,23 @@ namespace BookStore.Model.MyClass
                     if (find.Count() > 0)
                     {
                         //Đã tồn tại
-                        return true;
+                        return find.Select(x => x.Book_Id).First();
                     }
                     else
                     {
-                        return false;
+                        return 0;
                     }
                 }
                 else
                 {
-                    return false;
+                    return 0;
                 }          
             }
             catch
             {
 
             }
-            return false;
+            return 0;
         }
         #endregion
     }

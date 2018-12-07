@@ -193,7 +193,11 @@ namespace BookStore.ViewModel
 
             IncreaseBookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                MessageBox.Show("fsvvf");
+                IncreaseBookWindow wd = new IncreaseBookWindow();
+                wd.ShowDialog();
+
+                //load lại bảng sau khi đã thêm
+                ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
             }
                );
 

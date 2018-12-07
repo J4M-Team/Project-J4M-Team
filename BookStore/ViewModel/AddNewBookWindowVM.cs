@@ -152,7 +152,7 @@ namespace BookStore.ViewModel
                     };
 
                     //Kiểm tra sách đã tồn tại trong kho chưa
-                    if (CBook.Ins.isExist(Book) == true)
+                    if (CBook.Ins.isExist(Book) != 0)
                     {
                         return false;
                     }
