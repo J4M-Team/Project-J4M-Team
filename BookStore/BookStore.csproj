@@ -104,6 +104,9 @@
     <Compile Include="AddBookBillInformation.xaml.cs">
       <DependentUpon>AddBookBillInformation.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddEmployee.xaml.cs">
+      <DependentUpon>AddEmployee.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddNewBookWindow.xaml.cs">
       <DependentUpon>AddNewBookWindow.xaml</DependentUpon>
     </Compile>
@@ -131,6 +134,12 @@
     </Compile>
     <Compile Include="BookPage.xaml.cs">
       <DependentUpon>BookPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ManagementEmployee.xaml.cs">
+      <DependentUpon>ManagementEmployee.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ManagementEmployeePage.xaml.cs">
+      <DependentUpon>ManagementEmployeePage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ManagementWindow.xaml.cs">
       <DependentUpon>ManagementWindow.xaml</DependentUpon>
@@ -245,6 +254,7 @@
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AccepBillPageVM.cs" />
+    <Compile Include="ViewModel\AddEmployeeVM.cs" />
     <Compile Include="ViewModel\AddNewBookWindowVM.cs" />
     <Compile Include="ViewModel\BanHangMain2VM.cs" />
     <Compile Include="ViewModel\BanHangMainVM.cs" />
@@ -255,6 +265,8 @@
     <Compile Include="ViewModel\IncreaseBookWindowVM.cs" />
     <Compile Include="ViewModel\InHoaDonVM.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\ManagementEmployeePageVM.cs" />
+    <Compile Include="ViewModel\ManagementEmployeeVM.cs" />
     <Compile Include="ViewModel\ManagementWindowVM.cs" />
     <Compile Include="ViewModel\SearchPageVM.cs" />
     <Compile Include="ViewModel\SettingBookPageVM.cs" />
@@ -269,6 +281,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddBookBillInformation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -317,6 +333,14 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="BookPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ManagementEmployee.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ManagementEmployeePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

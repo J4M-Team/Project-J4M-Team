@@ -34,11 +34,11 @@
                 <ListView FontSize="15">
                     <ListViewItem Padding="1">
                         <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Book" Margin="15"/>
-                            <TextBlock Text="Sách" VerticalAlignment="Center"/>
+                            <materialDesign:PackIcon Kind="HumanMaleFemale" Margin="15"/>
+                            <TextBlock Text="Nhân viên" VerticalAlignment="Center"/>
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding BookCommand}"/>
+                                    <i:InvokeCommandAction Command="{Binding EmployeeCommand}"/>
                                 </i:EventTrigger>
                             </i:Interaction.Triggers>
                         </StackPanel>

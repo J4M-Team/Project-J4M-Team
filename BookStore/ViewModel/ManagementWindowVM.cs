@@ -30,12 +30,13 @@ namespace BookStore.ViewModel
             }
         }
 
-        
+
 
         #endregion
 
         #region command binding
 
+        public ICommand EmployeeCommand { get; set; }
         public ICommand SettingCommand { get; set; }
 
         #endregion
@@ -43,6 +44,10 @@ namespace BookStore.ViewModel
 
         public ManagementWindowVM()
         {
+            EmployeeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                FramePage = new ManagementEmployee();
+            });
             SettingCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 FramePage = new SettingPage();

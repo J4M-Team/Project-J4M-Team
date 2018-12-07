@@ -15,4 +15,8 @@
     <viewmodel:InHoaDonVM x:Key="InHoaDonVM"></viewmodel:InHoaDonVM>
     <viewmodel:AddNewBookWindowVM x:Key="AddNewBookWindowVM"></viewmodel:AddNewBookWindowVM>
     <viewmodel:IncreaseBookWindowVM x:Key="IncreaseBookWindowVM"></viewmodel:IncreaseBookWindowVM>
+    
+    <viewmodel:ManagementEmployeePageVM x:Key="ManagementEmployeePageVM"></viewmodel:ManagementEmployeePageVM>
+    <viewmodel:ManagementEmployeeVM x:Key="ManagementEmployeeVM"></viewmodel:ManagementEmployeeVM>
+    <viewmodel:AddEmployeeVM x:Key="AddEmployeeVM"></viewmodel:AddEmployeeVM>
 </ResourceDictionary>
