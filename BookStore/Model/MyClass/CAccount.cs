@@ -40,5 +40,32 @@ namespace BookStore.Model.MyClass
         public string Password { get { return _Password; } set { _Password = value; } }
 
         #endregion
+
+        #region method
+
+        /// <summary>
+        /// Hàm trả về Id của nhân viên tương ứng với Account nếu như tồn tại trong csdl
+        /// </summary>
+        /// <param name="Account"></param>
+        /// <returns></returns>
+        public int IsAccount(CAccount Account)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Employee_Account.Where(x => x.Account_User == Account.User && x.Account_Password == Account.Password).FirstOrDefault();
+
+                if (find != null)
+                {
+                    return find.Employee_Id;
+                }
+            }
+            catch
+            {
+
+            }
+            return 0;
+        }
+
+        #endregion
     }
 }

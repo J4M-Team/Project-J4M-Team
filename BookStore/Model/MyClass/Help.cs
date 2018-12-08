@@ -9,7 +9,7 @@ using System.Windows.Media.Imaging;
 namespace BookStore.Model.MyClass
 {
     static class Help
-    {
+    {     
         static public Byte[] ImageToByte(BitmapImage imageSource)
         {
             byte[] data;

@@ -202,6 +202,41 @@ namespace BookStore.Model.MyClass
             return false;
         }
 
+        //Hàm trả về thông tin của nhân viên tương ứng với id của nhân viên đó
+        public CEmployee EmployeeInfo(int EmployeeId)
+        {
+            CEmployee Employee = new CEmployee();
+
+            try
+            {
+                //Kiểm tra nhân viên có tồn tại trong csdl không
+                var find = DataProvider.Ins.DB.Employees.Find(EmployeeId);
+                if (find != null)
+                {
+                    Employee = new CEmployee
+                    {
+                        Name = find.Employee_Name,
+                        Id = find.Employee_Id,
+                        Identity = find.Employee_Identity,
+                        Role = new CRole { Name = find.Employee_Role.Role_Name, Id = find.Employee_Role.Role_Id },
+                        BirthDay = (DateTime)find.Employee_BirthDay,
+                        Address = find.Employee_Address,
+                        Email = find.Employee_Email,
+                        Phone = find.Employee_Phone
+                    };
+                }
+                else
+                {
+                    //do something
+                }
+            }
+            catch
+            {
+
+            }
+            return Employee;
+        }
+
         #endregion
 
 

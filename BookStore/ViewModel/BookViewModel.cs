@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookStore.Model.MyClass;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,7 +11,22 @@ namespace BookStore.ViewModel
 {
     public class BookViewModel : BaseViewModel
     {
-       //Biến lưu framepage
+        #region data binding
+
+        //Lưu tên của nhân viên
+        private string _EmployeeName;
+        public string EmployeeName
+        {
+            get { return _EmployeeName; }
+            set
+            {
+                _EmployeeName = value;
+                OnPropertyChanged(nameof(EmployeeName));
+            }
+        }
+
+        #endregion
+        //Biến lưu framepage
         private Page _FramePage;
         public Page FramePage
         {
@@ -32,12 +48,22 @@ namespace BookStore.ViewModel
         public ICommand EditBookCommand { get; set; }//Hiển thị màn hình thêm sách
         public ICommand SearchBookCommand { get; set; }//Hiển thị màn hình tìm kiếm sách
         public ICommand AccepBillCommand { get; set; }//Hiển thị màn hình duyệt hóa đơn
+        public ICommand loadCommand { get; set; }
 
         public BookViewModel()
         {
             BookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 FramePage = new BookPage();
+            }
+               );
+
+            loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (DataTransfer.Employee_Id > 0)
+                {
+                    EmployeeName = CEmployee.Ins.EmployeeInfo(DataTransfer.Employee_Id).Name;
+                }         
             }
                );
 
