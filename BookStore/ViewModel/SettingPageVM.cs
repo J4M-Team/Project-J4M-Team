@@ -46,8 +46,9 @@ namespace BookStore.ViewModel
         #region command binding
 
         public ICommand PriceCommand { set; get; }
-        public ICommand Price2Command { set; get; }
+        public ICommand EmployeeCommand { set; get; }
         public ICommand loadCommand { get; set; }
+        public ICommand PromotionCommand { get; set; }
 
         #endregion
 
@@ -64,11 +65,20 @@ namespace BookStore.ViewModel
                      
             }
                );
-            Price2Command = new RelayCommand<object>((p) => { return true; }, (p) =>
+
+            EmployeeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 //Thay đổi vị trí của thanh ngang
                 GridCursorMargin = new Thickness(10+170, 0, 0, 0);
                 FramePage = new SettingEmployeePage();
+            }
+               );
+
+            PromotionCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                //Thay đổi vị trí của thanh ngang
+                GridCursorMargin = new Thickness(10 + 170 + 170, 0, 0, 0);
+                FramePage = new SettingPromotionBookpage();
             }
                );
 

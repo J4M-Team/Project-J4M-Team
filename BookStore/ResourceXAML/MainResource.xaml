@@ -19,4 +19,5 @@
     <viewmodel:ManagementEmployeePageVM x:Key="ManagementEmployeePageVM"></viewmodel:ManagementEmployeePageVM>
     <viewmodel:ManagementEmployeeVM x:Key="ManagementEmployeeVM"></viewmodel:ManagementEmployeeVM>
     <viewmodel:AddEmployeeVM x:Key="AddEmployeeVM"></viewmodel:AddEmployeeVM>
+    <viewmodel:SettingPromotionBookpageVM x:Key="SettingPromotionBookpageVM"></viewmodel:SettingPromotionBookpageVM>
 </ResourceDictionary>

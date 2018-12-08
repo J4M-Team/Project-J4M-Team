@@ -41,6 +41,8 @@ namespace BookStore.Model.MyClass
         private BitmapImage _Image;
         //imgage
         private CBook_Price _Price;
+        private float _Promotion;//Phần trăm khuyến mãi
+        private float _PricePromotion;//Giá bán sách sau khuyến mãi
 
         #endregion
 
@@ -55,6 +57,8 @@ namespace BookStore.Model.MyClass
         public int Count { get { return _Count; } set { _Count = value; OnPropertyChanged(nameof(Count)); } }
         public CBook_Price Price { get { return _Price; } set { _Price = value; } }
         public BitmapImage Image { get { return _Image; } set { _Image = value; } }
+        public float Promotion { get { return _Promotion; } set { _Promotion = value; } }
+        public float PricePromotion { get { return _PricePromotion; } set { _PricePromotion = value; } }
 
         #endregion
 
@@ -692,6 +696,120 @@ namespace BookStore.Model.MyClass
             //Trả về -1 nếu không còn sách tồn trong kho
             return -1;
         }
+
+        /// <summary>
+        /// Hàm trả về danh sách sách kèm theo giá bán và giá khuyến mãi
+        /// </summary>
+        /// <returns></returns>
+        public List<CBook> ListPromotionBook()
+        {
+            List<CBook> List = new List<CBook>();
+            try
+            {
+                //Lấy ra danh sách giá mới nhất ở bảng outputprice
+                var OutputPrice = from item in DataProvider.Ins.DB.Book_Output_Price
+                                  group item by item.Book_Id into Group
+                                  from item2 in Group
+                                  where item2.Date_Set == Group.Max(x => x.Date_Set)
+                                  select new { item2.Book_Id, item2.Date_Set, item2.Output_Price };
+
+                //join 3 bảng lại nếu như giá chưa được cài đặt hoặc sách không có khuyến mãi thì trả về là 0
+                var data = from book in DataProvider.Ins.DB.Books
+                           join output in OutputPrice on book.Book_Id equals output.Book_Id into outputtable
+                           join promotion in DataProvider.Ins.DB.Book_Output_PromotionPrice on book.Book_Id equals promotion.Book_Id into promotiontable
+                           from pro in promotiontable.DefaultIfEmpty()
+                           from outp in outputtable.DefaultIfEmpty()
+                           select new
+                           {
+                               book.Book_Id,
+                               book.Book_Name,
+                               book.Book_Author,
+                               book.Book_Count,
+                               promotion = pro == null ? 0 : pro.Promotion,
+                               output = outp == null ? 0 : outp.Output_Price
+                           };
+
+                //Thêm vào list
+                foreach (var item in data)
+                {
+                    CBook Book = new CBook
+                    {
+                        Id = item.Book_Id,
+                        Name = item.Book_Name,
+                        Author = item.Book_Author,
+                        Count = (int)item.Book_Count,
+                        Price = new CBook_Price { OutputPrice = (float)item.output },
+                        Promotion = (float)item.promotion,
+                        PricePromotion = item.promotion == 0 ? (float)item.output : (float)item.output * (float)item.promotion + (float)item.output
+                    };
+                    List.Add(Book);
+                }
+       
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        public bool ChangePromotion(int Book_Id, float NewPromotion)
+        {
+            try
+            {
+                //Kiểm tra điều kiện nhập
+                if (Book_Id <= 0 || NewPromotion <= 0)
+                {
+                    return false;
+                }
+
+                //Tìm kiếm sách trong danh sách sách
+                if (DataProvider.Ins.DB.Books.Find(Book_Id) == null)
+                {
+                    return false;
+                }
+
+                //Kiểm tra trong bảng PromotionPrice, nếu đã tồn tại rồi thì cập nhật giá mới, nếu như chưa tồn tại thì thêm mới
+                var find = DataProvider.Ins.DB.Book_Output_PromotionPrice.Where(x => x.Book_Id == Book_Id).FirstOrDefault();
+
+                if (find == null)
+                {
+                    //Tạo mới
+                    Book_Output_PromotionPrice Promotion = new Book_Output_PromotionPrice { Book_Id = Book_Id, Promotion = NewPromotion };
+
+                    //Thêm mới
+                    DataProvider.Ins.DB.Book_Output_PromotionPrice.Add(Promotion);
+
+                    //Lưu thay đổi
+                    DataProvider.Ins.DB.SaveChanges();
+
+                    return true;
+                }
+                else
+                {
+                    //Kiểm tra nếu như khuyến mãi mới giống khuyến mãi cũ thì không cập nhật
+                    if ((float)find.Promotion == NewPromotion)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        //Cập nhật
+                        find.Promotion = NewPromotion;
+
+                        //Lưu thay đổi
+                        DataProvider.Ins.DB.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
         #endregion
     }
 }
