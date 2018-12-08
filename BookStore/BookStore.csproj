@@ -239,9 +239,11 @@
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AccepBillPageVM.cs" />
+    <Compile Include="ViewModel\AddBookBillInformationVM.cs" />
     <Compile Include="ViewModel\BanHangMain2VM.cs" />
     <Compile Include="ViewModel\BanHangMainVM.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
+    <Compile Include="ViewModel\BookBillClass.cs" />
     <Compile Include="ViewModel\BookViewModel.cs" />
     <Compile Include="ViewModel\DeleteBillVMcs.cs" />
     <Compile Include="ViewModel\EditBookPageVM.cs" />

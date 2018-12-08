@@ -16,7 +16,9 @@ namespace BookStore.ViewModel
             AddBookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 AddBookBillInformation wd = new AddBookBillInformation();
+                object c=wd.DataContext;
                 wd.ShowDialog();
+                
             }
               );
         }

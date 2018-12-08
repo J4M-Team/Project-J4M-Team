@@ -13,4 +13,5 @@
     <viewmodel:SettingBookPageVM x:Key="SettingBookPageVM"></viewmodel:SettingBookPageVM>
     <viewmodel:SettingEmployeePageVM x:Key="SettingEmployeePageVM"></viewmodel:SettingEmployeePageVM>
     <viewmodel:InHoaDonVM x:Key="InHoaDonVM"></viewmodel:InHoaDonVM>
+    <viewmodel:AddBookBillInformationVM x:Key="AddBookBillInformation"></viewmodel:AddBookBillInformationVM>
 </ResourceDictionary>
