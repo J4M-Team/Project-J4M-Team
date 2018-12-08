@@ -57,6 +57,7 @@
           <Property Name="Book_Id" Type="int" Nullable="false" />
           <Property Name="Book_Count" Type="int" Nullable="false" />
           <Property Name="Input_Date" Type="datetime" />
+          <Property Name="Input_Price" Type="float" />
         </EntityType>
         <EntityType Name="Book_Input_Price">
           <Key>
@@ -787,6 +788,7 @@
           <Property Name="Book_Id" Type="Int32" Nullable="false" />
           <Property Name="Book_Count" Type="Int32" Nullable="false" />
           <Property Name="Input_Date" Type="DateTime" Precision="3" />
+          <Property Name="Input_Price" Type="Double" />
           <NavigationProperty Name="Book" Relationship="BookStoreModel.FK_Book_Input_Book" FromRole="Book_Input" ToRole="Book" />
           <NavigationProperty Name="Employee" Relationship="BookStoreModel.FK_Book_Input_Employee" FromRole="Book_Input" ToRole="Employee" />
         </EntityType>
@@ -1303,6 +1305,7 @@
           <EntitySetMapping Name="Book_Input">
             <EntityTypeMapping TypeName="BookStoreModel.Book_Input">
               <MappingFragment StoreEntitySet="Book_Input">
+                <ScalarProperty Name="Input_Price" ColumnName="Input_Price" />
                 <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
                 <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
                 <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
