@@ -31,25 +31,40 @@
         <Grid Grid.Column="0">
             <StackPanel HorizontalAlignment="Center">
                 <!--Thanh tìm kiếm -->
-                <materialDesign:Card Width="650" Margin="0,20,0,0">
-                    <StackPanel Orientation="Horizontal">
+                <Grid>
+                    <materialDesign:Card Width="650" Margin="40,20,0,0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
 
-                        <TextBox Width="590" FontSize="15" Height="35"
+                            <TextBox Width="590" FontSize="15" Height="35"
                                     x:Name="CommentTextBox"
-                                    materialDesign:HintAssist.Hint="Mã sách/Tên sách" Text="{Binding FilterString,UpdateSourceTrigger=PropertyChanged}">
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="TextChanged">
-                                    <i:InvokeCommandAction Command="{Binding SearchTextChangeCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </TextBox>
-                        <Button Background="#FF3EA0C3" Width="60" BorderBrush="#FF3EA0C3" Command="{Binding SearchCommand}">
-                            <StackPanel Orientation="Horizontal">
-                                <materialDesign:PackIcon Kind="Magnify" Height="25" Width="25" HorizontalAlignment="Right"/>
-                            </StackPanel>
-                        </Button>
-                    </StackPanel>
-                </materialDesign:Card>
+                                    materialDesign:HintAssist.Hint="  Mã sách/Tên sách" Text="{Binding FilterString,UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding SearchTextChangeCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            <Button Background="#FF3EA0C3" Width="60" BorderBrush="#FF3EA0C3" Command="{Binding SearchCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Magnify" Height="25" Width="25" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:Card>
+                    <ToggleButton
+                    Style="{StaticResource MaterialDesignSwitchToggleButton}"
+                    ToolTip="MaterialDesignSwitchToggleButton with Content and ToggleButtonAssist.OnContent"
+                    HorizontalAlignment="Right" Margin="0,30,30,0" Command="{Binding CheckCommand}" IsChecked="{Binding IsChecked}">
+                        <materialDesign:PackIcon Kind="BorderColor" RenderTransformOrigin=".5,.5">
+                            <materialDesign:PackIcon.RenderTransform>
+                                <RotateTransform Angle="45" />
+                            </materialDesign:PackIcon.RenderTransform>
+                        </materialDesign:PackIcon>
+                        <materialDesign:ToggleButtonAssist.OnContent>
+                            <materialDesign:PackIcon Kind="BorderColor" />
+                        </materialDesign:ToggleButtonAssist.OnContent>
+                    </ToggleButton>
+                </Grid>
                 <materialDesign:Card Margin="0,10,20,20" Width="775">
                     <DataGrid x:Name="Grid"
                     Margin="0 0 0 0"
@@ -60,6 +75,9 @@
                     materialDesign:DataGridAssist.CellPadding="13 8 8 8"
                     materialDesign:DataGridAssist.ColumnHeaderPadding="8"
                     SelectedItem="{Binding SelectedItem}" Height="550">
+                        <DataGrid.Resources>
+                            <local:BindingProxy x:Key="proxy" Data="{Binding}"/>
+                        </DataGrid.Resources>
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
@@ -67,13 +85,13 @@
                         </i:Interaction.Triggers>
                         <DataGrid.Columns>
                             <DataGridTextColumn
-                            Binding="{Binding Id}"
-                            Header="Mã sách"                            
-                            IsReadOnly="True" />
+                                Binding="{Binding Id}"
+                                Header="Mã sách"                            
+                                IsReadOnly="True" />
                             <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Name}"
-                            Header="Tên sách"
-                            IsReadOnly="True" Width="150" MinWidth="150">
+                                Binding="{Binding Name}"
+                                Header="Tên sách"
+                                IsReadOnly="True" Width="150" MinWidth="150">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
@@ -81,9 +99,9 @@
                                 </DataGridTextColumn.ElementStyle>
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Author}"
-                            Header="Tác giả"                           
-                            IsReadOnly="True" Width="149" MinWidth="149">
+                                Binding="{Binding Author}"
+                                Header="Tác giả"                           
+                                IsReadOnly="True" Width="149" MinWidth="149">
                                 <DataGridTextColumn.ElementStyle>
                                     <Style TargetType="TextBlock">
                                         <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
@@ -91,18 +109,20 @@
                                 </DataGridTextColumn.ElementStyle>
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Count}"
-                            IsReadOnly="True"
-                            Header="Số lượng"/>
+                                Binding="{Binding Count}"
+                                IsReadOnly="True"
+                                Header="Số lượng"/>
                             <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Price.InputPrice}"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                            Header="Giá nhập"/>
+                                Binding="{Binding Price.InputPrice}"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                IsReadOnly="{Binding Data.InPriceIsReadOnly,Source={StaticResource proxy}}"
+                                Header="Giá nhập"/>
                             <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Price.OutputPrice}"
-                            EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
-                            Header="giá bán"/>
-                            <DataGridTemplateColumn Visibility="{Binding aa}">
+                                Binding="{Binding Price.OutputPrice}"
+                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
+                                IsReadOnly="{Binding Data.OutPriceIsReadOnly,Source={StaticResource proxy}}"
+                                Header="giá bán"/>
+                            <DataGridTemplateColumn Visibility="{Binding Data.ButtonColumnVisibility,Source={StaticResource proxy}}">
                                 <DataGridTemplateColumn.CellTemplate>
                                     <DataTemplate>
                                         <Button x:Name="ButtonEdit" Content="Cập nhật" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
@@ -123,7 +143,7 @@
                         Background="#03a9f4"
                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                        
-                        Padding="8" Width="auto" Margin="5,0,5,0">
+                        Padding="8" Width="auto" Margin="5,0,5.2,0">
                         <TextBlock HorizontalAlignment="Center"
                             FontSize="16" Text="Lịch sử giá nhập">
                         </TextBlock>

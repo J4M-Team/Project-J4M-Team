@@ -15,92 +15,93 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         DataContext="{StaticResource BookVM}"
-        Title="BookWindow" Height="800" Width="1300" Icon="Image/Book.png" WindowStartupLocation="CenterScreen">
+        Title="BookWindow" Height="800" Width="1305" Icon="Image/Book.png" WindowStartupLocation="CenterScreen">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="Comlumn2" Width="150"/>
+            <ColumnDefinition x:Name="Comlumn2" Width="155"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid  Background="#01FFFFFF">
-            <StackPanel>
-                <ListViewItem Padding="0">
-                    <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Home" Margin="15"/>
-                        <TextBlock Text="Home" VerticalAlignment="Center"/>
-                        
-                    </StackPanel>
-                </ListViewItem>
-                <TextBlock Text="System" Margin="15" FontWeight="DemiBold"/>
-                <ListView FontSize="15">
-                    <ListViewItem Padding="1">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="DatabaseSearch" Margin="15"/>
-                            <TextBlock Text="Tìm kiếm" VerticalAlignment="Center"/>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding SearchBookCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </StackPanel>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="5"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0">
+                <Grid Width="5" Height="51" Background="Black" VerticalAlignment="Top" 
+                      Margin="{Binding GridCursorMargin}"></Grid><!--96-->
+            </Grid>
+            <Grid Grid.Column="1">
+                <StackPanel>
+                    <ListViewItem Padding="0">
+                        <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding}" Height="50" Width="148">
+                            <StackPanel Orientation="Horizontal" Margin="-49,0,0,0">
+                                <materialDesign:PackIcon Kind="Home" Foreground="Black"/>
+                                <TextBlock Text="Home" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>
+                            </StackPanel>
+                        </Button>
                     </ListViewItem>
-                    <ListViewItem Padding="1">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="Book" Margin="15"/>
-                            <TextBlock Text="Sách" VerticalAlignment="Center"/>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding BookCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Padding="1">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="GreasePencil" Margin="15"/>
-                            <TextBlock Text="Chỉnh sửa" VerticalAlignment="Center"/>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding EditBookCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Padding="1">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="ChartPie" Margin="15"/>
-                            <TextBlock Text="Biểu đồ" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Padding="1">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="AccountEdit" Margin="15"/>
-                            <TextBlock Text="Tài khoản" VerticalAlignment="Center"/>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding AccountCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Padding="1">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="MessageBulleted" Margin="15"/>
-                            <TextBlock Text="Thông báo" VerticalAlignment="Center"/>
-                            <i:Interaction.Triggers>
-                                <i:EventTrigger EventName="MouseLeftButtonDown">
-                                    <i:InvokeCommandAction Command="{Binding AccepBillCommand}"/>
-                                </i:EventTrigger>
-                            </i:Interaction.Triggers>
-                        </StackPanel>
-                    </ListViewItem>
-                    <ListViewItem Padding="1">
-                        <StackPanel Orientation="Horizontal">
-                            <materialDesign:PackIcon Kind="ExitToApp" Margin="15"/>
-                            <TextBlock Text="Thoát" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </ListViewItem>
-                </ListView>
-            </StackPanel>
+                    <TextBlock Text="System" Margin="15" FontWeight="DemiBold"/>
+                    <ListView FontSize="15">
+                        <ListViewItem Padding="1">
+                            <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding SearchBookCommand}" Height="50" Width="148">
+                                <StackPanel Orientation="Horizontal" Margin="-30,0,0,0">
+                                    <materialDesign:PackIcon Kind="DatabaseSearch" Foreground="Black"/>
+                                    <TextBlock Text="Tìm kiếm" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>
+                                </StackPanel>
+                            </Button>
+                        </ListViewItem>
+                        <ListViewItem Padding="1">
+                            <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding EditBookCommand}" Height="50" Width="148">
+                                <StackPanel Orientation="Horizontal" Margin="-30,0,0,0">
+                                    <materialDesign:PackIcon Kind="Book" Foreground="Black"/>
+                                    <TextBlock Text="Kho sách" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>
+                                </StackPanel>
+                            </Button>
+                            
+                        </ListViewItem>
+                        <ListViewItem Padding="1">
+                            <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding ChartCommand}" Height="50" Width="148">
+                                <StackPanel Orientation="Horizontal" Margin="-40,0,0,0">
+                                    <materialDesign:PackIcon Kind="ChartPie" Foreground="Black"/>
+                                    <TextBlock Text="Biểu đồ" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>
+                                </StackPanel>
+                            </Button>
+
+                        </ListViewItem>
+                        <ListViewItem Padding="1">
+                            <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding AccepBillCommand}" Height="50" Width="148">
+                                <StackPanel Orientation="Horizontal" Margin="-20,0,0,0">
+                                    <materialDesign:PackIcon Kind="MessageBulleted" Foreground="Black"/>
+                                    <TextBlock Text="Thông báo" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>
+                                </StackPanel>
+                            </Button>
+                        </ListViewItem>
+                        <ListViewItem Padding="1">
+                            <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding AccountCommand}" Height="50" Width="148">
+                                <StackPanel Orientation="Horizontal" Margin="-29,0,0,0">
+                                    <materialDesign:PackIcon Kind="AccountEdit" Foreground="Black"/>
+                                    <TextBlock Text="Tài khoản" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>
+                                </StackPanel>
+                            </Button>
+                        </ListViewItem>
+                        <ListViewItem Padding="1">
+                            <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding ExitCommand}" Height="50" Width="148">
+                                <StackPanel Orientation="Horizontal" Margin="-53,0,0,0">
+                                    <materialDesign:PackIcon Kind="ExitToApp" Foreground="Black"/>
+                                    <TextBlock Text="Thoát" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>
+                                </StackPanel>
+                            </Button>
+                            
+                        </ListViewItem>
+                    </ListView>
+                </StackPanel>
+            </Grid>
+            
         </Grid>
         
         <Grid Grid.Column="1" Background="White">
@@ -113,7 +114,7 @@
                     <Grid>
                         <TextBlock Text="Quản lý kho" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"></TextBlock>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,50,0">
-                            <materialDesign:Chip Content="your ID"/>
+                            <materialDesign:Chip Content="{Binding EmployeeName}"/>
                             <materialDesign:PackIcon Kind="AccountOutline" Width="30" Height="30" VerticalAlignment="Center"/>
                         </StackPanel>
                         

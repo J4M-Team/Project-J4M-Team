@@ -50,7 +50,194 @@ namespace BookStore.Model.MyClass
 
 
         #endregion
-       
+
+        #region method
+
+        /// <summary>
+        /// Hàm trả về danh sách nhân viên
+        /// </summary>
+        /// <returns></returns>
+        public List<CEmployee> ListEmployee()
+        {
+            List<CEmployee> List = new List<CEmployee>();
+            try
+            {
+                //Lấy ra danh sách dữ liệu
+                var data = DataProvider.Ins.DB.Employees;
+                var a = data.Count();
+                if (data.Count() > 0)
+                {
+                    foreach (var item in data)
+                    {
+                        CRole role = new CRole { Id = item.Employee_Role.Role_Id, Name = item.Employee_Role.Role_Name, Salary = (float)item.Employee_Role.Role_Salary };
+                        //tạo mới
+                        CEmployee Employee = new CEmployee
+                        {
+                            Id = item.Employee_Id,
+                            Name = item.Employee_Name,
+                            Address = item.Employee_Address,
+                            Phone = item.Employee_Phone,
+                            Email = item.Employee_Email,
+                            BirthDay = (DateTime)item.Employee_BirthDay,
+                            Identity = item.Employee_Identity,
+                            Role = role,
+                            //Info = item.Employee_Info
+
+                        };
+
+                        //Thêm vào danh sách
+                        List.Add(Employee);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+
+
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm cập nhật loại nhân viên
+        /// </summary>
+        /// <param name="Role"></param>
+        /// <returns></returns>
+        public bool UpdateEmployee(CEmployee Employee)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(Employee.Name) && !string.IsNullOrEmpty(Employee.Address) && !string.IsNullOrEmpty(Employee.Phone) && !string.IsNullOrEmpty(Employee.Email) && !string.IsNullOrEmpty(Employee.Identity))
+                {
+                    //Tìm đối tượng cần update theo khóa chính
+                    var find = DataProvider.Ins.DB.Employees.Find(Employee.Id);
+                    if (find != null)
+                    {
+                        //Kiểm tra tên nhân viên
+                        if (find.Employee_Name.ToLower() != Employee.Name.ToLower())
+                        {
+                            //Cập nhật lại
+                            find.Employee_Name = Employee.Name;
+                        }
+
+                        //Kiểm tra địa chỉ nhân viên
+                        if (find.Employee_Address != Employee.Address)
+                        {
+                            //Cập nhật lại
+                            find.Employee_Address = Employee.Address;
+                        }
+
+                        //Kiểm tra số điện thoại nhân viên
+                        if (find.Employee_Phone != Employee.Phone)
+                        {
+                            //Cập nhật lại
+                            find.Employee_Phone = Employee.Phone;
+                        }
+
+                        //Kiểm tra email nhân viên
+                        if (find.Employee_Email != Employee.Email)
+                        {
+                            //Cập nhật lại
+                            find.Employee_Email = Employee.Email;
+                        }
+
+                        //Kiểm tra CMND nhân viên
+                        if (find.Employee_Identity != Employee.Identity)
+                        {
+                            //Cập nhật lại
+                            find.Employee_Identity = Employee.Identity;
+                        }
+
+
+                        //Lưu thay đổi
+                        DataProvider.Ins.DB.SaveChanges();
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+
+        public bool AddEmployee(CEmployee newEmployee)
+        {
+            try
+            {
+                //Tạo mới Emloyee
+                Employee employee = new Employee
+                {
+                    Employee_Name = newEmployee.Name,
+                    Employee_Address = newEmployee.Address,
+                    Employee_Phone = newEmployee.Phone,
+                    Employee_Email = newEmployee.Email,
+                    Employee_Identity = newEmployee.Identity
+                };
+
+                //Thêm
+                DataProvider.Ins.DB.Employees.Add(employee);
+
+                //Lưu thay đổi
+                DataProvider.Ins.DB.SaveChanges();
+
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show(ex.Message);
+            }
+            return false;
+        }
+
+        //Hàm trả về thông tin của nhân viên tương ứng với id của nhân viên đó
+        public CEmployee EmployeeInfo(int EmployeeId)
+        {
+            CEmployee Employee = new CEmployee();
+
+            try
+            {
+                //Kiểm tra nhân viên có tồn tại trong csdl không
+                var find = DataProvider.Ins.DB.Employees.Find(EmployeeId);
+                if (find != null)
+                {
+                    Employee = new CEmployee
+                    {
+                        Name = find.Employee_Name,
+                        Id = find.Employee_Id,
+                        Identity = find.Employee_Identity,
+                        Role = new CRole { Name = find.Employee_Role.Role_Name, Id = find.Employee_Role.Role_Id },
+                        BirthDay = (DateTime)find.Employee_BirthDay,
+                        Address = find.Employee_Address,
+                        Email = find.Employee_Email,
+                        Phone = find.Employee_Phone
+                    };
+                }
+                else
+                {
+                    //do something
+                }
+            }
+            catch
+            {
+
+            }
+            return Employee;
+        }
+
+        #endregion
 
 
     }

@@ -32,26 +32,14 @@ namespace BookStore.ViewModel
             }
         }
 
-
-        private ObservableCollection<string> _ListTheme;
-        public ObservableCollection<string> ListTheme
+        private ObservableCollection<CBook> _DataListBook;
+        public ObservableCollection<CBook> DataListBook
         {
-            get { return _ListTheme; }
+            get { return _DataListBook; }
             set
             {
-                _ListTheme = value;
-                OnPropertyChanged(nameof(ListTheme));
-            }
-        }
-
-        private ObservableCollection<string> _ListType;
-        public ObservableCollection<string> ListType
-        {
-            get { return _ListType; }
-            set
-            {
-                _ListType = value;
-                OnPropertyChanged(nameof(ListType));
+                _DataListBook = value;
+                OnPropertyChanged(nameof(DataListBook));
             }
         }
 
@@ -66,60 +54,7 @@ namespace BookStore.ViewModel
             }
         }
 
-        private string _Name;
-        public string Name
-        {
-            get { return _Name; }
-            set
-            {
-                _Name = value;
-                OnPropertyChanged(nameof(Name));
-            }
-        }
-       
-        private string _Author;
-        public string Author
-        {
-            get { return _Author; }
-            set
-            {
-                _Author = value;
-                OnPropertyChanged(nameof(Author));
-            }
-        }
-
-        private string _Theme;
-        public string Theme
-        {
-            get { return _Theme; }
-            set
-            {
-                _Theme = value;
-                OnPropertyChanged(nameof(Theme));
-            }
-        }
-
-        private string _Type;
-        public string Type
-        {
-            get { return _Type; }
-            set
-            {
-                _Type = value;
-                OnPropertyChanged(nameof(Type));
-            }
-        }
-
-        private string _Count;
-        public string Count
-        {
-            get { return _Count; }
-            set
-            {
-                _Count = value;
-                OnPropertyChanged(nameof(Count));
-            }
-        }
+        
 
         private BitmapImage _CoverImage;
         public BitmapImage CoverImage
@@ -132,15 +67,116 @@ namespace BookStore.ViewModel
             }
         }
 
+        private string _FilterString;
+        public string FilterString
+        {
+            get { return _FilterString; }
+            set
+            {
+                _FilterString = value;
+                OnPropertyChanged(nameof(FilterString));
+            }
+        }
+
+        #endregion
+
+        #region properties binding
+
+        //Thuộc tính isreadonly cột tên sách
+        private bool _NameisReadOnly;
+        public bool NameisReadOnly
+        {
+            get { return _NameisReadOnly; }
+            set
+            {
+                _NameisReadOnly = value;
+                OnPropertyChanged(nameof(NameisReadOnly));
+            }
+        }
+
+        //Thuộc tính isreadonly cột tác giả
+        private bool _AuthorisReadOnly;
+        public bool AuthorisReadOnly
+        {
+            get { return _AuthorisReadOnly; }
+            set
+            {
+                _AuthorisReadOnly = value;
+                OnPropertyChanged(nameof(AuthorisReadOnly));
+            }
+        }
+
+        //Thuộc tính isreadonly cột thể loại
+        private bool _TypeisReadOnly;
+        public bool TypeisReadOnly
+        {
+            get { return _TypeisReadOnly; }
+            set
+            {
+                _TypeisReadOnly = value;
+                OnPropertyChanged(nameof(TypeisReadOnly));
+            }
+        }
+
+        //Thuộc tính isreadonly cột chủ đề
+        private bool _ThemeisReadOnly;
+        public bool ThemeisReadOnly
+        {
+            get { return _ThemeisReadOnly; }
+            set
+            {
+                _ThemeisReadOnly = value;
+                OnPropertyChanged(nameof(ThemeisReadOnly));
+            }
+        }
+
+        private bool _IsChecked;
+        public bool IsChecked
+        {
+            get { return _IsChecked; }
+            set
+            {
+                _IsChecked = value;
+                OnPropertyChanged(nameof(IsChecked));
+            }
+        }
+
+        //Thuộc tính ẩn của cột button
+        private Visibility _EditColumnVisibility;
+        public Visibility EditColumnVisibility
+        {
+            get { return _EditColumnVisibility; }
+            set
+            {
+                _EditColumnVisibility = value;
+                OnPropertyChanged(nameof(EditColumnVisibility));
+            }
+        }
+
+        //Thuộc tính ẩn của nút chọn ảnh
+        private Visibility _ImageButtonVisibility;
+        public Visibility ImageButtonVisibility
+        {
+            get { return _ImageButtonVisibility; }
+            set
+            {
+                _ImageButtonVisibility = value;
+                OnPropertyChanged(nameof(ImageButtonVisibility));
+            }
+        }
+
         #endregion
 
         #region command binding
 
         public ICommand loadCommand { get; set; }
-        public ICommand AddCommand { get; set; }
+        public ICommand AddnewBookCommand { get; set; }
+        public ICommand IncreaseBookCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand ImageCommand { get; set; }
         public ICommand SelectionChangedCommand { get; set; }
+        public ICommand CheckCommand { get; set; }
+        public ICommand SearchTextChangeCommand { get; set; }
 
         #endregion
 
@@ -154,25 +190,40 @@ namespace BookStore.ViewModel
         {
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
-                ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
-                ListType = new ObservableCollection<string>(CBook.Ins.ListType());
+                AuthorisReadOnly = true;
+                NameisReadOnly = true;
+                ThemeisReadOnly = true;
+                TypeisReadOnly = true;
+
+                IsChecked = false;
+
+                EditColumnVisibility = Visibility.Hidden;
+                ImageButtonVisibility = Visibility.Hidden;
+                DataListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                ListBook = DataListBook;
+                             
             }
                );
 
-            AddCommand = new RelayCommand<object>((p) => {
-                if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Author) || string.IsNullOrEmpty(Theme) || string.IsNullOrEmpty(Type) || string.IsNullOrEmpty(Count))
-                    return false;
-                return true;
-            }, (p) =>
+            AddnewBookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                AddNewBookWindow wd = new AddNewBookWindow();
+                wd.ShowDialog();
 
-                var NewBook = new CBook { Name = Name, Author = Author, Theme = Theme, Type = Type, Count = int.Parse(Count), Image = CoverImage };
-                CBook.Ins.Add(NewBook);
-                ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
-                ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
-                ListType = new ObservableCollection<string>(CBook.Ins.ListType());
+                //load lại bảng sau khi đã thêm
+                DataListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                ListBook = DataListBook;
+            }
+               );
 
+            IncreaseBookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                IncreaseBookWindow wd = new IncreaseBookWindow();
+                wd.ShowDialog();
+
+                //load lại bảng sau khi đã thêm
+                DataListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                ListBook = DataListBook;
             }
                );
 
@@ -198,11 +249,10 @@ namespace BookStore.ViewModel
                         };
                         CBook.Ins.Update(Book);
 
-                        //load lại dữ liệu
-                        ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
-                        ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
-                        ListType = new ObservableCollection<string>(CBook.Ins.ListType());
-                        // MessageBox.Show("chọn vào button");
+                        //Không cần load lại dữ liệu vì dữ liệu trên UI đã thay đổi
+                        DataListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                        ListBook = DataListBook;
+
                     }
                 }
 
@@ -247,6 +297,94 @@ namespace BookStore.ViewModel
                 
             }
                );
+
+            CheckCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+
+                if (IsChecked == true)
+                {
+                    AuthorisReadOnly = false;
+                    NameisReadOnly = false;
+                    ThemeisReadOnly = false;
+                    TypeisReadOnly = false;
+
+                    EditColumnVisibility = Visibility.Visible;
+                    ImageButtonVisibility = Visibility.Visible;
+                }
+                else
+                {
+
+                    AuthorisReadOnly = true;
+                    NameisReadOnly = true;
+                    ThemeisReadOnly = true;
+                    TypeisReadOnly = true;
+
+                    EditColumnVisibility = Visibility.Hidden;
+                    ImageButtonVisibility = Visibility.Hidden;
+                }
+
+            }
+               );
+
+            SearchTextChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Search();
+            }
+                );
+        }
+
+        /// <summary>
+        /// Hàm tìm kiếm sách theo mã hoặc theo tên
+        /// </summary>
+        private void Search()
+        {
+            if (DataListBook.Count > 0)
+            {
+
+                if (string.IsNullOrEmpty(FilterString))
+                {
+                    ListBook = DataListBook;
+                }
+                else
+                {
+                    int Id;
+                    //Tìm theo ID
+                    if (int.TryParse(FilterString, out Id) == true)
+                    {
+                        var data = DataListBook.Where(x => x.Id == Id).Select(x => x);
+                        if (data.Count() > 0)
+                        {
+                            //Tạo list với kết quả trả về là Id
+                            ListBook = new ObservableCollection<CBook>(data);
+                        }
+                        else
+                        {
+                            //Tạo list rỗng
+                            ListBook = new ObservableCollection<CBook>();
+                        }
+                    }
+                    //Tìm theo tên sách
+                    else
+                    {
+                        var data = DataListBook.Where(x => x.Name.ToLower().Contains(FilterString.ToLower()) == true).Select(x => x);
+                        if (data.Count() > 0)
+                        {
+                            //Tạo list với kết quả trả về là tên sách
+                            ListBook = new ObservableCollection<CBook>(data);
+                        }
+                        else
+                        {
+                            //Tạo list rỗng
+                            ListBook = new ObservableCollection<CBook>();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ListBook = new ObservableCollection<CBook>();
+            }
+
         }
 
 

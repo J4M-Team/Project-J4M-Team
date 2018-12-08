@@ -37,15 +37,20 @@
                         <TextBlock Text="Cài đặt giá sách" Margin="5,0,0,0" Foreground="Black"/>
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding Price2Command}"
+                <Button Command="{Binding EmployeeCommand}"
                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Width="170">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="AccountMultiple" Foreground="Black" Margin="5,0,0,0"/>
                         <TextBlock Text="Cài đặt nhân viên" Margin="3,0,0,0" Foreground="Black"/>
                     </StackPanel>
                 </Button>
-                <Button Content="cài đặt"
-                        Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3"></Button>
+                <Button Command="{Binding PromotionCommand}"
+                        Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Width="180">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Sale" Foreground="Black" Margin="5,0,0,0"/>
+                        <TextBlock Text="Cài đặt khuyến mãi" Margin="3,0,0,0" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
             </StackPanel>
             <Grid Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="{Binding GridCursorMargin}"></Grid>
         </Grid>

@@ -21,6 +21,7 @@ namespace BookStore.Model
             this.Book_Input = new HashSet<Book_Input>();
             this.Book_Input_Price = new HashSet<Book_Input_Price>();
             this.Book_Output_Price = new HashSet<Book_Output_Price>();
+            this.Book_Output_PromotionPrice = new HashSet<Book_Output_PromotionPrice>();
             this.Book_Query = new HashSet<Book_Query>();
         }
     
@@ -41,6 +42,8 @@ namespace BookStore.Model
         public virtual ICollection<Book_Input_Price> Book_Input_Price { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book_Output_Price> Book_Output_Price { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Book_Output_PromotionPrice> Book_Output_PromotionPrice { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Book_Query> Book_Query { get; set; }
     }

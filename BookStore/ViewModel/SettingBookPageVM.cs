@@ -85,12 +85,61 @@ namespace BookStore.ViewModel
 
         #endregion
 
+        #region properties binding
+
+        private bool _IsChecked;
+        public bool IsChecked
+        {
+            get { return _IsChecked; }
+            set
+            {
+                _IsChecked = value;
+                OnPropertyChanged(nameof(IsChecked));
+            }
+        }
+
+        private bool _InPriceIsReadOnly;
+        public bool InPriceIsReadOnly
+        {
+            get { return _InPriceIsReadOnly; }
+            set
+            {
+                _InPriceIsReadOnly = value;
+                OnPropertyChanged(nameof(InPriceIsReadOnly));
+            }
+        }
+
+        private bool _OutPriceIsReadOnly;
+        public bool OutPriceIsReadOnly
+        {
+            get { return _OutPriceIsReadOnly; }
+            set
+            {
+                _OutPriceIsReadOnly = value;
+                OnPropertyChanged(nameof(OutPriceIsReadOnly));
+            }
+        }
+
+        private Visibility _ButtonColumnVisibility;
+        public Visibility ButtonColumnVisibility
+        {
+            get { return _ButtonColumnVisibility; }
+            set
+            {
+                _ButtonColumnVisibility = value;
+                OnPropertyChanged(nameof(ButtonColumnVisibility));
+            }
+        }
+
+        #endregion
+
         #region command binding
 
         public ICommand loadCommand { get; set; }
         public ICommand SearchTextChangeCommand { get; set; }
         public ICommand EditCommand { get; set; }
         public ICommand SelectionChangedCommand { get; set; }
+        public ICommand CheckCommand { get; set; }
 
         #endregion
 
@@ -99,15 +148,23 @@ namespace BookStore.ViewModel
            
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                //Ẩn cột button
+                ButtonColumnVisibility = Visibility.Hidden;
+                InPriceIsReadOnly = true;
+                OutPriceIsReadOnly = true;
+
                 //lấy data từ cơ sở dữ liệu
                 DataListBook = new ObservableCollection<CBook>(CBook.Ins.ListPriceBook());
                 ListBook = DataListBook;
             }
                );
            
-            EditCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            EditCommand = new RelayCommand<object>((p) => 
             {
-
+                return true;
+            }, 
+            (p) =>
+            {
                 if (SelectedItem != null)
                 {
                     CBook.Ins.ChangeInputPrice(SelectedItem.Id, SelectedItem.Price.InputPrice);
@@ -131,6 +188,26 @@ namespace BookStore.ViewModel
                    OutputHistory = new ObservableCollection<CBook>(CBook.Ins.ListHistoryOutputPrice(SelectedItem.Id));
                    InputHistory = new ObservableCollection<CBook>(CBook.Ins.ListHistoryInputPrice(SelectedItem.Id));
                 }              
+            }
+               );
+
+            CheckCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+
+                if (IsChecked == true)
+                {
+                    //Hiện cột button
+                    ButtonColumnVisibility = Visibility.Visible;                  
+                    InPriceIsReadOnly = false;
+                    OutPriceIsReadOnly = false;
+                }
+                else
+                {
+                    //Ẩn cột button
+                    ButtonColumnVisibility = Visibility.Hidden;
+                    InPriceIsReadOnly = true;
+                    OutPriceIsReadOnly = true;
+                }
             }
                );
         }

@@ -1,0 +1,231 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BookStoreModelStoreContainer" CdmEntityContainer="BookStoreEntities">
+    <EntitySetMapping Name="Bills">
+      <EntityTypeMapping TypeName="BookStoreModel.Bill">
+        <MappingFragment StoreEntitySet="Bill">
+          <ScalarProperty Name="Bill_Date" ColumnName="Bill_Date" />
+          <ScalarProperty Name="Bill_Promotion" ColumnName="Bill_Promotion" />
+          <ScalarProperty Name="Bill_Type" ColumnName="Bill_Type" />
+          <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+          <ScalarProperty Name="Bill_Total_Money" ColumnName="Bill_Total_Money" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Bill_Info">
+      <EntityTypeMapping TypeName="BookStoreModel.Bill_Info">
+        <MappingFragment StoreEntitySet="Bill_Info">
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
+          <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
+          <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
+          <ScalarProperty Name="Bill_Info_Id" ColumnName="Bill_Info_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Bill_Remove">
+      <EntityTypeMapping TypeName="BookStoreModel.Bill_Remove">
+        <MappingFragment StoreEntitySet="Bill_Remove">
+          <ScalarProperty Name="Bill_Status" ColumnName="Bill_Status" />
+          <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
+          <ScalarProperty Name="Bill_Remove_Id" ColumnName="Bill_Remove_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Books">
+      <EntityTypeMapping TypeName="BookStoreModel.Book">
+        <MappingFragment StoreEntitySet="Book">
+          <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
+          <ScalarProperty Name="Book_Image" ColumnName="Book_Image" />
+          <ScalarProperty Name="Book_Content" ColumnName="Book_Content" />
+          <ScalarProperty Name="Book_Type" ColumnName="Book_Type" />
+          <ScalarProperty Name="Book_Theme" ColumnName="Book_Theme" />
+          <ScalarProperty Name="Book_Author" ColumnName="Book_Author" />
+          <ScalarProperty Name="Book_Name" ColumnName="Book_Name" />
+          <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Book_Input">
+      <EntityTypeMapping TypeName="BookStoreModel.Book_Input">
+        <MappingFragment StoreEntitySet="Book_Input">
+          <ScalarProperty Name="Input_Date" ColumnName="Input_Date" />
+          <ScalarProperty Name="Book_Count" ColumnName="Book_Count" />
+          <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Input_Id" ColumnName="Input_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Book_Input_Price">
+      <EntityTypeMapping TypeName="BookStoreModel.Book_Input_Price">
+        <MappingFragment StoreEntitySet="Book_Input_Price">
+          <ScalarProperty Name="Input_Price" ColumnName="Input_Price" />
+          <ScalarProperty Name="Date_Set" ColumnName="Date_Set" />
+          <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
+          <ScalarProperty Name="Input_Price_Id" ColumnName="Input_Price_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Book_Output">
+      <EntityTypeMapping TypeName="BookStoreModel.Book_Output">
+        <MappingFragment StoreEntitySet="Book_Output">
+          <ScalarProperty Name="Output_Date" ColumnName="Output_Date" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
+          <ScalarProperty Name="Output_Id" ColumnName="Output_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Book_Output_Price">
+      <EntityTypeMapping TypeName="BookStoreModel.Book_Output_Price">
+        <MappingFragment StoreEntitySet="Book_Output_Price">
+          <ScalarProperty Name="Output_Price" ColumnName="Output_Price" />
+          <ScalarProperty Name="Date_Set" ColumnName="Date_Set" />
+          <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
+          <ScalarProperty Name="Output_Price_Id" ColumnName="Output_Price_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Book_Query">
+      <EntityTypeMapping TypeName="BookStoreModel.Book_Query">
+        <MappingFragment StoreEntitySet="Book_Query">
+          <ScalarProperty Name="Query_Date" ColumnName="Query_Date" />
+          <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
+          <ScalarProperty Name="Query_Id" ColumnName="Query_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customers">
+      <EntityTypeMapping TypeName="BookStoreModel.Customer">
+        <MappingFragment StoreEntitySet="Customer">
+          <ScalarProperty Name="Types_Id" ColumnName="Types_Id" />
+          <ScalarProperty Name="Customer_Email" ColumnName="Customer_Email" />
+          <ScalarProperty Name="Customer_Phone" ColumnName="Customer_Phone" />
+          <ScalarProperty Name="Customer_Address" ColumnName="Customer_Address" />
+          <ScalarProperty Name="Customer_Name" ColumnName="Customer_Name" />
+          <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customer_Types">
+      <EntityTypeMapping TypeName="BookStoreModel.Customer_Types">
+        <MappingFragment StoreEntitySet="Customer_Types">
+          <ScalarProperty Name="Types_Promotion" ColumnName="Types_Promotion" />
+          <ScalarProperty Name="Types_Name" ColumnName="Types_Name" />
+          <ScalarProperty Name="Types_Id" ColumnName="Types_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Customer_Vip">
+      <EntityTypeMapping TypeName="BookStoreModel.Customer_Vip">
+        <MappingFragment StoreEntitySet="Customer_Vip">
+          <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+          <ScalarProperty Name="Vip_Id" ColumnName="Vip_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Decentralizations">
+      <EntityTypeMapping TypeName="BookStoreModel.Decentralization">
+        <MappingFragment StoreEntitySet="Decentralization">
+          <ScalarProperty Name="Describe" ColumnName="Describe" />
+          <ScalarProperty Name="Decentralization_Id" ColumnName="Decentralization_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="BookStoreModel.Employee">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="Employee_BirthDay" ColumnName="Employee_BirthDay" />
+          <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+          <ScalarProperty Name="Employee_Email" ColumnName="Employee_Email" />
+          <ScalarProperty Name="Employee_Phone" ColumnName="Employee_Phone" />
+          <ScalarProperty Name="Employee_Address" ColumnName="Employee_Address" />
+          <ScalarProperty Name="Employee_Name" ColumnName="Employee_Name" />
+          <ScalarProperty Name="Employee_Identity" ColumnName="Employee_Identity" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Account">
+      <EntityTypeMapping TypeName="BookStoreModel.Employee_Account">
+        <MappingFragment StoreEntitySet="Employee_Account">
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Account_Password" ColumnName="Account_Password" />
+          <ScalarProperty Name="Account_User" ColumnName="Account_User" />
+          <ScalarProperty Name="Account_Id" ColumnName="Account_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Info">
+      <EntityTypeMapping TypeName="BookStoreModel.Employee_Info">
+        <MappingFragment StoreEntitySet="Employee_Info">
+          <ScalarProperty Name="Date_In_Month" ColumnName="Date_In_Month" />
+          <ScalarProperty Name="Sum_Date" ColumnName="Sum_Date" />
+          <ScalarProperty Name="Date_Start" ColumnName="Date_Start" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Emplouee_Info_Id" ColumnName="Emplouee_Info_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Employee_Role">
+      <EntityTypeMapping TypeName="BookStoreModel.Employee_Role">
+        <MappingFragment StoreEntitySet="Employee_Role">
+          <ScalarProperty Name="Decentralization" ColumnName="Decentralization" />
+          <ScalarProperty Name="Role_Salary" ColumnName="Role_Salary" />
+          <ScalarProperty Name="Role_Name" ColumnName="Role_Name" />
+          <ScalarProperty Name="Role_Id" ColumnName="Role_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Evaluates">
+      <EntityTypeMapping TypeName="BookStoreModel.Evaluate">
+        <MappingFragment StoreEntitySet="Evaluate">
+          <ScalarProperty Name="Evaluate_Date" ColumnName="Evaluate_Date" />
+          <ScalarProperty Name="Evaluate_Content" ColumnName="Evaluate_Content" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+          <ScalarProperty Name="Evaluate_Id" ColumnName="Evaluate_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Evaluate_Store">
+      <EntityTypeMapping TypeName="BookStoreModel.Evaluate_Store">
+        <MappingFragment StoreEntitySet="Evaluate_Store">
+          <ScalarProperty Name="Evaluate_Store_Date" ColumnName="Evaluate_Store_Date" />
+          <ScalarProperty Name="Evaluate_Store_Content" ColumnName="Evaluate_Store_Content" />
+          <ScalarProperty Name="Customer_Id" ColumnName="Customer_Id" />
+          <ScalarProperty Name="Evaluate_Store_Id" ColumnName="Evaluate_Store_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Output_Info">
+      <EntityTypeMapping TypeName="BookStoreModel.Output_Info">
+        <MappingFragment StoreEntitySet="Output_Info">
+          <ScalarProperty Name="Bill_Id" ColumnName="Bill_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="PayWage_History">
+      <EntityTypeMapping TypeName="BookStoreModel.PayWage_History">
+        <MappingFragment StoreEntitySet="PayWage_History">
+          <ScalarProperty Name="Employee_Salary" ColumnName="Employee_Salary" />
+          <ScalarProperty Name="PayWage_Date" ColumnName="PayWage_Date" />
+          <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
+          <ScalarProperty Name="PayWage_Id" ColumnName="PayWage_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Salary_Bonus">
+      <EntityTypeMapping TypeName="BookStoreModel.Salary_Bonus">
+        <MappingFragment StoreEntitySet="Salary_Bonus">
+          <ScalarProperty Name="Bonus_Money" ColumnName="Bonus_Money" />
+          <ScalarProperty Name="Bonus_Name" ColumnName="Bonus_Name" />
+          <ScalarProperty Name="Bonus_Id" ColumnName="Bonus_Id" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

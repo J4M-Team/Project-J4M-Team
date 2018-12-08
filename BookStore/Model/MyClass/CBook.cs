@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookStore.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ using System.Windows.Media.Imaging;
 
 namespace BookStore.Model.MyClass
 {
-    public class CBook
+    public class CBook:BaseViewModel
     {
         #region design pattern singleton
 
@@ -40,20 +41,24 @@ namespace BookStore.Model.MyClass
         private BitmapImage _Image;
         //imgage
         private CBook_Price _Price;
+        private float _Promotion;//Phần trăm khuyến mãi
+        private float _PricePromotion;//Giá bán sách sau khuyến mãi
 
         #endregion
 
         #region public properties
 
-        public int Id { get { return _Id; } set { _Id = value; } }
-        public string Name { get { return _Name; } set { _Name = value; } }
-        public string Author { get { return _Author; } set { _Author = value; } }
+        public int Id { get { return _Id; } set { _Id = value;OnPropertyChanged(nameof(Id)); } }
+        public string Name { get { return _Name; } set { _Name = value;OnPropertyChanged(nameof(Name)); } }
+        public string Author { get { return _Author; } set { _Author = value;OnPropertyChanged(nameof(Author)); } }
         public string Theme { get { return _Theme; } set { _Theme = value; } }
         public string Type { get { return _Type; } set { _Type = value; } }
         public string Content { get { return _Content; } set { _Content = value; } }
-        public int Count { get { return _Count; } set { _Count = value; } }
+        public int Count { get { return _Count; } set { _Count = value; OnPropertyChanged(nameof(Count)); } }
         public CBook_Price Price { get { return _Price; } set { _Price = value; } }
         public BitmapImage Image { get { return _Image; } set { _Image = value; } }
+        public float Promotion { get { return _Promotion; } set { _Promotion = value; } }
+        public float PricePromotion { get { return _PricePromotion; } set { _PricePromotion = value; } }
 
         #endregion
 
@@ -114,8 +119,8 @@ namespace BookStore.Model.MyClass
         /// Hàm thêm mới một sách dưới cơ sở dữ liệu
         /// </summary>
         /// <param name="BookData">Dữ liệu sách cần thêm mới</param>
-        /// <returns>nếu thành công trả về true, thất bại trả về false</returns>
-        public bool Add(CBook BookData)
+        /// <returns>nếu thành công trả về id sách vừa thêm, thất bại trả về 0</returns>
+        public int Add(CBook BookData)
         {
             try
             {
@@ -146,11 +151,27 @@ namespace BookStore.Model.MyClass
                
                 DataProvider.Ins.DB.Books.Add(Book);
                 DataProvider.Ins.DB.SaveChanges();
-                return true;
+
+                //Tìm id sách vừa mới được tạo theo tên và tác giả và thể loại
+                var Book_Id = DataProvider.Ins.DB.Books.Where(x => x.Book_Name.ToLower() == BookData.Name.ToLower() && x.Book_Author == BookData.Author && x.Book_Type == BookData.Type).Select(x => x.Book_Id).FirstOrDefault();
+
+                //Kiểm tra tồn tại id chưa
+                if (Book_Id == 0)
+                {
+                    return 0;
+                }
+
+                //Thêm giá nhập sách
+                this.ChangeInputPrice(Book_Id, BookData.Price.InputPrice);
+
+                //Thêm giá bán sách mặc định ban đầu giá bán sách sẽ bằng 140% giá của giá nhập sách
+                this.ChangeOutputPrice(Book_Id, BookData.Price.OutputPrice);
+
+                return Book_Id;
             }
             catch
             {
-                return false;
+                return 0;
             }
 
         }
@@ -614,6 +635,179 @@ namespace BookStore.Model.MyClass
 
             }
             return List;
+        }
+
+        /// <summary>
+        /// Hàm kiếm tra xem sách đã tồn tại trong cơ sở dữ liệu chưa, kiểm tra theo tên sách và tên tác giả
+        /// </summary>
+        /// <param name="Book"></param>
+        /// <returns>trả về Id sách</returns>
+        public int isExist(CBook Book)
+        {
+
+            try
+            {
+                if (!string.IsNullOrEmpty(Book.Name) && !string.IsNullOrEmpty(Book.Author))
+                {
+                    //Tìm theo tên và tác giả
+                    var find = DataProvider.Ins.DB.Books.Where(x => x.Book_Name.ToLower() == Book.Name.ToLower() && x.Book_Author.ToLower() == Book.Author.ToLower());
+
+                    if (find.Count() > 0)
+                    {
+                        //Đã tồn tại
+                        return find.Select(x => x.Book_Id).First();
+                    }
+                    else
+                    {
+                        return 0;
+                    }
+                }
+                else
+                {
+                    return 0;
+                }          
+            }
+            catch
+            {
+
+            }
+            return 0;
+        }
+
+        /// <summary>
+        /// Hàm trả về số lượng sách có trong kho của sách theo id
+        /// </summary>
+        /// <param name="Book_Id"></param>
+        /// <returns></returns>
+        public int InventoryNumber(int Book_Id)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Books.Find(Book_Id);
+                if (find != null)
+                {
+                    return (int)find.Book_Count;
+                }
+            }
+            catch
+            {
+
+            }
+            //Trả về -1 nếu không còn sách tồn trong kho
+            return -1;
+        }
+
+        /// <summary>
+        /// Hàm trả về danh sách sách kèm theo giá bán và giá khuyến mãi
+        /// </summary>
+        /// <returns></returns>
+        public List<CBook> ListPromotionBook()
+        {
+            List<CBook> List = new List<CBook>();
+            try
+            {
+                //Lấy ra danh sách giá mới nhất ở bảng outputprice
+                var OutputPrice = from item in DataProvider.Ins.DB.Book_Output_Price
+                                  group item by item.Book_Id into Group
+                                  from item2 in Group
+                                  where item2.Date_Set == Group.Max(x => x.Date_Set)
+                                  select new { item2.Book_Id, item2.Date_Set, item2.Output_Price };
+
+                //join 3 bảng lại nếu như giá chưa được cài đặt hoặc sách không có khuyến mãi thì trả về là 0
+                var data = from book in DataProvider.Ins.DB.Books
+                           join output in OutputPrice on book.Book_Id equals output.Book_Id into outputtable
+                           join promotion in DataProvider.Ins.DB.Book_Output_PromotionPrice on book.Book_Id equals promotion.Book_Id into promotiontable
+                           from pro in promotiontable.DefaultIfEmpty()
+                           from outp in outputtable.DefaultIfEmpty()
+                           select new
+                           {
+                               book.Book_Id,
+                               book.Book_Name,
+                               book.Book_Author,
+                               book.Book_Count,
+                               promotion = pro == null ? 0 : pro.Promotion,
+                               output = outp == null ? 0 : outp.Output_Price
+                           };
+
+                //Thêm vào list
+                foreach (var item in data)
+                {
+                    CBook Book = new CBook
+                    {
+                        Id = item.Book_Id,
+                        Name = item.Book_Name,
+                        Author = item.Book_Author,
+                        Count = (int)item.Book_Count,
+                        Price = new CBook_Price { OutputPrice = (float)item.output },
+                        Promotion = (float)item.promotion,
+                        PricePromotion = item.promotion == 0 ? (float)item.output : (float)item.output * (float)item.promotion + (float)item.output
+                    };
+                    List.Add(Book);
+                }
+       
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        public bool ChangePromotion(int Book_Id, float NewPromotion)
+        {
+            try
+            {
+                //Kiểm tra điều kiện nhập
+                if (Book_Id <= 0 || NewPromotion <= 0)
+                {
+                    return false;
+                }
+
+                //Tìm kiếm sách trong danh sách sách
+                if (DataProvider.Ins.DB.Books.Find(Book_Id) == null)
+                {
+                    return false;
+                }
+
+                //Kiểm tra trong bảng PromotionPrice, nếu đã tồn tại rồi thì cập nhật giá mới, nếu như chưa tồn tại thì thêm mới
+                var find = DataProvider.Ins.DB.Book_Output_PromotionPrice.Where(x => x.Book_Id == Book_Id).FirstOrDefault();
+
+                if (find == null)
+                {
+                    //Tạo mới
+                    Book_Output_PromotionPrice Promotion = new Book_Output_PromotionPrice { Book_Id = Book_Id, Promotion = NewPromotion };
+
+                    //Thêm mới
+                    DataProvider.Ins.DB.Book_Output_PromotionPrice.Add(Promotion);
+
+                    //Lưu thay đổi
+                    DataProvider.Ins.DB.SaveChanges();
+
+                    return true;
+                }
+                else
+                {
+                    //Kiểm tra nếu như khuyến mãi mới giống khuyến mãi cũ thì không cập nhật
+                    if ((float)find.Promotion == NewPromotion)
+                    {
+                        return false;
+                    }
+                    else
+                    {
+                        //Cập nhật
+                        find.Promotion = NewPromotion;
+
+                        //Lưu thay đổi
+                        DataProvider.Ins.DB.SaveChanges();
+                        return true;
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
         }
 
         #endregion

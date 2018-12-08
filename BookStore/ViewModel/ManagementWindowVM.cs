@@ -30,21 +30,75 @@ namespace BookStore.ViewModel
             }
         }
 
-        
+
+
+        #endregion
+
+        #region properties binding
+
+        private Thickness _GridCursorMargin;
+        public Thickness GridCursorMargin
+        {
+            get
+            {
+                return _GridCursorMargin;
+            }
+            set
+            {
+                _GridCursorMargin = value;
+                OnPropertyChanged(nameof(GridCursorMargin));
+            }
+        }
 
         #endregion
 
         #region command binding
 
+        public ICommand EmployeeCommand { get; set; }
         public ICommand SettingCommand { get; set; }
+        public ICommand CustomerCommand { get; set; }
+        public ICommand ReportCommand { get; set; }
+        public ICommand AccountCommand { get; set; }
+        public ICommand ExitCommand { get; set; }
 
         #endregion
 
 
         public ManagementWindowVM()
         {
+            EmployeeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 97, 0, 0);
+                FramePage = new ManagementEmployee();
+            });
+
+            CustomerCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 97 + 52 * 1, 0, 0);
+
+            });
+
+            ReportCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 97 + 52 * 2, 0, 0);
+
+            });
+
+            AccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 97 + 52 * 4, 0, 0);
+
+            });
+
+            ExitCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 97 + 52 * 5, 0, 0);
+
+            });
+
             SettingCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                GridCursorMargin = new Thickness(0, 97 + 52 * 3, 0, 0);
                 FramePage = new SettingPage();
             });
         } 

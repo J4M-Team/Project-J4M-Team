@@ -19,6 +19,7 @@ namespace BookStore.Model
         public int Book_Id { get; set; }
         public int Book_Count { get; set; }
         public Nullable<System.DateTime> Input_Date { get; set; }
+        public Nullable<double> Input_Price { get; set; }
     
         public virtual Book Book { get; set; }
         public virtual Employee Employee { get; set; }

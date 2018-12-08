@@ -93,29 +93,113 @@ namespace BookStore.Model.MyClass
         }
        
         /// <summary>
-        /// Hàm cập nhật lương mới cho nhân viên
+        /// Hàm cập nhật loại nhân viên
         /// </summary>
         /// <param name="Role"></param>
         /// <returns></returns>
-        public bool ChangeSalary(CRole Role)
+        public bool UpdateRole(CRole Role)
         {
             try
             {
-                if (Role.Salary > 0)
+                if (Role.Salary > 0 && !string.IsNullOrEmpty(Role.Name) && !string.IsNullOrEmpty(Role.Decentralization))
                 {
                     //Tìm đối tượng cần update theo khóa chính
                     var find = DataProvider.Ins.DB.Employee_Role.Find(Role.Id);
                     if (find != null)
                     {
+                        //Tìm id tương ứng của quyền hạn nhân viên trong bảng Decentralization
+                        var findId = DataProvider.Ins.DB.Decentralizations.Where(x => x.Describe.ToLower() == Role.Decentralization.ToLower()).Select(x => x.Decentralization_Id).FirstOrDefault();
+                        
                         //Kiểm tra nếu lương mới bằng lương cũ thì không cập nhật
                         if (find.Role_Salary != Role.Salary)
                         {
                             //Cập nhật giá mới
-                            find.Role_Salary = Role.Salary;
+                            find.Role_Salary = Role.Salary;                                                
+                        }
 
-                            //Lưu lại thay đổi
+                        //Kiểm tra nếu tên mới bằng tên cũ thì không cập nhật
+                        if (find.Role_Name.ToLower() != Role.Name.ToLower())
+                        {
+                            find.Role_Name = Role.Name;
+                        }
+
+                        if (findId != 0)
+                        {
+                            //Kiểm tra nếu id_Decentralization bằng id cũ thì không cập nhật
+                            if (find.Decentralization != findId)
+                            {
+                                find.Decentralization = findId;
+                            }
+                        }
+
+                        //Lưu thay đổi
+                        DataProvider.Ins.DB.SaveChanges();                                                
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+                else
+                {
+                    return false;
+                }                
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm trả về danh sách quyền của nhân viên
+        /// </summary>
+        /// <returns></returns>
+        public List<string> ListDecentralization()
+        {
+            List<string> List = new List<string>();
+            try
+            {
+                var data = DataProvider.Ins.DB.Decentralizations.Select(x => x.Describe);
+                if (data.Count() > 0)
+                {
+                    foreach(var item in data)
+                    {
+                        List.Add(item);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        public bool AddRole(CRole newRole)
+        {
+            
+            try
+            {
+                if (newRole.Salary > 0)
+                {
+                    //Kiểm tra xem loại nhân viên đó có tồn tại trong cơ sở dữ liệu hay chưa
+                    var find = DataProvider.Ins.DB.Employee_Role.Where(x => x.Role_Name.ToLower() == newRole.Name.ToLower());
+                    if (find.Count() == 0)
+                    {
+                        //Tìm kiếm id tương ứng với loại quyền của nhân viên
+                        var IdDecentralization = DataProvider.Ins.DB.Decentralizations.Where(x => x.Describe.ToLower() == newRole.Decentralization.ToLower()).First();
+                        if (IdDecentralization != null)
+                        {
+                            //Tạo mới Role
+                            Employee_Role Role = new Employee_Role { Role_Name = newRole.Name, Role_Salary = newRole.Salary, Decentralization = IdDecentralization.Decentralization_Id };
+
+                            //Thêm
+                            DataProvider.Ins.DB.Employee_Role.Add(Role);
+
+                            //Lưu thay đổi
                             DataProvider.Ins.DB.SaveChanges();
-
                             return true;
                         }
                         else
@@ -131,7 +215,8 @@ namespace BookStore.Model.MyClass
                 else
                 {
                     return false;
-                }                
+                }
+                
             }
             catch
             {
