@@ -32,6 +32,17 @@ namespace BookStore.ViewModel
             }
         }
 
+        private ObservableCollection<CBook> _DataListBook;
+        public ObservableCollection<CBook> DataListBook
+        {
+            get { return _DataListBook; }
+            set
+            {
+                _DataListBook = value;
+                OnPropertyChanged(nameof(DataListBook));
+            }
+        }
+
         private CBook _SelectedItem;
         public CBook SelectedItem
         {
@@ -53,6 +64,17 @@ namespace BookStore.ViewModel
             {
                 _CoverImage = value;
                 OnPropertyChanged(nameof(CoverImage));
+            }
+        }
+
+        private string _FilterString;
+        public string FilterString
+        {
+            get { return _FilterString; }
+            set
+            {
+                _FilterString = value;
+                OnPropertyChanged(nameof(FilterString));
             }
         }
 
@@ -154,6 +176,7 @@ namespace BookStore.ViewModel
         public ICommand ImageCommand { get; set; }
         public ICommand SelectionChangedCommand { get; set; }
         public ICommand CheckCommand { get; set; }
+        public ICommand SearchTextChangeCommand { get; set; }
 
         #endregion
 
@@ -176,8 +199,9 @@ namespace BookStore.ViewModel
 
                 EditColumnVisibility = Visibility.Hidden;
                 ImageButtonVisibility = Visibility.Hidden;
-
-                ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());               
+                DataListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                ListBook = DataListBook;
+                             
             }
                );
 
@@ -187,7 +211,8 @@ namespace BookStore.ViewModel
                 wd.ShowDialog();
 
                 //load lại bảng sau khi đã thêm
-                ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                DataListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                ListBook = DataListBook;
             }
                );
 
@@ -197,7 +222,8 @@ namespace BookStore.ViewModel
                 wd.ShowDialog();
 
                 //load lại bảng sau khi đã thêm
-                ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                DataListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                ListBook = DataListBook;
             }
                );
 
@@ -223,10 +249,10 @@ namespace BookStore.ViewModel
                         };
                         CBook.Ins.Update(Book);
 
-                        //load lại dữ liệu
-                        ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
-                        
-                        // MessageBox.Show("chọn vào button");
+                        //Không cần load lại dữ liệu vì dữ liệu trên UI đã thay đổi
+                        DataListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                        ListBook = DataListBook;
+
                     }
                 }
 
@@ -299,6 +325,66 @@ namespace BookStore.ViewModel
 
             }
                );
+
+            SearchTextChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Search();
+            }
+                );
+        }
+
+        /// <summary>
+        /// Hàm tìm kiếm sách theo mã hoặc theo tên
+        /// </summary>
+        private void Search()
+        {
+            if (DataListBook.Count > 0)
+            {
+
+                if (string.IsNullOrEmpty(FilterString))
+                {
+                    ListBook = DataListBook;
+                }
+                else
+                {
+                    int Id;
+                    //Tìm theo ID
+                    if (int.TryParse(FilterString, out Id) == true)
+                    {
+                        var data = DataListBook.Where(x => x.Id == Id).Select(x => x);
+                        if (data.Count() > 0)
+                        {
+                            //Tạo list với kết quả trả về là Id
+                            ListBook = new ObservableCollection<CBook>(data);
+                        }
+                        else
+                        {
+                            //Tạo list rỗng
+                            ListBook = new ObservableCollection<CBook>();
+                        }
+                    }
+                    //Tìm theo tên sách
+                    else
+                    {
+                        var data = DataListBook.Where(x => x.Name.ToLower().Contains(FilterString.ToLower()) == true).Select(x => x);
+                        if (data.Count() > 0)
+                        {
+                            //Tạo list với kết quả trả về là tên sách
+                            ListBook = new ObservableCollection<CBook>(data);
+                        }
+                        else
+                        {
+                            //Tạo list rỗng
+                            ListBook = new ObservableCollection<CBook>();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                ListBook = new ObservableCollection<CBook>();
+            }
+
         }
 
 

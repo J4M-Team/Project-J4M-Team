@@ -166,6 +166,14 @@ namespace BookStore.ViewModel
                 {
                     CBook.Ins.IncreaseNumberOfBook(item.Id, item.Count);
                 }
+
+                //Thông báo thêm thành công
+                System.Windows.MessageBox.Show("Thêm thành công");
+                //Trả về trang trắng
+                Name = "";
+                Author = "";
+                Count = "";
+                ListBook.Clear();
             }
                );
 
