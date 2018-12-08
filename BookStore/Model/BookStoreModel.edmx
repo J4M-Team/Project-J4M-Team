@@ -86,6 +86,14 @@
           <Property Name="Date_Set" Type="datetime" Nullable="false" />
           <Property Name="Output_Price" Type="float" Nullable="false" />
         </EntityType>
+        <EntityType Name="Book_Output_PromotionPrice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Book_Id" Type="int" Nullable="false" />
+          <Property Name="Promotion" Type="float" Nullable="false" />
+        </EntityType>
         <EntityType Name="Book_Query">
           <Key>
             <PropertyRef Name="Query_Id" />
@@ -342,6 +350,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Book_Output_PromotionPrice_Book">
+          <End Role="Book" Type="Self.Book" Multiplicity="1" />
+          <End Role="Book_Output_PromotionPrice" Type="Self.Book_Output_PromotionPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_Id" />
+            </Principal>
+            <Dependent Role="Book_Output_PromotionPrice">
+              <PropertyRef Name="Book_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Book_Query_Book">
           <End Role="Book" Type="Self.Book" Multiplicity="1" />
           <End Role="Book_Query" Type="Self.Book_Query" Multiplicity="*" />
@@ -495,6 +515,7 @@
           <EntitySet Name="Book_Input_Price" EntityType="Self.Book_Input_Price" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Book_Output" EntityType="Self.Book_Output" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Book_Output_Price" EntityType="Self.Book_Output_Price" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Book_Output_PromotionPrice" EntityType="Self.Book_Output_PromotionPrice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Book_Query" EntityType="Self.Book_Query" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer" EntityType="Self.Customer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Customer_Types" EntityType="Self.Customer_Types" Schema="dbo" store:Type="Tables" />
@@ -552,6 +573,10 @@
           <AssociationSet Name="FK_Book_Output_Price_Book" Association="Self.FK_Book_Output_Price_Book">
             <End Role="Book" EntitySet="Book" />
             <End Role="Book_Output_Price" EntitySet="Book_Output_Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Output_PromotionPrice_Book" Association="Self.FK_Book_Output_PromotionPrice_Book">
+            <End Role="Book" EntitySet="Book" />
+            <End Role="Book_Output_PromotionPrice" EntitySet="Book_Output_PromotionPrice" />
           </AssociationSet>
           <AssociationSet Name="FK_Book_Query_Book" Association="Self.FK_Book_Query_Book">
             <End Role="Book" EntitySet="Book" />
@@ -615,6 +640,7 @@
           <EntitySet Name="Book_Input_Price" EntityType="BookStoreModel.Book_Input_Price" />
           <EntitySet Name="Book_Output" EntityType="BookStoreModel.Book_Output" />
           <EntitySet Name="Book_Output_Price" EntityType="BookStoreModel.Book_Output_Price" />
+          <EntitySet Name="Book_Output_PromotionPrice" EntityType="BookStoreModel.Book_Output_PromotionPrice" />
           <EntitySet Name="Book_Query" EntityType="BookStoreModel.Book_Query" />
           <EntitySet Name="Customers" EntityType="BookStoreModel.Customer" />
           <EntitySet Name="Customer_Types" EntityType="BookStoreModel.Customer_Types" />
@@ -668,6 +694,10 @@
           <AssociationSet Name="FK_Book_Output_Price_Book" Association="BookStoreModel.FK_Book_Output_Price_Book">
             <End Role="Book" EntitySet="Books" />
             <End Role="Book_Output_Price" EntitySet="Book_Output_Price" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Book_Output_PromotionPrice_Book" Association="BookStoreModel.FK_Book_Output_PromotionPrice_Book">
+            <End Role="Book" EntitySet="Books" />
+            <End Role="Book_Output_PromotionPrice" EntitySet="Book_Output_PromotionPrice" />
           </AssociationSet>
           <AssociationSet Name="FK_Book_Query_Book" Association="BookStoreModel.FK_Book_Query_Book">
             <End Role="Book" EntitySet="Books" />
@@ -777,6 +807,7 @@
           <NavigationProperty Name="Book_Input" Relationship="BookStoreModel.FK_Book_Input_Book" FromRole="Book" ToRole="Book_Input" />
           <NavigationProperty Name="Book_Input_Price" Relationship="BookStoreModel.FK_Book_Input_Price_Book" FromRole="Book" ToRole="Book_Input_Price" />
           <NavigationProperty Name="Book_Output_Price" Relationship="BookStoreModel.FK_Book_Output_Price_Book" FromRole="Book" ToRole="Book_Output_Price" />
+          <NavigationProperty Name="Book_Output_PromotionPrice" Relationship="BookStoreModel.FK_Book_Output_PromotionPrice_Book" FromRole="Book" ToRole="Book_Output_PromotionPrice" />
           <NavigationProperty Name="Book_Query" Relationship="BookStoreModel.FK_Book_Query_Book" FromRole="Book" ToRole="Book_Query" />
         </EntityType>
         <EntityType Name="Book_Input">
@@ -822,6 +853,15 @@
           <Property Name="Date_Set" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Output_Price" Type="Double" Nullable="false" />
           <NavigationProperty Name="Book" Relationship="BookStoreModel.FK_Book_Output_Price_Book" FromRole="Book_Output_Price" ToRole="Book" />
+        </EntityType>
+        <EntityType Name="Book_Output_PromotionPrice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Book_Id" Type="Int32" Nullable="false" />
+          <Property Name="Promotion" Type="Double" Nullable="false" />
+          <NavigationProperty Name="Book" Relationship="BookStoreModel.FK_Book_Output_PromotionPrice_Book" FromRole="Book_Output_PromotionPrice" ToRole="Book" />
         </EntityType>
         <EntityType Name="Book_Query">
           <Key>
@@ -1093,6 +1133,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Book_Output_PromotionPrice_Book">
+          <End Type="BookStoreModel.Book" Role="Book" Multiplicity="1" />
+          <End Type="BookStoreModel.Book_Output_PromotionPrice" Role="Book_Output_PromotionPrice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Book">
+              <PropertyRef Name="Book_Id" />
+            </Principal>
+            <Dependent Role="Book_Output_PromotionPrice">
+              <PropertyRef Name="Book_Id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Book_Query_Book">
           <End Type="BookStoreModel.Book" Role="Book" Multiplicity="1" />
           <End Type="BookStoreModel.Book_Query" Role="Book_Query" Multiplicity="*" />
@@ -1341,6 +1393,15 @@
                 <ScalarProperty Name="Date_Set" ColumnName="Date_Set" />
                 <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
                 <ScalarProperty Name="Output_Price_Id" ColumnName="Output_Price_Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Book_Output_PromotionPrice">
+            <EntityTypeMapping TypeName="BookStoreModel.Book_Output_PromotionPrice">
+              <MappingFragment StoreEntitySet="Book_Output_PromotionPrice">
+                <ScalarProperty Name="Promotion" ColumnName="Promotion" />
+                <ScalarProperty Name="Book_Id" ColumnName="Book_Id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

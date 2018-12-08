@@ -33,6 +33,7 @@ namespace BookStore.Model
         public virtual DbSet<Book_Input_Price> Book_Input_Price { get; set; }
         public virtual DbSet<Book_Output> Book_Output { get; set; }
         public virtual DbSet<Book_Output_Price> Book_Output_Price { get; set; }
+        public virtual DbSet<Book_Output_PromotionPrice> Book_Output_PromotionPrice { get; set; }
         public virtual DbSet<Book_Query> Book_Query { get; set; }
         public virtual DbSet<Customer> Customers { get; set; }
         public virtual DbSet<Customer_Types> Customer_Types { get; set; }
