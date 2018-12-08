@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:viewmodel="clr-namespace:BookStore.ViewModel"
+                    xmlns:local="clr-namespace:BookStore.ResourceXAML">
+    <viewmodel:LoginViewModel x:Key="LoginVM"></viewmodel:LoginViewModel>
+    <viewmodel:BookViewModel x:Key="BookVM"></viewmodel:BookViewModel>
+    <viewmodel:EditBookPageVM x:Key="EditBookPageVM"></viewmodel:EditBookPageVM>
+    <viewmodel:SearchPageVM x:Key="SearchPageVM"></viewmodel:SearchPageVM>
+    <viewmodel:BanHangMain2VM x:Key="BanHangMain2VM"></viewmodel:BanHangMain2VM>
+    <viewmodel:AccepBillPageVM x:Key="AccepBillPageVM"></viewmodel:AccepBillPageVM>
+    <viewmodel:ManagementWindowVM x:Key="ManagementWindowVM"></viewmodel:ManagementWindowVM>
+    <viewmodel:SettingPageVM x:Key="SettingPageVM"></viewmodel:SettingPageVM>
+    <viewmodel:SettingBookPageVM x:Key="SettingBookPageVM"></viewmodel:SettingBookPageVM>
+    <viewmodel:SettingEmployeePageVM x:Key="SettingEmployeePageVM"></viewmodel:SettingEmployeePageVM>
+    <viewmodel:InHoaDonVM x:Key="InHoaDonVM"></viewmodel:InHoaDonVM>
+    <viewmodel:AddNewBookWindowVM x:Key="AddNewBookWindowVM"></viewmodel:AddNewBookWindowVM>
+    <viewmodel:IncreaseBookWindowVM x:Key="IncreaseBookWindowVM"></viewmodel:IncreaseBookWindowVM>
+    
+    <viewmodel:ManagementEmployeePageVM x:Key="ManagementEmployeePageVM"></viewmodel:ManagementEmployeePageVM>
+    <viewmodel:ManagementEmployeeVM x:Key="ManagementEmployeeVM"></viewmodel:ManagementEmployeeVM>
+    <viewmodel:AddEmployeeVM x:Key="AddEmployeeVM"></viewmodel:AddEmployeeVM>
+    <viewmodel:SettingPromotionBookpageVM x:Key="SettingPromotionBookpageVM"></viewmodel:SettingPromotionBookpageVM>
+</ResourceDictionary>
