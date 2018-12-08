@@ -46,6 +46,17 @@ namespace BookStore.ViewModel
             }
         }
 
+        private string _EmployeeName;
+        public string EmployeeName
+        {
+            get { return _EmployeeName; }
+            set
+            {
+                _EmployeeName = value;
+                OnPropertyChanged(nameof(EmployeeName));
+            }
+        }
+
         private string _Name;
         public string Name
         {
@@ -120,6 +131,11 @@ namespace BookStore.ViewModel
         {
             loadCommand = new RelayCommand<object>((p) =>{ return true;},(p) =>
             {
+                if (DataTransfer.Employee_Id > 0)
+                {
+                    EmployeeName = CEmployee.Ins.EmployeeInfo(DataTransfer.Employee_Id).Name;
+                }
+
                 MinCount = "150";
                 MinExist = "300";
                 ListBook = new ObservableCollection<CBook>();
@@ -167,7 +183,11 @@ namespace BookStore.ViewModel
                     CBook.Ins.IncreaseNumberOfBook(item.Id, item.Count);
 
                     //Thêm vào lịch sử nhập kho
-                    CWarehouse.Ins_Warehouse.AddHistoryInput(4, item);
+                    
+                    if (DataTransfer.Employee_Id > 0)
+                    {
+                        CWarehouse.Ins_Warehouse.AddHistoryInput(DataTransfer.Employee_Id, item);
+                    }              
                 }
 
                 //Thông báo thêm thành công

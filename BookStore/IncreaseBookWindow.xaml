@@ -32,7 +32,7 @@
                 <Grid Grid.Row="0" Background="#03a9f4">
                     <TextBlock Text="Phiếu nhập thêm sách" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="18" FontWeight="Medium" Foreground="White"></TextBlock>
                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,50,0">
-                        <materialDesign:Chip Content="your ID" Foreground="White"/>
+                        <materialDesign:Chip Content="{Binding EmployeeName}" Foreground="White"/>
                         <materialDesign:PackIcon Kind="AccountOutline" Width="30" Height="30" VerticalAlignment="Center" Foreground="White"/>
                     </StackPanel>
                     <materialDesign:PackIcon Kind="BookPlus" Height="50" Width="auto" Foreground="White"/>

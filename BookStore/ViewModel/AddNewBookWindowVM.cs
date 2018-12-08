@@ -36,6 +36,17 @@ namespace BookStore.ViewModel
             }
         }
 
+        private string _EmployeeName;
+        public string EmployeeName
+        {
+            get { return _EmployeeName; }
+            set
+            {
+                _EmployeeName = value;
+                OnPropertyChanged(nameof(EmployeeName));
+            }
+        }
+
         private string _Name;
         public string Name
         {
@@ -117,6 +128,11 @@ namespace BookStore.ViewModel
         {
             loadCommand = new RelayCommand<object>((p) => { return true; },(p) =>
             {
+                if (DataTransfer.Employee_Id > 0)
+                {
+                    EmployeeName = CEmployee.Ins.EmployeeInfo(DataTransfer.Employee_Id).Name;
+                }
+
                 ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
                 ListType = new ObservableCollection<string>(CBook.Ins.ListType());
             }
@@ -179,9 +195,13 @@ namespace BookStore.ViewModel
                 if (Book_Id != 0)
                 {
                     Book.Id = Book_Id;
-                    //Thêm vào lịch sử nhập sách
-                    CWarehouse.Ins_Warehouse.AddHistoryInput(4, Book);
 
+                    //Thêm vào lịch sử nhập sách
+                    if (DataTransfer.Employee_Id > 0)
+                    {
+                        CWarehouse.Ins_Warehouse.AddHistoryInput(DataTransfer.Employee_Id, Book);
+                    }
+                    
                     //tạo trắng bảng
                     Name = "";
                     Author = "";
