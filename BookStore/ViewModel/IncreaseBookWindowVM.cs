@@ -165,6 +165,9 @@ namespace BookStore.ViewModel
                 foreach(var item in ListBook)
                 {
                     CBook.Ins.IncreaseNumberOfBook(item.Id, item.Count);
+
+                    //Thêm vào lịch sử nhập kho
+                    CWarehouse.Ins_Warehouse.AddHistoryInput(4, item);
                 }
 
                 //Thông báo thêm thành công

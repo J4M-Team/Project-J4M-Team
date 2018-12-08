@@ -51,6 +51,56 @@ namespace BookStore.Model.MyClass
             return false;
         }
 
+        /// <summary>
+        /// Hàm thêm vào lịch sử nhập kho khi nhân viên nhập thêm sách mới, hoặc thêm sách vào kho
+        /// </summary>
+        /// <param name="Employee_Id"></param>
+        /// <param name="BookData"></param>
+        /// <returns></returns>
+        public bool AddHistoryInput(int Employee_Id,CBook BookData)
+        {
+            try
+            {
+                //Kiểm tra data của sách, id nhân viên truyền vào
+                if (BookData.Id <= 0 || BookData.Count <= 0 || Employee_Id <= 0)
+                {
+                    return false;
+                }
+
+                //Tìm giá nhập của sách theo id,Lấy giá nhập mới nhất trong bảng input_Price (giá nhập mới nhất có ngày cài đặt là ngày gần nhất)
+                float Input_Price = (float)DataProvider.Ins.DB.Book_Input_Price.Where(x => x.Book_Id == BookData.Id).OrderByDescending(x => x.Date_Set).Select(x => x.Input_Price).FirstOrDefault();
+
+                //Kiểm tra nếu giá nhập không tồn tại 
+                if(Input_Price<=0)
+                {
+                    return false;
+                }
+
+                //Tạo mới
+                Book_Input data = new Book_Input
+                {
+                    Book_Id = BookData.Id,
+                    Book_Count = BookData.Count,
+                    Employee_Id = Employee_Id,
+                    Input_Price = Input_Price,
+                    Input_Date = DateTime.Now
+                };
+
+                //Thêm vào
+                DataProvider.Ins.DB.Book_Input.Add(data);
+
+                //Lưu thay đổi
+                DataProvider.Ins.DB.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
         #endregion
     }
 }

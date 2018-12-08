@@ -170,19 +170,27 @@ namespace BookStore.ViewModel
                     Theme = Theme,
                     Type = Type,
                     Count = int.Parse(Count),
-                    Price = new CBook_Price { InputPrice = float.Parse(Price) }
+                    Price = new CBook_Price { InputPrice = float.Parse(Price), OutputPrice = float.Parse(Price) * (float)1.4 }
+
                 };
 
                 //Thêm sách mới
-                CBook.Ins.Add(Book);
+                int Book_Id = CBook.Ins.Add(Book);
+                if (Book_Id != 0)
+                {
+                    Book.Id = Book_Id;
+                    //Thêm vào lịch sử nhập sách
+                    CWarehouse.Ins_Warehouse.AddHistoryInput(4, Book);
 
-                //tạo trắng bảng
-                Name = "";
-                Author = "";
-                Theme = "";
-                Type = "";
-                Price = "";
-                Count = "";
+                    //tạo trắng bảng
+                    Name = "";
+                    Author = "";
+                    Theme = "";
+                    Type = "";
+                    Price = "";
+                    Count = "";
+                }
+                          
             }
                );
         }

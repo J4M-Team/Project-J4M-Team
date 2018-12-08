@@ -115,8 +115,8 @@ namespace BookStore.Model.MyClass
         /// Hàm thêm mới một sách dưới cơ sở dữ liệu
         /// </summary>
         /// <param name="BookData">Dữ liệu sách cần thêm mới</param>
-        /// <returns>nếu thành công trả về true, thất bại trả về false</returns>
-        public bool Add(CBook BookData)
+        /// <returns>nếu thành công trả về id sách vừa thêm, thất bại trả về 0</returns>
+        public int Add(CBook BookData)
         {
             try
             {
@@ -148,16 +148,26 @@ namespace BookStore.Model.MyClass
                 DataProvider.Ins.DB.Books.Add(Book);
                 DataProvider.Ins.DB.SaveChanges();
 
-                //Tìm id sách vừa mới được tạo theo tên
-                var Book_Id = DataProvider.Ins.DB.Books.Where(x => x.Book_Name.ToLower() == BookData.Name.ToLower()).Select(x => x.Book_Id).First();
+                //Tìm id sách vừa mới được tạo theo tên và tác giả và thể loại
+                var Book_Id = DataProvider.Ins.DB.Books.Where(x => x.Book_Name.ToLower() == BookData.Name.ToLower() && x.Book_Author == BookData.Author && x.Book_Type == BookData.Type).Select(x => x.Book_Id).FirstOrDefault();
+
+                //Kiểm tra tồn tại id chưa
+                if (Book_Id == 0)
+                {
+                    return 0;
+                }
+
                 //Thêm giá nhập sách
                 this.ChangeInputPrice(Book_Id, BookData.Price.InputPrice);
 
-                return true;
+                //Thêm giá bán sách mặc định ban đầu giá bán sách sẽ bằng 140% giá của giá nhập sách
+                this.ChangeOutputPrice(Book_Id, BookData.Price.OutputPrice);
+
+                return Book_Id;
             }
             catch
             {
-                return false;
+                return 0;
             }
 
         }
