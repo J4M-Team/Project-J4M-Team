@@ -131,7 +131,7 @@
                         <Label Content="THÔNG TIN HOÁ ĐƠN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="13" />
                     </Grid>
                     <Grid Grid.Row="1">
-                        <ListView ItemsSource="{Binding ListBill}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" Name="ListBill" IsSynchronizedWithCurrentItem="True">
+                        <ListView  ItemsSource="{Binding ListSelectedBooks}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" Name="ListBill" IsSynchronizedWithCurrentItem="True">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Style.Triggers>
@@ -147,10 +147,10 @@
                         DisplayMemberBinding="{Binding Id}"
                         Header="Mã Sách" />
                                     <GridViewColumn
-                        DisplayMemberBinding="{Binding Customer.Name}"
+                        DisplayMemberBinding="{Binding Name}"
                         Header="Tên Sách" />
                                     <GridViewColumn
-                        DisplayMemberBinding="{Binding Customer.Name}"
+                        DisplayMemberBinding="{Binding Price.OutputPrice}"
                         Header="Giá" />
                                     <GridViewColumn
                         DisplayMemberBinding="{Binding Customer.Name}"
@@ -177,7 +177,7 @@
                     <Grid Grid.Row="2">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock FontSize="18" Foreground="Gray" Text="Tổng tiền:"></TextBlock>
-                            <TextBlock  FontSize="18" Foreground="Gray" Text="{Binding}"></TextBlock>
+                            <TextBlock  FontSize="18" Foreground="Gray" Text="{Binding TotalOfPrice}"></TextBlock>
                         </StackPanel>
 
                     </Grid>

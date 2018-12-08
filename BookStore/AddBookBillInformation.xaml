@@ -159,7 +159,14 @@
         </Grid>
         <Grid Grid.Row="1">
 
-            <Button     Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Content="THÊM" Margin="0,0,0,0" BorderThickness="7"></Button>
+            <Button    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Content="THÊM" Margin="0,0,0,0" BorderThickness="7">
+                <i:Interaction.Triggers>
+                    <i:EventTrigger EventName="Click">
+                        <i:InvokeCommandAction Command="{Binding TransferBookBill}"/>
+                    </i:EventTrigger>
+                </i:Interaction.Triggers>
+            </Button>
+            
 
         </Grid>
 

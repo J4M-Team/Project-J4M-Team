@@ -41,14 +41,19 @@ namespace BookStore.Model.MyClass
         #endregion
 
         #region public properties
-
+        //Id hoa don
         public int Id { get { return _Id; } set { _Id = value; } }
+        //Thông tin người bán
         public CSalesman Salesman { get { return _Salesman; } set { _Salesman = value; } }
+        //Thông tin khác hàng
         public CCustomer Customer { get { return _Customer; } set { _Customer = value; } }
+        //Thông tin tổng số tiền
         public float TotalMoney { get { return _TotalMoney; } set { _TotalMoney = value; } }
         public int Type { get { return _Type; } set { _Type = value; } }
         public float Promotion { get { return _Promotion; } set { _Promotion = value; } }
+        //Ngày thanh toán
         public DateTime Date { get { return _Date; } set { _Date = value; } }
+        //Dánh Sách Sách
         public List<CBook> ListBook { get { return _ListBook; } set { _ListBook = value; } }
 
         #endregion

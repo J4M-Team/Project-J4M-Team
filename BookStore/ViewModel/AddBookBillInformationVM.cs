@@ -111,6 +111,7 @@ namespace BookStore.ViewModel
         public ICommand SearchTextChangeCommand { get; set; }
         public ICommand SelectBookCommand { get; set; }
         public ICommand NumberOfBookChangeCommand { get; set; }
+        public ICommand TransferBookBill { get; set; }
 
         #endregion
         public AddBookBillInformationVM()
@@ -134,6 +135,7 @@ namespace BookStore.ViewModel
                 {
                     Name = SelectedItem.Name;
                     Price = SelectedItem.Price.OutputPrice.ToString();
+                    
                 }
                 //System.Windows.MessageBox.Show(FilterString.ToString());
             }
@@ -143,6 +145,22 @@ namespace BookStore.ViewModel
                if(CheckNumberOfBook()==false)
                 {
                     MessageBox.Show("KHONG DUOC NHAP CHU");
+                }
+            }
+              );
+
+            TransferBookBill = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if(NumberOfBook=="" || NumberOfBook==null)
+                {
+                    MessageBox.Show("Khong duoc de trong so luong");
+                }
+                else
+                {
+                    DataTransfer.BookBill.Add(_SelectedItem);
+                    DataTransfer.NumberOfBook = int.Parse(_NumberOfBook);
+                    DataTransfer.ListBooks.Add(_SelectedItem);
+                    
                 }
             }
               );
