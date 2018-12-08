@@ -58,7 +58,7 @@
                         <ListViewItem Padding="1">
                             <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding EditBookCommand}" Height="50" Width="148">
                                 <StackPanel Orientation="Horizontal" Margin="-30,0,0,0">
-                                    <materialDesign:PackIcon Kind="Book" Foreground="Black"/>
+                                    <materialDesign:PackIcon Kind="GreasePencil" Foreground="Black"/>
                                     <TextBlock Text="Kho sách" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>
                                 </StackPanel>
                             </Button>
