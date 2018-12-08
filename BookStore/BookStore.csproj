@@ -261,6 +261,7 @@
       <DependentUpon>SettingPromotionBookpage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AccepBillPageVM.cs" />
+    <Compile Include="ViewModel\AddBookBillInformationVM.cs" />
     <Compile Include="ViewModel\AddEmployeeVM.cs" />
     <Compile Include="ViewModel\AddNewBookWindowVM.cs" />
     <Compile Include="ViewModel\BanHangMain2VM.cs" />

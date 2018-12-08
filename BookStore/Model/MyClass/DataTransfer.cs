@@ -11,5 +11,8 @@ namespace BookStore.Model.MyClass
     {
         //Biến truyền id của nhân viên giữa các màn hình
         public static int Employee_Id;
+        //Biến truyền sách 
+        public static CBook BookBill;
+             
     }
 }
