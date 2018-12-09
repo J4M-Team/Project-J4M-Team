@@ -83,7 +83,7 @@ namespace BookStore.ViewModel
 
             ShowListBookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                ListSelectedBooks = new ObservableCollection<CBook>(DataTransfer.BookBill);
+               // ListSelectedBooks = new ObservableCollection<CBook>(DataTransfer.BookBill);
             }
               );
         }

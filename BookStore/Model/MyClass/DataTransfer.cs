@@ -21,16 +21,16 @@ namespace BookStore.Model.MyClass
 
         //Biến của Phạm Ngọc Sơn
         //Biến truyền sách 
-        private static List<CBook> bookBill;
-        public static int NumberOfBook;
+        //private static List<CBook> bookBill;
+        //public static int NumberOfBook;
         public static ObservableCollection<CBook> ListBooks;
-        public static List<CBook> BookBill { get => bookBill; set => bookBill = value; }
+        //public static List<CBook> BookBill { get => bookBill; set => bookBill = value; }
 
 
         //Hàm khởi tạo truyền dữ liệu
         static DataTransfer()
         {
-            bookBill = new List<CBook>();
+            //bookBill = new List<CBook>();
             ListBooks = new ObservableCollection<CBook>();
         }
     }

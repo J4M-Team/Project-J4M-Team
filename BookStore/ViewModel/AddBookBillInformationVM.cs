@@ -149,6 +149,7 @@ namespace BookStore.ViewModel
                if(CheckNumberOfBook()==false)
                 {
                     MessageBox.Show("KHONG DUOC NHAP CHU");
+
                 }
             }
               );
@@ -161,8 +162,9 @@ namespace BookStore.ViewModel
                 }
                 else
                 {
-                    DataTransfer.BookBill.Add(_SelectedItem);
-                    DataTransfer.NumberOfBook = int.Parse(_NumberOfBook);
+                    //DataTransfer.BookBill.Add(_SelectedItem);
+                    //DataTransfer.NumberOfBook = int.Parse(_NumberOfBook);
+                    _SelectedItem.Count= int.Parse(_NumberOfBook);
                     DataTransfer.ListBooks.Add(_SelectedItem);
                     
                 }

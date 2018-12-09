@@ -122,13 +122,13 @@
                 </Grid>-->
                 <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition  Height="*"></RowDefinition>
-                        <RowDefinition Height="50"></RowDefinition>
+                        <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="50"></RowDefinition>
                      </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
-                        <Label Content="THÔNG TIN HOÁ ĐƠN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="13" />
+                        <Label Content="THÔNG TIN HOÁ ĐƠN" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="Gray" FontSize="13" />
                     </Grid>
                     <Grid Grid.Row="1">
                         <ListView  ItemsSource="{Binding ListSelectedBooks}" SelectedItem="{Binding SelectedItem}"  SelectedIndex="{Binding SelectedIndex}" SelectionMode="Single" Name="ListBill" IsSynchronizedWithCurrentItem="True">
@@ -156,7 +156,7 @@
                         DisplayMemberBinding="{Binding Price.OutputPrice}"
                         Header="Giá" />
                                     <GridViewColumn
-                        DisplayMemberBinding="{Binding Customer.Name}"
+                        DisplayMemberBinding="{Binding Count}"
                         Header="Số lượng" />
                                     <GridViewColumn
                         DisplayMemberBinding="{Binding Customer.Name}"
