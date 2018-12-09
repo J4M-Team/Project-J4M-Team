@@ -24,7 +24,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="50"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0" >
             <Label Content="HOÁ ĐƠN" HorizontalAlignment="Center" FontSize="18" Foreground="Gray"/>
         </Grid>
         <Grid Grid.Row="1">
@@ -131,7 +131,7 @@
                         <Label Content="THÔNG TIN HOÁ ĐƠN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="13" />
                     </Grid>
                     <Grid Grid.Row="1">
-                        <ListView  ItemsSource="{Binding ListSelectedBooks}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" Name="ListBill" IsSynchronizedWithCurrentItem="True">
+                        <ListView  ItemsSource="{Binding ListSelectedBooks}" SelectedItem="{Binding SelectedItem}"  SelectedIndex="{Binding SelectedIndex}" SelectionMode="Single" Name="ListBill" IsSynchronizedWithCurrentItem="True">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Style.Triggers>
@@ -144,12 +144,15 @@
                             <ListView.View>
                                 <GridView>
                                     <GridViewColumn
+                                        Width="Auto"
                         DisplayMemberBinding="{Binding Id}"
                         Header="Mã Sách" />
                                     <GridViewColumn
+                                         Width="Auto"
                         DisplayMemberBinding="{Binding Name}"
                         Header="Tên Sách" />
                                     <GridViewColumn
+                                         Width="Auto"
                         DisplayMemberBinding="{Binding Price.OutputPrice}"
                         Header="Giá" />
                                     <GridViewColumn
@@ -162,8 +165,8 @@
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
                                                 <Button Content="XOÁ" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Margin="30,0,0,0"
-                                                    Command="{Binding Path=DataContext.AccepCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}} }"
-                                                    CommandParameter="{Binding}"></Button>
+                                                    Command="{Binding Path=DataContext.DeleteCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListView}} }"
+                                                    ></Button>
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>

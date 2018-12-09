@@ -39,12 +39,39 @@ namespace BookStore.ViewModel
             }
         }
 
+        private int _SelectedIndex;
+        public int SelectedIndex
+        {
+            get { return _SelectedIndex; }
+            set
+            {
+                _SelectedIndex = value;
+                OnPropertyChanged(nameof(SelectedIndex));
+            }
+        }
+
         #endregion
         public ICommand AddBookCommand { get; set; }
+        public ICommand DeleteCommand { get; set; }
         public ICommand ShowListBookCommand { get; set; }
         public InHoaDonVM()
         {
             ListSelectedBooks = DataTransfer.ListBooks;
+
+            DeleteCommand = new RelayCommand<object>((p) =>
+            {                                         
+                return true;
+            },
+          (p) =>
+          {
+              if (SelectedItem != null)
+              {
+                  ListSelectedBooks.RemoveAt(SelectedIndex);
+              }
+              
+          }
+             );
+
 
             AddBookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {

@@ -112,10 +112,14 @@ namespace BookStore.ViewModel
         public ICommand SelectBookCommand { get; set; }
         public ICommand NumberOfBookChangeCommand { get; set; }
         public ICommand TransferBookBill { get; set; }
+       
+
 
         #endregion
         public AddBookBillInformationVM()
         {
+           
+
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 //lấy data từ cơ sở dữ liệu
