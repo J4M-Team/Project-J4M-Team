@@ -40,7 +40,7 @@
             <PropertyRef Name="Book_Id" />
           </Key>
           <Property Name="Book_Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Book_Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Book_Name" Type="nvarchar" MaxLength="200" />
           <Property Name="Book_Author" Type="nvarchar" MaxLength="50" />
           <Property Name="Book_Theme" Type="nvarchar" MaxLength="50" />
           <Property Name="Book_Type" Type="nvarchar" MaxLength="50" />
@@ -796,7 +796,7 @@
             <PropertyRef Name="Book_Id" />
           </Key>
           <Property Name="Book_Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Book_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Book_Name" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Book_Author" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Book_Theme" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Book_Type" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
