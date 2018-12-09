@@ -43,6 +43,7 @@ namespace BookStore.Model.MyClass
         private CBook_Price _Price;
         private float _Promotion;//Phần trăm khuyến mãi
         private float _PricePromotion;//Giá bán sách sau khuyến mãi
+        private int _TotalCount;//tổng lượt mua của sách
 
         #endregion
 
@@ -59,6 +60,7 @@ namespace BookStore.Model.MyClass
         public BitmapImage Image { get { return _Image; } set { _Image = value; } }
         public float Promotion { get { return _Promotion; } set { _Promotion = value; } }
         public float PricePromotion { get { return _PricePromotion; } set { _PricePromotion = value; } }
+        public int TotalCount { get { return _TotalCount; } set { _TotalCount = value; } }
 
         #endregion
 
@@ -88,7 +90,9 @@ namespace BookStore.Model.MyClass
                             Type = item.Book_Type,
                             Theme = item.Book_Theme,
                             Count = (int)item.Book_Count,
-                            Image = image
+                            Image = image,
+                            Price = new CBook_Price { OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault() },
+                            TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum()
                         };
                     }
                     else
@@ -101,7 +105,9 @@ namespace BookStore.Model.MyClass
                             Type = item.Book_Type,
                             Theme = item.Book_Theme,
                             Count = (int)item.Book_Count,
-                            Image = Help.ByteToImage(item.Book_Image)
+                            Image = Help.ByteToImage(item.Book_Image),
+                            Price = new CBook_Price { OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault() },
+                            TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum()
                         };
                     }
                     

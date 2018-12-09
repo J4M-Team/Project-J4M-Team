@@ -115,8 +115,12 @@
                                                    Margin="0,0,0,0" TextWrapping="WrapWithOverflow" Width="170" HorizontalAlignment="Left" FontWeight="Regular" FontSize="15">
                                         </TextBlock>
                                         <TextBlock Text="{Binding Author}" FontWeight="Light" Margin="0,4,0,0" FontSize="13" />
-                                        <TextBlock Text="15.000đ" FontWeight="Black" Margin="0,4,0,0"/>
-                                        <TextBlock Text="Lượt mua: 40" Margin="0,4,0,0"/>
+                                        <TextBlock Text="{Binding Price.OutputPrice}" FontWeight="Black" Margin="0,4,0,0"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Lượt mua: " Margin="0,4,0,0"/>
+                                            <TextBlock Text="{Binding TotalCount}" Margin="0,4,0,0"/>
+                                        </StackPanel>
+                                        
                                     </StackPanel>
                                     
                                 </Grid>
