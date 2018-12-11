@@ -66,6 +66,27 @@ namespace BookStore.Model.MyClass
             return 0;
         }
 
+        /// <summary>
+        /// Hàm trả về quyền truy cập của tài khoản nhân viên theo theo id nhân viên
+        /// </summary>
+        /// <param name="Employee_Id"></param>
+        /// <returns>trả về 0 khi nhân viên không tồn tại, trả về 1 khi nhân viên có quyền truy cập tồn bộ hệ thống
+        /// trả về 2 khi nhân viên có quyền truy cập quản lý kho, trả về 3 khi nhân viên có quyền truy cập quản lý bán hàng
+        /// Trả về 4 khi nhân viên có toàn quyền truy cập hệ thống</returns>
+        public int Decentralization(int Employee_Id)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Employees.Find(Employee_Id).Employee_Role.Decentralization1.Decentralization_Id;
+                return find;
+            }
+            catch
+            {
+
+            }
+            return 0;
+        }
+
         #endregion
     }
 }

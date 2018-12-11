@@ -16,6 +16,11 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         DataContext="{StaticResource BanHangMain2VM}"
         Title="Ban Hang" Height="800" Width="1305" Icon="Image/Book.png" WindowStartupLocation="CenterScreen">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="155"/>
@@ -99,7 +104,7 @@
                     <Grid>
                         <TextBlock Text="Bán hàng" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="15"></TextBlock>
                         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,50,0">
-                            <materialDesign:Chip Content="your ID"/>
+                            <materialDesign:Chip Content="{Binding EmployeeName}"/>
                             <materialDesign:PackIcon Kind="AccountOutline" Width="30" Height="30" VerticalAlignment="Center"/>
                         </StackPanel>
 

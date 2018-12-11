@@ -21,6 +21,12 @@
         <ImageBrush ImageSource="Image/WindowBackground.jpg"/>
     </Window.Background>
     <Grid>
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}"
+                Command="{Binding CloseCommand}" CommandParameter="{Binding ElementName=Login}">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <materialDesign:PackIcon Kind="CloseOctagonOutline" Width="25" Height="25"/>
+            </Grid>
+        </Button>
         <materialDesign:Card VerticalAlignment="Top" Height="450" Width="750" Margin="0,30,0,0"
                              Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                              Padding="0"
@@ -28,14 +34,36 @@
                              >
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="300"></ColumnDefinition>
+                    <ColumnDefinition Width="320"></ColumnDefinition>
                     <ColumnDefinition Width="*"></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <Grid Grid.Column="0">
                     <Grid.Background>
                         <ImageBrush ImageSource="Image/Blue.jpg"/>
                     </Grid.Background>
-
+                    <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top"  Margin="0,20,0,0">
+                        <TextBlock Text="Chào mừng" HorizontalAlignment="Center" FontSize="30" FontWeight="Medium"></TextBlock>
+                        <TextBlock Text="đến với ứng dụng quản lý nhà sách" FontSize="16" HorizontalAlignment="Center" FontWeight="Medium" Margin="0,5,0,0"/>
+                        <StackPanel Orientation="Horizontal" Margin="10,20,0,0">
+                            <materialDesign:PackIcon Kind="AlertCircleOutline" />
+                            <TextBlock Text="Vui lòng chọn màn hình trước khi đăng nhập" FontSize="14"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                            <materialDesign:PackIcon Kind="AlertCircleOutline" />
+                            <TextBlock Text="Vui lòng đăng nhập đúng quyền hạn" FontSize="14"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                            <materialDesign:PackIcon Kind="AlertCircleOutline" />
+                            <TextBlock Text="Vui lòng cung cấp đầy đủ thông tin" FontSize="14"/>
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="10,10,0,0">
+                            <materialDesign:PackIcon Kind="AlertCircleOutline" />
+                            <TextBlock Text="Nếu bạn là khách hàng hãy chọn màn hình tìm kiếm" TextWrapping="WrapWithOverflow" Width="250" FontSize="14"/>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                        
+                    
                 </Grid>
                 <Grid Grid.Column="1">
                     <TextBlock Text="Đăng nhập" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontSize="20" Margin="10,60,0,0" FontWeight="Medium"></TextBlock>
@@ -75,7 +103,8 @@
                     <ComboBox
                         materialDesign:HintAssist.Hint="Màn hình"                          
                         Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Bottom"
-                        Margin="30,0,0,153">
+                        Margin="30,0,0,153"
+                        SelectedItem="{Binding SelectedItem}">
                         <ComboBoxItem>
                             Màn hình quản lý
                         </ComboBoxItem>

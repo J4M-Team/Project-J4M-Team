@@ -6,12 +6,24 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows;
+using BookStore.Model.MyClass;
 
 namespace BookStore.ViewModel
 {
     public class ManagementWindowVM : BaseViewModel
     {
         #region data binding
+        //Lưu tên của nhân viên
+        private string _EmployeeName;
+        public string EmployeeName
+        {
+            get { return _EmployeeName; }
+            set
+            {
+                _EmployeeName = value;
+                OnPropertyChanged(nameof(EmployeeName));
+            }
+        }
 
         //Biến lưu framepage
         private Page _FramePage;
@@ -60,12 +72,21 @@ namespace BookStore.ViewModel
         public ICommand ReportCommand { get; set; }
         public ICommand AccountCommand { get; set; }
         public ICommand ExitCommand { get; set; }
-
+        public ICommand loadCommand { get; set; }
         #endregion
 
 
         public ManagementWindowVM()
         {
+            loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (DataTransfer.Employee_Id > 0)
+                {
+                    EmployeeName = CEmployee.Ins.EmployeeInfo(DataTransfer.Employee_Id).Name;
+                }
+            }
+               );
+
             EmployeeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 97, 0, 0);

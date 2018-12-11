@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookStore.Model.MyClass;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -29,6 +30,17 @@ namespace BookStore.ViewModel
             }
         }
 
+        //Lưu tên của nhân viên
+        private string _EmployeeName;
+        public string EmployeeName
+        {
+            get { return _EmployeeName; }
+            set
+            {
+                _EmployeeName = value;
+                OnPropertyChanged(nameof(EmployeeName));
+            }
+        }
 
         #endregion
 
@@ -58,11 +70,21 @@ namespace BookStore.ViewModel
         public ICommand ExchangeCommand { get; set; }
         public ICommand AccountCommand { get; set; }
         public ICommand ExitCommand { get; set; }
+        public ICommand loadCommand { get; set; }
 
         #endregion
 
         public BanHangMain2VM()
         {
+            loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (DataTransfer.Employee_Id > 0)
+                {
+                    EmployeeName = CEmployee.Ins.EmployeeInfo(DataTransfer.Employee_Id).Name;
+                }
+            }
+               );
+
             DeleteCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 97 + 52 * 1, 0, 0);
