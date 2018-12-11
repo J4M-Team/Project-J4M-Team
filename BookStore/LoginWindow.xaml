@@ -11,57 +11,93 @@
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
         TextOptions.TextFormattingMode="Ideal"
-        TextOptions.TextRenderingMode="Auto"
-        Background="{DynamicResource MaterialDesignPaper}"
+        TextOptions.TextRenderingMode="Auto"       
         FontFamily="{DynamicResource MaterialDesignFont}"
         ResizeMode="NoResize"
         DataContext="{StaticResource LoginVM}" 
         Name="Login"
-        Title="LoginWindow" Height="500" Width="350" WindowStartupLocation="CenterScreen" Icon="Image/Book.png">
+        Title="LoginWindow" Height="530" Width="800" WindowStartupLocation="CenterScreen" Icon="Image/Book.png" WindowStyle="None">
+    <Window.Background>
+        <ImageBrush ImageSource="Image/WindowBackground.jpg"/>
+    </Window.Background>
     <Grid>
-        <Rectangle Height="280" VerticalAlignment="Top">
-            <Rectangle.Fill>
-                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="#FF3EA0C3"/>
-                    <GradientStop Color="#FF1C455A" Offset="1"/>
-                    <GradientStop Color="#FF4392A5" Offset="0.5"/>
-                </LinearGradientBrush>
+        <materialDesign:Card VerticalAlignment="Top" Height="450" Width="750" Margin="0,30,0,0"
+                             Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                             Padding="0"
+                             UniformCornerRadius="15"
+                             >
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="300"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <Grid Grid.Column="0">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="Image/Blue.jpg"/>
+                    </Grid.Background>
 
-            </Rectangle.Fill>
-        </Rectangle>
-        <Image Source="Image/Book.png" Width="100" Height="100" VerticalAlignment="Top" Margin="20"/>
-        <materialDesign:Card Width="300" Height="200" VerticalAlignment="Center">
-            <Grid >
-                <TextBlock Text="LOGIN" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="Gray" FontSize="18"></TextBlock>
-                <StackPanel VerticalAlignment="Center" Margin="10">
-                    <TextBox materialDesign:HintAssist.Hint="User"
+                </Grid>
+                <Grid Grid.Column="1">
+                    <TextBlock Text="Đăng nhập" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="Gray" FontSize="20" Margin="10,60,0,0" FontWeight="Medium"></TextBlock>
+                    <StackPanel VerticalAlignment="Center" Margin="20,0,40,90">
+                        <TextBox materialDesign:HintAssist.Hint="Tên đăng nhập"
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                             FontSize="14"
-                             Margin="0,10" Text="{Binding UserName}"/>
-                    <PasswordBox materialDesign:HintAssist.Hint="Password"
+                             FontSize="15"                            
+                             Margin="0,10,0,10" Foreground="Black" FontWeight="Medium" Text="{Binding UserName}"/>
+                        <PasswordBox materialDesign:HintAssist.Hint="Mật khẩu"
                                  Style="{StaticResource MaterialDesignFloatingHintPasswordBox}"
-                                 FontSize="14"
-                                 Margin="0,5" x:Name="Password">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="PasswordChanged">
-                                <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" CommandParameter="{Binding ElementName=Password}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </PasswordBox>
-                </StackPanel>
-            </Grid>
-        </materialDesign:Card>
-        <Button Content="LOGIN" 
-                VerticalAlignment="Bottom" 
-                Margin="0,120" 
-                Width="150"
-                Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Grid.ColumnSpan="3"
-                Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=Login}">
-        </Button>
-        <TextBlock Text="Please login your Account!"
+                                 FontSize="15" x:Name="Password"
+                                 Margin="0,10,0,0" Foreground="Black" FontWeight="Medium">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding PasswordChangedCommand}" CommandParameter="{Binding ElementName=Password}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+                    </StackPanel>
+                    <Button Content="Đăng nhập" 
+                        VerticalAlignment="Bottom" HorizontalAlignment="Right"
+                        Margin="0,0,70,150" 
+                        Width="150"
+                        Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Grid.ColumnSpan="3"
+                        Command="{Binding LoginCommand}" CommandParameter="{Binding ElementName=Login}" IsDefault="True">
+                    </Button>
+                    <TextBlock Text="Vui lòng đăng nhập vào tài khoản của bạn!"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Bottom"
-                   Margin="0,95"
+                   Margin="0,0,0,30"
                    Foreground="Gray" Cursor="Hand"/>
+                    <!-- icon-->
+                    <materialDesign:PackIcon Kind="LaptopWindows" 
+                                             Foreground="#FF3EA0C3"
+                                             Height="70" Width="70"
+                                             HorizontalAlignment="Left" VerticalAlignment="Top" Margin="130,37,0,0"/>
+                    <ComboBox
+                        materialDesign:HintAssist.Hint="Màn hình"                          
+                        Foreground="Black" HorizontalAlignment="Left" VerticalAlignment="Bottom"
+                        Margin="30,0,0,153">
+                        <ComboBoxItem>
+                            Màn hình quản lý
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Màn hình quản lý kho
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Màn hình bán hàng
+                        </ComboBoxItem>
+                        <ComboBoxItem>
+                            Màn hình tìm kiếm sách
+                        </ComboBoxItem>
+                    </ComboBox>
+
+                </Grid>
+
+            </Grid>
+        </materialDesign:Card>
+        <TextBlock Text="Created by J4M Team" HorizontalAlignment="Center" 
+                   VerticalAlignment="Bottom" 
+                   Foreground="White"
+                   Margin="0,0,0,20" FontStretch="Medium" FontWeight="Medium"
+                   Cursor="Hand"/>
     </Grid>
 </Window>

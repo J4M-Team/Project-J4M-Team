@@ -417,6 +417,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Image\Blue.jpg" />
+    <Resource Include="Image\WindowBackground.jpg" />
     <Content Include="Model\BookStoreModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BookStoreModel.Context.cs</LastGenOutput>
