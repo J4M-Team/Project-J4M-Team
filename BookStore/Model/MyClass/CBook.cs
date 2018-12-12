@@ -746,11 +746,10 @@ namespace BookStore.Model.MyClass
                         Count = (int)item.Book_Count,
                         Price = new CBook_Price { OutputPrice = (float)item.output },
                         Promotion = (float)item.promotion,
-                        PricePromotion = item.promotion == 0 ? (float)item.output : (float)item.output * (float)item.promotion + (float)item.output
+                        PricePromotion = item.promotion == 0 ? (float)item.output : (float)item.output - (float)item.output * (float)item.promotion
                     };
                     List.Add(Book);
-                }
-       
+                }      
             }
             catch
             {

@@ -22,4 +22,6 @@
     <viewmodel:SettingPromotionBookpageVM x:Key="SettingPromotionBookpageVM"></viewmodel:SettingPromotionBookpageVM>
 
     <viewmodel:AddBookBillInformationVM x:Key="AddBookBillInformation"></viewmodel:AddBookBillInformationVM>
+    <viewmodel:ReportMenuPageVM x:Key="ReportMenuPageVM"></viewmodel:ReportMenuPageVM>
+    <viewmodel:ProfitReportPageVM x:Key="ProfitReportPageVM"></viewmodel:ProfitReportPageVM>
 </ResourceDictionary>

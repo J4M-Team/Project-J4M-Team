@@ -231,6 +231,7 @@
     <Compile Include="Model\MyClass\CEmployee_Info.cs" />
     <Compile Include="Model\MyClass\CEvaluate.cs" />
     <Compile Include="Model\MyClass\CHuman.cs" />
+    <Compile Include="Model\MyClass\CReport.cs" />
     <Compile Include="Model\MyClass\CRole.cs" />
     <Compile Include="Model\MyClass\CSalesman.cs" />
     <Compile Include="Model\MyClass\CWarehouse.cs" />
@@ -244,6 +245,12 @@
     </Compile>
     <Compile Include="Model\Salary_Bonus.cs">
       <DependentUpon>BookStoreModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="ProfitReportPage.xaml.cs">
+      <DependentUpon>ProfitReportPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ReportMenuPage.xaml.cs">
+      <DependentUpon>ReportMenuPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="SearchPage.xaml.cs">
       <DependentUpon>SearchPage.xaml</DependentUpon>
@@ -276,6 +283,8 @@
     <Compile Include="ViewModel\ManagementEmployeePageVM.cs" />
     <Compile Include="ViewModel\ManagementEmployeeVM.cs" />
     <Compile Include="ViewModel\ManagementWindowVM.cs" />
+    <Compile Include="ViewModel\ProfitReportPageVM.cs" />
+    <Compile Include="ViewModel\ReportMenuPageVM.cs" />
     <Compile Include="ViewModel\SearchPageVM.cs" />
     <Compile Include="ViewModel\SettingBookPageVM.cs" />
     <Compile Include="ViewModel\SettingEmployeePageVM.cs" />
@@ -354,6 +363,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ManagementWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ProfitReportPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ReportMenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
