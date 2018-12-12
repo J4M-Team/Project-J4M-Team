@@ -17,8 +17,125 @@
       DataContext="{StaticResource ProfitReportPageVM}"
       d:DesignHeight="700" d:DesignWidth="1150"      
       Title="ProfitReportPage">
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <TextBlock Text="Doanh thu" HorizontalAlignment="Center"/>
+        </Grid>
+        <Grid Grid.Row="1">
+            <ListView ItemsSource="{Binding ListReport}" MaxHeight="600" VerticalAlignment="Top">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <UniformGrid Columns="4"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <materialDesign:Card Margin="40,0,0,0" Width="220"
+                                 Height="200"
+                                 UniformCornerRadius="20"
+                                 materialDesign:ShadowAssist.ShadowDepth="Depth4">
+                            <materialDesign:Card.Background>
+                                <ImageBrush ImageSource="Image/background2.jpg"/>
+                            </materialDesign:Card.Background>
+                            <Grid Height="200" Margin="0,0,0,0" Width="220">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid Grid.Row="0" HorizontalAlignment="Stretch">
+                                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+                                        <TextBlock Text="Ngày: " FontSize="15" FontWeight="Medium" Foreground="White"/>
+                                        <TextBlock Text="{Binding Date,FallbackValue=10-10-2018}" FontSize="15" FontWeight="Medium" Foreground="White"/>
+                                    </StackPanel>
+                                </Grid>
+                                <Grid Grid.Row="1">
+                                    <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                                        <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                                            <TextBlock Text="Tổng sách bán ra: " FontSize="15" FontWeight="Medium" Foreground="White"/>
+                                            <TextBlock Text="{Binding CountBook,FallbackValue=10}" FontSize="15" FontWeight="Medium" Foreground="White"/>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                            <TextBlock Text="Tổng tiền: " FontSize="15" FontWeight="Medium" Foreground="White"/>
+                                            <TextBlock Text="{Binding TotalMoney,FallbackValue=100000}" FontSize="15" FontWeight="Medium" Foreground="White"/>
+                                        </StackPanel>
+
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBlock Text="Ước lượng lợi nhuận: " FontSize="15" FontWeight="Medium" Foreground="White"/>
+                                            <TextBlock Text="{Binding Profit,FallbackValue=100000}" FontSize="15" FontWeight="Medium" Foreground="White"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                    <materialDesign:PackIcon Kind="Blender" VerticalAlignment="Bottom" 
+                                                 HorizontalAlignment="Center"
+                                                 Foreground="White"
+                                                 Width="50" Height="50" Margin="0,0,0,20"/>
+                                </Grid>
+
+
+                            </Grid>
+                        </materialDesign:Card>
+
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+        <Grid Grid.Row="1">
+            <!--<materialDesign:Card Margin="40,0,0,0" Width="230"
+                                 Height="200"
+                                 UniformCornerRadius="20"
+                                 materialDesign:ShadowAssist.ShadowDepth="Depth4">
+                <materialDesign:Card.Background>
+                    <ImageBrush ImageSource="Image/background2.jpg"/>
+                </materialDesign:Card.Background>
+                <Grid Height="200" Margin="0,0,0,0" Width="200">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" HorizontalAlignment="Stretch">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
+                            <TextBlock Text="Ngày: " FontSize="15" FontWeight="Medium" Foreground="White"/>
+                            <TextBlock Text="{Binding Date,FallbackValue=10-10-2018}" FontSize="15" FontWeight="Medium" Foreground="White"/>
+                        </StackPanel>
+                    </Grid>
+                    <Grid Grid.Row="1">
+                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
+                            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
+                                <TextBlock Text="Tổng sách bán ra: " FontSize="15" FontWeight="Medium" Foreground="White"/>
+                                <TextBlock Text="{Binding CountBook,FallbackValue=10}" FontSize="15" FontWeight="Medium" Foreground="White"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                                <TextBlock Text="Tổng tiền: " FontSize="15" FontWeight="Medium" Foreground="White"/>
+                                <TextBlock Text="{Binding TotalMoney,FallbackValue=100000}" FontSize="15" FontWeight="Medium" Foreground="White"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="Ước lượng lợi nhuận: " FontSize="15" FontWeight="Medium" Foreground="White"/>
+                                <TextBlock Text="{Binding Profit,FallbackValue=100000}" FontSize="15" FontWeight="Medium" Foreground="White"/>
+                            </StackPanel>
+                        </StackPanel>
+                        <materialDesign:PackIcon Kind="Blender" VerticalAlignment="Bottom" 
+                                                 HorizontalAlignment="Center"
+                                                 Foreground="White"
+                                                 Width="50" Height="50" Margin="0,0,0,20"/>
+                    </Grid>
+                          
+                    
+                </Grid>
+            </materialDesign:Card>-->
+        </Grid>
         
     </Grid>
 </Page>

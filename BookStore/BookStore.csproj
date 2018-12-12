@@ -436,6 +436,7 @@
   <ItemGroup>
     <Resource Include="Image\Blue.jpg" />
     <Resource Include="Image\WindowBackground.jpg" />
+    <Resource Include="Image\background2.jpg" />
     <Content Include="Model\BookStoreModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>BookStoreModel.Context.cs</LastGenOutput>

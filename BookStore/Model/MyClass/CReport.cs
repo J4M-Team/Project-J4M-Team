@@ -9,6 +9,25 @@ namespace BookStore.Model.MyClass
 {
     public class CReport
     {
+        #region design pattern singleton
+
+        private static CReport _ins;
+        public static CReport Ins
+        {
+            get
+            {
+                if (_ins == null)
+                    _ins = new CReport();
+                return _ins;
+            }
+            set
+            {
+                _ins = value;
+            }
+        }
+
+        #endregion
+
         #region private properties
 
         private DateTime _Date;//Ngày cần thống kê

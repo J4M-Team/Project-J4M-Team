@@ -30,11 +30,11 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <StackPanel Orientation="Horizontal" Background="WhiteSmoke">
-                <Button Command="{Binding PriceCommand}"
+                <Button Command="{Binding DateReportCommand}"
                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Width="170">
                     <StackPanel Orientation="Horizontal">
                         <materialDesign:PackIcon Kind="BookSecure"  Foreground="Black"/>
-                        <TextBlock Text="Cài đặt giá sách" Margin="5,0,0,0" Foreground="Black"/>
+                        <TextBlock Text="Báo cáo theo ngày" Margin="5,0,0,0" Foreground="Black"/>
                     </StackPanel>
                 </Button>
                 <Button Command="{Binding EmployeeCommand}"
