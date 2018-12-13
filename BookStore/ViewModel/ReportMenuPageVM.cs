@@ -76,6 +76,8 @@ namespace BookStore.ViewModel
             {
                 //Thay đổi vị trí của thanh ngang
                 GridCursorMargin = new Thickness(10 + 170 + 170, 0, 0, 0);
+
+                FramePage = new TopBookPage();
             }
               );
 

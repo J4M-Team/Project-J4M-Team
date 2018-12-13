@@ -1,6 +1,7 @@
 ﻿using BookStore.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -758,6 +759,12 @@ namespace BookStore.Model.MyClass
             return List;
         }
 
+        /// <summary>
+        /// Hàm thay đổi giá khuyễn mãi của sách theo Id
+        /// </summary>
+        /// <param name="Book_Id"></param>
+        /// <param name="NewPromotion"></param>
+        /// <returns></returns>
         public bool ChangePromotion(int Book_Id, float NewPromotion)
         {
             try
@@ -813,6 +820,125 @@ namespace BookStore.Model.MyClass
 
             }
             return false;
+        }
+
+        /// <summary>
+        /// Hàm trả về Top sách bán ra nhiều nhất theo tháng
+        /// </summary>
+        /// <param name="Year">Năm</param>
+        /// <param name="Month">Tháng</param>
+        /// <param name="Top">Số lượng sách cần lấy</param>
+        /// <returns></returns>
+        public List<CBook> ListTopBook(int Year,int Month,int Top)
+        {
+            List<CBook> List = new List<CBook>();
+
+            try
+            {
+                //https://stackoverflow.com/questions/37338860/linq-sum-with-group-by?rq=1
+
+                //Lấy ra danh sách id sách kèm tổng số lượng bán ra
+                var ListBook = from item in DataProvider.Ins.DB.Bill_Info.Where(x => SqlFunctions.DatePart("year", x.Bill.Bill_Date) == Year &&
+                    SqlFunctions.DatePart("month", x.Bill.Bill_Date) == Month)
+                               group item by item.Book_Id into Group
+                               select new
+                               {
+                                   Book_Id = Group.Key,
+                                   Book_Sum = Group.Select(x => x.Book_Count).DefaultIfEmpty(0).Sum()
+                               };
+
+                //Lấy ra thông tin của sách bằng cách join với bảng Book
+                var dataListBook = from item1 in ListBook.OrderByDescending(x => x.Book_Sum).Take(Top)
+                                   join item2 in DataProvider.Ins.DB.Books on item1.Book_Id equals item2.Book_Id
+                                   select new
+                                   {
+                                       item1.Book_Id,
+                                       item2.Book_Name,
+                                       item2.Book_Author,
+                                       item1.Book_Sum
+                                   };
+
+                if (dataListBook.Count() > 0)
+                {
+                    //Thêm dữ liệu
+                    foreach (var item in dataListBook)
+                    {
+                        //Tạo mới
+                        CBook Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Count = item.Book_Sum
+                        };
+
+                        //Thêm vào List
+                        List.Add(Book);
+                    }
+                }
+               
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
+
+        public List<CBook> ListTopBookAll(int Top)
+        {
+            List<CBook> List = new List<CBook>();
+
+            try
+            {
+                //https://stackoverflow.com/questions/37338860/linq-sum-with-group-by?rq=1
+
+                //Lấy ra danh sách id sách kèm tổng số lượng bán ra
+                var ListBook = from item in DataProvider.Ins.DB.Bill_Info
+                               group item by item.Book_Id into Group
+                               select new
+                               {
+                                   Book_Id = Group.Key,
+                                   Book_Sum = Group.Select(x => x.Book_Count).DefaultIfEmpty(0).Sum()
+                               };
+
+                //Lấy ra thông tin của sách bằng cách join với bảng Book
+                var dataListBook = from item1 in ListBook.OrderByDescending(x => x.Book_Sum).Take(Top)
+                                   join item2 in DataProvider.Ins.DB.Books on item1.Book_Id equals item2.Book_Id
+                                   select new
+                                   {
+                                       item1.Book_Id,
+                                       item2.Book_Name,
+                                       item2.Book_Author,
+                                       item1.Book_Sum
+                                   };
+
+                if (dataListBook.Count() > 0)
+                {
+                    //Thêm dữ liệu
+                    foreach (var item in dataListBook)
+                    {
+                        //Tạo mới
+                        CBook Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Count = item.Book_Sum
+                        };
+
+                        //Thêm vào List
+                        List.Add(Book);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
         }
 
         #endregion

@@ -17,8 +17,203 @@
       d:DesignHeight="450" d:DesignWidth="1100" 
       DataContext="{StaticResource TopBookPageVM}"
       Title="TopBookPage">
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         
+        <!-- top sách bán chạy trong tháng-->
+        <Grid Grid.Column="0">
+            <StackPanel VerticalAlignment="Top" Margin="10,15,10,0">
+                <materialDesign:Card
+                    Background="#03a9f4"
+                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"                  
+                    Padding="8"
+                    UniformCornerRadius="6"
+                    Margin="10,0,10,0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                        <TextBlock TextWrapping="Wrap" Text="Top sách bán chạy trong" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+                        <ComboBox  SelectedItem="{Binding SelectedItemMonth}" ItemsSource="{Binding ListMonth}" Text="{Binding TextMonth}"
+                    materialDesign:HintAssist.Hint="Tháng" Width="auto" FontSize="16" Margin="10,0,10,0">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedMonth}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+
+                        <ComboBox  SelectedItem="{Binding SelectedItemYear}" ItemsSource="{Binding ListYear}" Text="{Binding TextYear}"
+                    materialDesign:HintAssist.Hint="Năm" Width="auto" Margin="15,0,0,0" FontSize="16">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="SelectionChanged">
+                                    <i:InvokeCommandAction Command="{Binding SelectionChangedYear}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </ComboBox>
+                    </StackPanel>
+
+                </materialDesign:Card>
+                <materialDesign:Card VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <ListView
+                    ItemsSource="{Binding ListBook}" MaxHeight="600">
+
+                        <!-- https://social.msdn.microsoft.com/Forums/vstudio/en-US/0944b3ed-dce9-4e19-9ab4-99193d682b2c/align-each-columns-cell-text-in-a-listview-using-a-gridview?forum=wpf-->
+                        <!-- Đặt text ở giữa mỗi côt-->
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.View>
+                            <GridView>
+                                <!--https://social.msdn.microsoft.com/Forums/vstudio/en-US/ba58e84c-bcdc-49d6-b70b-cebb35d3f38e/alignment-of-gridviewcolumn-header-in-listview?forum=wpf-->
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Mã sách" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Id}" HorizontalAlignment="Left"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Tên sách" HorizontalContentAlignment="Center"/>
+                                    </GridViewColumn.Header>
+
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" Width="130" TextWrapping="WrapWithOverflow"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Tác giả" HorizontalContentAlignment="Center"/>
+                                    </GridViewColumn.Header>
+
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Author}" HorizontalAlignment="Left"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Số lượng bán ra" HorizontalContentAlignment="Center"/>
+                                    </GridViewColumn.Header>
+
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Count,StringFormat='0,0'}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                               
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </materialDesign:Card>
+            </StackPanel>
+            
+        </Grid>
+        
+        <!-- Top sách bán chạy-->
+        <Grid Grid.Column="1">
+            <StackPanel VerticalAlignment="Top" Margin="10,15,10,0">
+                <materialDesign:Card
+                    Background="#03a9f4"
+                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"                  
+                    Padding="8"
+                    UniformCornerRadius="6"
+                    Margin="10,0,10,0" Height="48">
+                    <TextBlock TextWrapping="Wrap" Text="Top sách bán chạy nhất" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center"></TextBlock>
+
+                </materialDesign:Card>
+                <materialDesign:Card VerticalAlignment="Top" HorizontalAlignment="Center" Margin="0,10,0,0">
+                    <ListView
+                    ItemsSource="{Binding ListBookAll}" MaxHeight="600">
+
+                        <!-- https://social.msdn.microsoft.com/Forums/vstudio/en-US/0944b3ed-dce9-4e19-9ab4-99193d682b2c/align-each-columns-cell-text-in-a-listview-using-a-gridview?forum=wpf-->
+                        <!-- Đặt text ở giữa mỗi côt-->
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <ListView.View>
+                            <GridView>
+                                <!--https://social.msdn.microsoft.com/Forums/vstudio/en-US/ba58e84c-bcdc-49d6-b70b-cebb35d3f38e/alignment-of-gridviewcolumn-header-in-listview?forum=wpf-->
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Mã sách" HorizontalContentAlignment="Center" VerticalAlignment="Center"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Id}" HorizontalAlignment="Left"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Tên sách" HorizontalContentAlignment="Center"/>
+                                    </GridViewColumn.Header>
+
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Left" Width="130" TextWrapping="WrapWithOverflow"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Tác giả" HorizontalContentAlignment="Center"/>
+                                    </GridViewColumn.Header>
+
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Author}" HorizontalAlignment="Left"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Số lượng bán ra" HorizontalContentAlignment="Center"/>
+                                    </GridViewColumn.Header>
+
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Count,StringFormat='0,0'}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+
+
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </materialDesign:Card>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>
