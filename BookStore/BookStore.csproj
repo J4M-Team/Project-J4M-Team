@@ -270,6 +270,9 @@
     <Compile Include="SettingPromotionBookpage.xaml.cs">
       <DependentUpon>SettingPromotionBookpage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="TopBookPage.xaml.cs">
+      <DependentUpon>TopBookPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModel\AccepBillPageVM.cs" />
     <Compile Include="ViewModel\AddBookBillInformationVM.cs" />
     <Compile Include="ViewModel\AddEmployeeVM.cs" />
@@ -294,6 +297,7 @@
     <Compile Include="ViewModel\SettingEmployeePageVM.cs" />
     <Compile Include="ViewModel\SettingPageVM.cs" />
     <Compile Include="ViewModel\SettingPromotionBookpageVM.cs" />
+    <Compile Include="ViewModel\TopBookPageVM.cs" />
     <Page Include="AccepBillPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -403,6 +407,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingPromotionBookpage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="TopBookPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
