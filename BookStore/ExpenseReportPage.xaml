@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:local="clr-namespace:BookStore"
       mc:Ignorable="d" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -16,8 +17,149 @@
       DataContext="{StaticResource ExpenseReportPageVM}"
       d:DesignHeight="700" d:DesignWidth="1150"
       Title="ExpenseReportPage">
-
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="900"></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="70"></RowDefinition>
+                <RowDefinition></RowDefinition>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <materialDesign:Card VerticalAlignment="Center"
+                    Background="#03a9f4"
+                    Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                    Width="650"
+                    Padding="8"
+                    UniformCornerRadius="6"
+                    Margin="0,0,0,0">
+                        <TextBlock TextWrapping="Wrap" Text="Báo cáo chi tiêu các tháng" FontSize="16" HorizontalAlignment="Center"></TextBlock>
+                    </materialDesign:Card>
+                    <ComboBox  SelectedItem="{Binding SelectedItemYear}" ItemsSource="{Binding ListYear}" Text="{Binding TextYear}"
+                    materialDesign:HintAssist.Hint="Năm" Width="auto" Margin="30,0,0,0" FontSize="16" VerticalAlignment="Center">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectionChangedYear}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </ComboBox>
+                </StackPanel>
+                
+            </Grid>
+            <Grid Grid.Row="1">
+                <materialDesign:Card VerticalAlignment="Top" HorizontalAlignment="Center" Width="800">
+                    <ListView
+                    ItemsSource="{Binding ListReport}" MaxHeight="600">
+
+                        <!-- https://social.msdn.microsoft.com/Forums/vstudio/en-US/0944b3ed-dce9-4e19-9ab4-99193d682b2c/align-each-columns-cell-text-in-a-listview-using-a-gridview?forum=wpf-->
+                        <!-- Đặt text ở giữa mỗi côt-->
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        
+                        <ListView.View>
+                            <GridView>
+                                <!--https://social.msdn.microsoft.com/Forums/vstudio/en-US/ba58e84c-bcdc-49d6-b70b-cebb35d3f38e/alignment-of-gridviewcolumn-header-in-listview?forum=wpf-->
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Tháng" HorizontalContentAlignment="Center"/>
+                                    </GridViewColumn.Header>
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Date,StringFormat=Tháng {0:MM}}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Số sách nhập" HorizontalContentAlignment="Center"/>
+                                    </GridViewColumn.Header>
+                                    
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding CountBookInput,StringFormat='0,0'}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Số sách bán" HorizontalContentAlignment="Center"/>
+                                    </GridViewColumn.Header>
+                                    
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding CountBook,StringFormat='0,0'}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Tiền nhập sách" HorizontalContentAlignment="Center"/>
+                                    </GridViewColumn.Header>
+                                    
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding ToltalMoneyInput,StringFormat='0,0.00'}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Tiền bán sách" HorizontalContentAlignment="Center"/>
+                                    </GridViewColumn.Header>
+                                    
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding TotalMoney,StringFormat='0,0.00'}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Tiền lương nhân viên" HorizontalContentAlignment="Center"/>
+                                    </GridViewColumn.Header>
+                                    
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding SumSalary,StringFormat='0,0.00'}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
+                                <GridViewColumn>
+                                    <GridViewColumn.Header>
+                                        <GridViewColumnHeader Content="Lợi nhuận" HorizontalContentAlignment="Center"/>
+                                    </GridViewColumn.Header>
+                                    
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Profit,StringFormat='0,0.00'}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </materialDesign:Card>
+            </Grid>
+
+        </Grid>
     </Grid>
 </Page>
