@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Core.Objects;
+using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -105,6 +106,74 @@ namespace BookStore.Model.MyClass
             {
 
             }
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về ListReport theo tháng
+        /// </summary>
+        /// <param name="Month"></param>
+        /// <returns></returns>
+        public List<CReport> MonthlyReport(int Month,int Year)
+        {
+            List<CReport> List = new List<CReport>();
+
+            try
+            {
+                //Lấy ra list date trong danh sách hóa đơn (lấy ra những ngày khác nhau không lấy ra giờ vì trong một ngày có thể có nhiều hóa đơn)
+                //Lấy ra những tháng và năm như điều kiện nhập vào
+                //https://stackoverflow.com/questions/30588033/get-date-part-only-from-datetime-value-using-entity-framework
+
+                var ListDate = DataProvider.Ins.DB.Bills.Where(x => SqlFunctions.DatePart("year", x.Bill_Date) == Year
+                && SqlFunctions.DatePart("month", x.Bill_Date) == Month).Select(x => EntityFunctions.TruncateTime(x.Bill_Date)).Distinct();
+               
+                if (ListDate.Count() > 0)
+                {
+                    //Duyệt trong listday và so sánh với 
+                    foreach (var date in ListDate)
+                    {
+                        //Lấy ra danh sách thông tin hóa đơn theo ngày (như là groupby)
+                        var dataBillInfo = DataProvider.Ins.DB.Bill_Info.Where(x => EntityFunctions.TruncateTime(x.Bill.Bill_Date) == date);
+
+                        //Lấy ra tổng số sách                            
+                        int CountBook = dataBillInfo.Sum(x => x.Book_Count);
+                        Console.WriteLine(CountBook);
+
+                        //Lấy ra tổng số tiền bán ra trong ngày
+                        float TotalMoney = (float)dataBillInfo.Sum(x => x.Price);
+                        Console.WriteLine(TotalMoney);
+
+                        //Tính toán tổng lợi nhuận dựa trên giá bán của sách trừ cho giá nhập của sách
+                        float sum = 0;
+                        foreach (var item in dataBillInfo)
+                        {
+                            //Lấy ra giá sách nhập vào với ngày cài đặt gần nhất so với ngày cần truy vấn
+                            var inputPrice = item.Book.Book_Input_Price.Where(x => x.Date_Set <= date).OrderByDescending(x => x.Date_Set).Select(x => x.Input_Price).FirstOrDefault();
+                            //Console.WriteLine($"fffffffffff{inputPrice} fsf {item.Book.Book_Name}");
+
+                            //Console.WriteLine($"{item.Price} giá bán lúc đó");
+                            sum += (float)(item.Price - inputPrice);
+                        }
+
+                        //Tạo mới CReport
+                        CReport Report = new CReport
+                        {
+                            Date = (DateTime)date,
+                            CountBook = CountBook,
+                            TotalMoney = TotalMoney,
+                            Profit = sum
+                        };
+
+                        //Thêm vào list
+                        List.Add(Report);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
             return List;
         }
 

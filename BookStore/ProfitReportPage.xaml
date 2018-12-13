@@ -24,11 +24,36 @@
     </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
+            <RowDefinition Height="70"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <TextBlock Text="Doanh thu" HorizontalAlignment="Center"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                <materialDesign:Card Width="170" Height="40">
+                    <materialDesign:Card.Background>
+                        <ImageBrush ImageSource="Image/background2.jpg"/>
+                    </materialDesign:Card.Background>
+                    <TextBlock Text="Doanh thu" HorizontalAlignment="Center" FontSize="16" FontWeight="Medium" Foreground="White" VerticalAlignment="Center"/>
+                </materialDesign:Card>
+                <ComboBox  SelectedItem="{Binding SelectedItemMonth}" ItemsSource="{Binding ListMonth}" Text="{Binding TextMonth}"
+                    materialDesign:HintAssist.Hint="Tháng" Width="auto" Margin="30,0,0,0" FontSize="16">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectionChangedMonth}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+
+                <ComboBox  SelectedItem="{Binding SelectedItemYear}" ItemsSource="{Binding ListYear}" Text="{Binding TextYear}"
+                    materialDesign:HintAssist.Hint="Năm" Width="auto" Margin="30,0,0,0" FontSize="16">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="SelectionChanged">
+                            <i:InvokeCommandAction Command="{Binding SelectionChangedYear}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </ComboBox>
+            </StackPanel>
+
         </Grid>
         <Grid Grid.Row="1">
             <ListView ItemsSource="{Binding ListReport}" MaxHeight="600" VerticalAlignment="Top">
@@ -55,7 +80,7 @@
                                 <Grid Grid.Row="0" HorizontalAlignment="Stretch">
                                     <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
                                         <TextBlock Text="Ngày: " FontSize="15" FontWeight="Medium" Foreground="White"/>
-                                        <TextBlock Text="{Binding Date,FallbackValue=10-10-2018}" FontSize="15" FontWeight="Medium" Foreground="White"/>
+                                        <TextBlock Text="{Binding Date,StringFormat=dd-MM-yyyy}" FontSize="15" FontWeight="Medium" Foreground="White"/>
                                     </StackPanel>
                                 </Grid>
                                 <Grid Grid.Row="1">
@@ -90,51 +115,9 @@
             </ListView>
         </Grid>
         <Grid Grid.Row="1">
-            <!--<materialDesign:Card Margin="40,0,0,0" Width="230"
-                                 Height="200"
-                                 UniformCornerRadius="20"
-                                 materialDesign:ShadowAssist.ShadowDepth="Depth4">
-                <materialDesign:Card.Background>
-                    <ImageBrush ImageSource="Image/background2.jpg"/>
-                </materialDesign:Card.Background>
-                <Grid Height="200" Margin="0,0,0,0" Width="200">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="40"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0" HorizontalAlignment="Stretch">
-                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,10">
-                            <TextBlock Text="Ngày: " FontSize="15" FontWeight="Medium" Foreground="White"/>
-                            <TextBlock Text="{Binding Date,FallbackValue=10-10-2018}" FontSize="15" FontWeight="Medium" Foreground="White"/>
-                        </StackPanel>
-                    </Grid>
-                    <Grid Grid.Row="1">
-                        <StackPanel Orientation="Vertical" HorizontalAlignment="Center">
-                            <StackPanel Orientation="Horizontal" Margin="0,5,0,5">
-                                <TextBlock Text="Tổng sách bán ra: " FontSize="15" FontWeight="Medium" Foreground="White"/>
-                                <TextBlock Text="{Binding CountBook,FallbackValue=10}" FontSize="15" FontWeight="Medium" Foreground="White"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
-                                <TextBlock Text="Tổng tiền: " FontSize="15" FontWeight="Medium" Foreground="White"/>
-                                <TextBlock Text="{Binding TotalMoney,FallbackValue=100000}" FontSize="15" FontWeight="Medium" Foreground="White"/>
-                            </StackPanel>
-
-                            <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="Ước lượng lợi nhuận: " FontSize="15" FontWeight="Medium" Foreground="White"/>
-                                <TextBlock Text="{Binding Profit,FallbackValue=100000}" FontSize="15" FontWeight="Medium" Foreground="White"/>
-                            </StackPanel>
-                        </StackPanel>
-                        <materialDesign:PackIcon Kind="Blender" VerticalAlignment="Bottom" 
-                                                 HorizontalAlignment="Center"
-                                                 Foreground="White"
-                                                 Width="50" Height="50" Margin="0,0,0,20"/>
-                    </Grid>
-                          
-                    
-                </Grid>
-            </materialDesign:Card>-->
+            <TextBlock Text="Không có hoạt động trong tháng này" HorizontalAlignment="Center" 
+                       VerticalAlignment="Top" Margin="0,100,0,0"
+                       FontSize="30" FontWeight="Medium" Visibility="{Binding MessVisibility}"></TextBlock>
         </Grid>
         
     </Grid>

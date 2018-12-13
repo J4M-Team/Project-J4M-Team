@@ -35,6 +35,25 @@ namespace BookStore.Model.MyClass
                 return image;
             }
         }
+
+        static public int StringMonthToInt(string StringMonth)
+        {
+            //dạng nhập vào tháng 12
+
+            if (string.IsNullOrEmpty(StringMonth))
+            {
+                return 0;
+            }
+
+            //Tách chuỗi
+            var tokens = StringMonth.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries);
+
+            //Lấy chuỗi thứ 2
+            int Int = int.Parse(tokens[1]);
+
+            return Int;
+        }
+
         static public string StandardizeName(string str)
         {
 
