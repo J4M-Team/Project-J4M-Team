@@ -33,22 +33,22 @@
                 <Button Command="{Binding DateReportCommand}"
                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Width="170">
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="BookSecure"  Foreground="Black"/>
+                        <materialDesign:PackIcon Kind="CalendarRange"  Foreground="Black"/>
                         <TextBlock Text="Báo cáo theo ngày" Margin="5,0,0,0" Foreground="Black"/>
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding EmployeeCommand}"
+                <Button Command="{Binding ProfitReportCommand}"
                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Width="170">
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="AccountMultiple" Foreground="Black" Margin="5,0,0,0"/>
-                        <TextBlock Text="Cài đặt nhân viên" Margin="3,0,0,0" Foreground="Black"/>
+                        <materialDesign:PackIcon Kind="Coin" Foreground="Black" Margin="5,0,0,0"/>
+                        <TextBlock Text="Báo cáo chi tiêu" Margin="3,0,0,0" Foreground="Black"/>
                     </StackPanel>
                 </Button>
-                <Button Command="{Binding PromotionCommand}"
+                <Button Command="{Binding BookReportCommand}"
                         Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Width="180">
                     <StackPanel Orientation="Horizontal">
-                        <materialDesign:PackIcon Kind="Sale" Foreground="Black" Margin="5,0,0,0"/>
-                        <TextBlock Text="Cài đặt khuyến mãi" Margin="3,0,0,0" Foreground="Black"/>
+                        <materialDesign:PackIcon Kind="BookmarkCheck" Foreground="Black" Margin="5,0,0,0"/>
+                        <TextBlock Text="Sách bán chạy" Margin="3,0,0,0" Foreground="Black"/>
                     </StackPanel>
                 </Button>
             </StackPanel>

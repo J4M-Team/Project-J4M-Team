@@ -52,7 +52,9 @@ namespace BookStore.ViewModel
 
         #region command binding
 
+        public ICommand ProfitReportCommand { get; set; }
         public ICommand DateReportCommand { get; set; }
+        public ICommand BookReportCommand { get; set; }
         public ICommand loadCommand { get; set; }
 
         #endregion
@@ -64,8 +66,26 @@ namespace BookStore.ViewModel
             DateReportCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(10, 0, 0, 0);
+
                 //Hiện màn hình thống kê theo ngày
                 FramePage = new ProfitReportPage();
+            }
+              );
+
+            BookReportCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                //Thay đổi vị trí của thanh ngang
+                GridCursorMargin = new Thickness(10 + 170 + 170, 0, 0, 0);
+            }
+              );
+
+            ProfitReportCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {               
+                //Thay đổi vị trí của thanh ngang
+                GridCursorMargin = new Thickness(10 + 170, 0, 0, 0);
+
+                FramePage = new ExpenseReportPage();
+                
             }
               );
 

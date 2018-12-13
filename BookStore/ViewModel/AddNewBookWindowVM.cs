@@ -119,6 +119,7 @@ namespace BookStore.ViewModel
 
         public ICommand AddCommand { get; set; }
         public ICommand loadCommand { get; set; }
+       
 
         #endregion
 
@@ -127,7 +128,7 @@ namespace BookStore.ViewModel
         public AddNewBookWindowVM()
         {
             loadCommand = new RelayCommand<object>((p) => { return true; },(p) =>
-            {
+            {                
                 if (DataTransfer.Employee_Id > 0)
                 {
                     EmployeeName = CEmployee.Ins.EmployeeInfo(DataTransfer.Employee_Id).Name;

@@ -123,6 +123,9 @@
     <Compile Include="EditBookPage.xaml.cs">
       <DependentUpon>EditBookPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ExpenseReportPage.xaml.cs">
+      <DependentUpon>ExpenseReportPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="IncreaseBookWindow.xaml.cs">
       <DependentUpon>IncreaseBookWindow.xaml</DependentUpon>
     </Compile>
@@ -277,6 +280,7 @@
     <Compile Include="ViewModel\BookViewModel.cs" />
     <Compile Include="ViewModel\DeleteBillVMcs.cs" />
     <Compile Include="ViewModel\EditBookPageVM.cs" />
+    <Compile Include="ViewModel\ExpenseReportPageVM.cs" />
     <Compile Include="ViewModel\IncreaseBookWindowVM.cs" />
     <Compile Include="ViewModel\InHoaDonVM.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
@@ -323,6 +327,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="EditBookPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ExpenseReportPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
