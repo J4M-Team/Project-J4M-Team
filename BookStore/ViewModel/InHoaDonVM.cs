@@ -16,6 +16,20 @@ namespace BookStore.ViewModel
         #region data binding
 
         //List để hiển thị lên giao diện
+
+        private float _TotalOfPrice;
+        public  float TotalOfPrice
+        {
+            get { return _TotalOfPrice; }
+            set
+            {
+                _TotalOfPrice = value;
+                OnPropertyChanged(nameof(TotalOfPrice));
+            }
+        }
+
+
+
         private ObservableCollection<CBook> _ListSelectedBooks;
         public ObservableCollection<CBook> ListSelectedBooks
         {
@@ -54,12 +68,14 @@ namespace BookStore.ViewModel
         public ICommand AddBookCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand ShowListBookCommand { get; set; }
+        public ICommand TotalOfPriceCommand { get; set; }
+
+
         public InHoaDonVM()
         {
             ListSelectedBooks = DataTransfer.ListBooks;
-
             DeleteCommand = new RelayCommand<object>((p) =>
-            {                                         
+            {
                 return true;
             },
           (p) =>
@@ -68,7 +84,7 @@ namespace BookStore.ViewModel
               {
                   ListSelectedBooks.RemoveAt(SelectedIndex);
               }
-              
+
           }
              );
 
@@ -83,9 +99,11 @@ namespace BookStore.ViewModel
 
             ShowListBookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-               // ListSelectedBooks = new ObservableCollection<CBook>(DataTransfer.BookBill);
+                // ListSelectedBooks = new ObservableCollection<CBook>(DataTransfer.BookBill);
             }
               );
+           
+
         }
     }
 }

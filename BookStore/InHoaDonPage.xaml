@@ -126,12 +126,12 @@
                         <RowDefinition  Height="*"></RowDefinition>
                         <RowDefinition Height="Auto"></RowDefinition>
                         <RowDefinition Height="50"></RowDefinition>
-                     </Grid.RowDefinitions>
+                    </Grid.RowDefinitions>
                     <Grid Grid.Row="0">
                         <Label Content="THÔNG TIN HOÁ ĐƠN" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="Gray" FontSize="13" />
                     </Grid>
                     <Grid Grid.Row="1">
-                        <ListView  ItemsSource="{Binding ListSelectedBooks}" SelectedItem="{Binding SelectedItem}"  SelectedIndex="{Binding SelectedIndex}" SelectionMode="Single" Name="ListBill" IsSynchronizedWithCurrentItem="True">
+                        <ListView  ItemsSource="{Binding ListSelectedBooks}"  SelectedItem="{Binding SelectedItem}"  SelectedIndex="{Binding SelectedIndex}" SelectionMode="Single" Name="ListBill" IsSynchronizedWithCurrentItem="True">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Style.Triggers>
@@ -159,7 +159,7 @@
                         DisplayMemberBinding="{Binding Count}"
                         Header="Số lượng" />
                                     <GridViewColumn
-                        DisplayMemberBinding="{Binding Customer.Name}"
+                        DisplayMemberBinding="{Binding TotalPrice}"
                         Header="Thành tiền" />
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
@@ -180,7 +180,7 @@
                     <Grid Grid.Row="2">
                         <StackPanel Orientation="Horizontal">
                             <TextBlock FontSize="18" Foreground="Gray" Text="Tổng tiền:"></TextBlock>
-                            <TextBlock  FontSize="18" Foreground="Gray" Text="{Binding TotalOfPrice}"></TextBlock>
+                            <TextBlock  FontSize="18" Foreground="Gray"  Text="{Binding TotalOfPrice}"></TextBlock>
                         </StackPanel>
 
                     </Grid>
@@ -188,7 +188,7 @@
                         <Button   Command="{Binding AddBookCommand}"  Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"  Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Content="THÊM SÁCH" Margin="0,0,0,0" BorderThickness="7"></Button>
 
                     </Grid>
-                    
+
                 </Grid>
                 <!-- List anh sach san pham-->
             </Grid>

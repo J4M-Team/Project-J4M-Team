@@ -35,7 +35,7 @@ namespace BookStore.Model.MyClass
             set
             {
                 _TotalMoney = value;
-                new PropertyChangedEventArgs(nameof(TotalMoney));
+                 new PropertyChangedEventArgs(nameof(TotalMoney));
             }
         }
 

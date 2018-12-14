@@ -46,6 +46,7 @@ namespace BookStore.Model.MyClass
         private float _Promotion;//Phần trăm khuyến mãi
         private float _PricePromotion;//Giá bán sách sau khuyến mãi
         private int _TotalCount;//tổng lượt mua của sách
+        private float _TotalPrice;//tổng lượt mua của sách
 
         //Thuộc tính ẩn của cột giá sách gốc
         private Visibility _PriceVisibility;
@@ -66,7 +67,8 @@ namespace BookStore.Model.MyClass
         public float Promotion { get { return _Promotion; } set { _Promotion = value; } }
         public float PricePromotion { get { return _PricePromotion; } set { _PricePromotion = value; } }
         public int TotalCount { get { return _TotalCount; } set { _TotalCount = value; } }
-        
+        public float TotalPrice { get { return _TotalPrice; } set { _TotalPrice = value; } }
+
         public Visibility PriceVisibility { get { return _PriceVisibility; } set { _PriceVisibility = value; } }
 
         #endregion

@@ -165,7 +165,10 @@ namespace BookStore.ViewModel
                     //DataTransfer.BookBill.Add(_SelectedItem);
                     //DataTransfer.NumberOfBook = int.Parse(_NumberOfBook);
                     _SelectedItem.Count= int.Parse(_NumberOfBook);
+                    _SelectedItem.TotalPrice = _SelectedItem.Price.OutputPrice * _SelectedItem.Count;
+                    DataTransfer.TotalMoney += _SelectedItem.TotalPrice;
                     DataTransfer.ListBooks.Add(_SelectedItem);
+                    
                     
                 }
             }
