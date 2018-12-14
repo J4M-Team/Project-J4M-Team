@@ -80,7 +80,7 @@ namespace BookStore.ViewModel
                 FramePage = new TopBookPage();
             }
               );
-
+            
             ProfitReportCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {               
                 //Thay đổi vị trí của thanh ngang

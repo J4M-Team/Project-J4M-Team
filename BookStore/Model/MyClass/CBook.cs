@@ -933,11 +933,368 @@ namespace BookStore.Model.MyClass
                     }
                 }
             }
+
             catch
             {
 
             }
 
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về list sách tìm kiếm theo thông tin tác giả.............
+        /// </summary>
+        /// <param name="bookdatt"></param>
+        /// <returns></returns>
+        public List<CBook> FindBookName(string BookName)
+        {
+            List<CBook> List = new List<CBook>();
+
+            if (string.IsNullOrEmpty(BookName))
+            {
+                return List;
+            }
+
+            try
+            {
+                var data = DataProvider.Ins.DB.Books.Where(x => x.Book_Name.ToLower().Contains(BookName.ToLower()));
+
+                foreach(var item in data)
+                {
+                    CBook Book;
+                    if (item.Book_Image == null)
+                    {
+                        BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/" + "./Image/Book.png"));
+                        Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Type = item.Book_Type,
+                            Theme = item.Book_Theme,
+                            Count = (int)item.Book_Count,
+                            Image = image,
+                            Price = new CBook_Price { OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault() },
+                            TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum()
+                        };
+                    }
+                    else
+                    {
+                        Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Type = item.Book_Type,
+                            Theme = item.Book_Theme,
+                            Count = (int)item.Book_Count,
+                            Image = Help.ByteToImage(item.Book_Image),
+                            Price = new CBook_Price { OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault() },
+                            TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum()
+                        };
+                    }
+
+                    //Thêm sách vào List
+                    List.Add(Book);
+
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về list sách tìm kiếm theo tên sách và tác giả
+        /// </summary>
+        /// <param name="BookName"></param>
+        /// <param name="Author"></param>
+        /// <returns></returns>
+        public List<CBook> FindBookAuthor(string Author)
+        {
+            List<CBook> List = new List<CBook>();
+
+            if (string.IsNullOrEmpty(Author))
+            {
+                return List;
+            }
+
+            try
+            {
+                var data = DataProvider.Ins.DB.Books.Where(x => x.Book_Author.ToLower().Contains(Author.ToLower()));
+
+                foreach (var item in data)
+                {
+                    CBook Book;
+                    if (item.Book_Image == null)
+                    {
+                        BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/" + "./Image/Book.png"));
+                        Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Type = item.Book_Type,
+                            Theme = item.Book_Theme,
+                            Count = (int)item.Book_Count,
+                            Image = image,
+                            Price = new CBook_Price { OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault() },
+                            TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum()
+                        };
+                    }
+                    else
+                    {
+                        Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Type = item.Book_Type,
+                            Theme = item.Book_Theme,
+                            Count = (int)item.Book_Count,
+                            Image = Help.ByteToImage(item.Book_Image),
+                            Price = new CBook_Price { OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault() },
+                            TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum()
+                        };
+                    }
+
+                    //Thêm sách vào List
+                    List.Add(Book);
+
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về List sách tìm kiếm theo chủ đề
+        /// </summary>
+        /// <param name="Theme"></param>
+        /// <returns></returns>
+        public List<CBook> FindBookTheme(string Theme)
+        {
+            List<CBook> List = new List<CBook>();
+
+            if (string.IsNullOrEmpty(Theme))
+            {
+                return List;
+            }
+
+            try
+            {
+                var data = DataProvider.Ins.DB.Books.Where(x => x.Book_Theme.ToLower().Contains(Theme.ToLower()));
+
+                foreach (var item in data)
+                {
+                    CBook Book;
+                    if (item.Book_Image == null)
+                    {
+                        BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/" + "./Image/Book.png"));
+                        Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Type = item.Book_Type,
+                            Theme = item.Book_Theme,
+                            Count = (int)item.Book_Count,
+                            Image = image,
+                            Price = new CBook_Price { OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault() },
+                            TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum()
+                        };
+                    }
+                    else
+                    {
+                        Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Type = item.Book_Type,
+                            Theme = item.Book_Theme,
+                            Count = (int)item.Book_Count,
+                            Image = Help.ByteToImage(item.Book_Image),
+                            Price = new CBook_Price { OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault() },
+                            TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum()
+                        };
+                    }
+
+                    //Thêm sách vào List
+                    List.Add(Book);
+
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về List sách tìm kiếm theo thể loại
+        /// </summary>
+        /// <param name="Type"></param>
+        /// <returns></returns>
+        public List<CBook> FindBookType(string Type)
+        {
+            List<CBook> List = new List<CBook>();
+
+            if (string.IsNullOrEmpty(Type))
+            {
+                return List;
+            }
+
+            try
+            {
+                var data = DataProvider.Ins.DB.Books.Where(x => x.Book_Type
+.ToLower().Contains(Type.ToLower()));
+
+                foreach (var item in data)
+                {
+                    CBook Book;
+                    if (item.Book_Image == null)
+                    {
+                        BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/" + "./Image/Book.png"));
+                        Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Type = item.Book_Type,
+                            Theme = item.Book_Theme,
+                            Count = (int)item.Book_Count,
+                            Image = image,
+                            Price = new CBook_Price { OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault() },
+                            TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum()
+                        };
+                    }
+                    else
+                    {
+                        Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Type = item.Book_Type,
+                            Theme = item.Book_Theme,
+                            Count = (int)item.Book_Count,
+                            Image = Help.ByteToImage(item.Book_Image),
+                            Price = new CBook_Price { OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault() },
+                            TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum()
+                        };
+                    }
+
+                    //Thêm sách vào List
+                    List.Add(Book);
+
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về List sách tìm kiếm theo giá bán ra từ Min đến Max
+        /// </summary>
+        /// <param name="MinPrice"></param>
+        /// <param name="MaxPrice"></param>
+        /// <returns></returns>
+        public List<CBook> FindBookPrice(float MinPrice,float MaxPrice)
+        {
+            List<CBook> List = new List<CBook>();
+            try
+            {
+                //Lấy ra danh sách giá mới nhất ở bảng outputprice
+                var OutputPrice = from item in DataProvider.Ins.DB.Book_Output_Price
+                                  group item by item.Book_Id into Group
+                                  from item2 in Group
+                                  where item2.Date_Set == Group.Max(x => x.Date_Set)
+                                  select new { item2.Book_Id, item2.Date_Set, item2.Output_Price };
+
+                //join 3 bảng lại nếu như giá chưa được cài đặt hoặc sách không có khuyến mãi thì trả về là 0
+                var data = from book in DataProvider.Ins.DB.Books
+                           join output in OutputPrice on book.Book_Id equals output.Book_Id into outputtable
+                           join promotion in DataProvider.Ins.DB.Book_Output_PromotionPrice on book.Book_Id equals promotion.Book_Id into promotiontable
+                           from pro in promotiontable.DefaultIfEmpty()
+                           from outp in outputtable.DefaultIfEmpty()
+                           select new
+                           {
+                               book.Book_Id,
+                               book.Book_Name,
+                               book.Book_Author,
+                               book.Book_Count,
+                               promotion = pro == null ? 0 : pro.Promotion,
+                               output = outp == null ? 0 : outp.Output_Price
+                           };
+                
+                //Thêm vào list
+                foreach (var item in data)
+                {
+                    CBook Book = new CBook
+                    {
+                        Id = item.Book_Id,
+                        Name = item.Book_Name,
+                        Author = item.Book_Author,
+                        Count = (int)item.Book_Count,
+                        Price = new CBook_Price { OutputPrice = (float)item.output },
+                        Promotion = (float)item.promotion,
+                        PricePromotion = item.promotion == 0 ? (float)item.output : (float)item.output - (float)item.output * (float)item.promotion
+                    };
+
+                    //Kiểm tra nếu như sách có giá khuyến mãi thì kiểm tra theo giá gốc, nếu như có khuyến mãi thì kiểm tra theo giá khuyến mãi
+                    float Check = Book.Promotion == 0 ? Book.Price.OutputPrice : Book.PricePromotion;
+                    if(Check>=MinPrice && Check <= MinPrice)
+                    {
+                        List.Add(Book);
+                    }                    
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về danh sách sách theo điều kiện nhập vào
+        /// </summary>
+        /// <param name="Name">Tên sách</param>
+        /// <param name="Author">Tác giả</param>
+        /// <param name="Theme">Chủ đề</param>
+        /// <param name="Type">Thể loại</param>
+        /// <param name="MinPrice">Giá thấp nhất</param>
+        /// <param name="MaxPrice">Giá cao nhất</param>
+        /// <param name="currentPage">Trang cần lấy</param>
+        /// <param name="NumberPage">Số lượng sách ở mỗi trang</param>
+        /// <returns></returns>
+        public List<CBook> FindBook(string Name,string Author,string Theme,string Type,float MinPrice,float MaxPrice,int currentPage,int NumberPage)
+        {
+            List<CBook> List = new List<CBook>();
+
+            try
+            {
+
+            }
+            catch
+            {
+
+            }
             return List;
         }
 

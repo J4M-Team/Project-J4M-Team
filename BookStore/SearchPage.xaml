@@ -14,7 +14,7 @@
       TextOptions.TextRenderingMode="Auto"
       Background="White"
       FontFamily="{DynamicResource MaterialDesignFont}"
-      d:DesignHeight="500" d:DesignWidth="1100"
+      d:DesignHeight="700" d:DesignWidth="1150"
       DataContext="{StaticResource SearchPageVM}"
       Title="SearchPage">
     <i:Interaction.Triggers>
@@ -36,7 +36,7 @@
 
                             <TextBox Width="800" FontSize="15" Height="35"
                                     x:Name="CommentTextBox"
-                                    materialDesign:HintAssist.Hint="Tìm kiếm" Margin="10,0,0,0"/>
+                                    materialDesign:HintAssist.Hint="Tìm kiếm" Margin="10,0,0,0" Text="{Binding FilterString}"/>
 
 
                             <Button Background="#FF3EA0C3" Width="60" BorderBrush="#FF3EA0C3">
@@ -60,33 +60,55 @@
 
                             <TextBlock Text="Thể loại" VerticalAlignment="Center"/>
                             <ComboBox
-                                    materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" ItemsSource="{Binding ListType}">
+                                materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" 
+                                ItemsSource="{Binding ListType}"
+                                SelectedItem="{Binding SelectedItemType}"
+                                Text="{Binding TextType}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionChangedType}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </ComboBox>
+                            
                             <TextBlock Text="Chủ đề" VerticalAlignment="Center"/>
                             <ComboBox
-                                    materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" ItemsSource="{Binding ListTheme}">
+                                materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" 
+                                ItemsSource="{Binding ListTheme}"
+                                SelectedItem="{Binding SelectedItemTheme}"
+                                Text="{Binding TextTheme}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionChangedTheme}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </ComboBox>
 
                             <TextBlock Text="tác giả" VerticalAlignment="Center"/>
                             <ComboBox
-                                    materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" ItemsSource="{Binding ListAuthor}">
+                                materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" 
+                                ItemsSource="{Binding ListAuthor}"
+                                SelectedItem="{Binding SelectedItemAuthor}"
+                                Text="{Binding TextAuthor}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionChangedAuthor}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </ComboBox>
 
                             <TextBlock Text="giá tiền" VerticalAlignment="Center"/>
                             <ComboBox
-                                    materialDesign:HintAssist.Hint="Tất cả" VerticalAlignment="Center" Margin="0,0,10,0">
-                                <ComboBoxItem>
-                                    Android
-                                </ComboBoxItem>
-                                <ComboBoxItem>
-                                    iOS
-                                </ComboBoxItem>
-                                <ComboBoxItem>
-                                    Linux
-                                </ComboBoxItem>
-                                <ComboBoxItem>
-                                    Windows
-                                </ComboBoxItem>
+                                materialDesign:HintAssist.Hint="Tất cả" 
+                                VerticalAlignment="Center" Margin="0,0,10,0" 
+                                ItemsSource="{Binding ListPrice}"
+                                SelectedItem="{Binding SelectedItemPrice}"
+                                Text="{Binding TextPrice}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="SelectionChanged">
+                                        <i:InvokeCommandAction Command="{Binding SelectionChangedPrice}" />
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
                             </ComboBox>
                         </StackPanel>
                     </materialDesign:Card>
@@ -95,7 +117,7 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
-            <ListView ItemsSource="{Binding ListBook}">
+            <ListView ItemsSource="{Binding ListBook}" MaxHeight="580" VerticalAlignment="Top" Margin="0,5,0,0">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <UniformGrid Columns="4"/>
