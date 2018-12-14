@@ -24,7 +24,7 @@ namespace BookStore.ViewModel
             set
             {
                 _TotalOfPrice = value;
-                OnPropertyChanged(nameof(_TotalOfPrice));
+                OnPropertyChanged(nameof(TotalOfPrice));
             }
         }
 
@@ -99,7 +99,7 @@ namespace BookStore.ViewModel
                 {
                     TotalOfPrice += ListSelectedBooks[i].Price.OutputPrice;
                 }
-              //  MessageBox.Show(TotalOfPrice.ToString());
+                 MessageBox.Show(TotalOfPrice.ToString());
             }
               );
 
