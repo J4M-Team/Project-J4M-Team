@@ -177,6 +177,21 @@ namespace BookStore.ViewModel
 
         #endregion
 
+        #region properties binding
+
+        private Visibility _MessTextVisibility;
+        public Visibility MessTextVisibility
+        {
+            get { return _MessTextVisibility; }
+            set
+            {
+                _MessTextVisibility = value;
+                OnPropertyChanged(nameof(MessTextVisibility));
+            }
+        }
+
+        #endregion
+
         #region binding Command
 
         public ICommand loadCommand { get; set; }
@@ -214,7 +229,16 @@ namespace BookStore.ViewModel
                 TextPrice = "Tất cả";
                 TextAuthor = "Tất cả";
 
-                ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook("tất cả", TextAuthor, TextTheme, TextType, -1, -1, 0, 0));
+                ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, TextTheme, TextType, -1, -1, 0, 0));
+
+                if (ListBook.Count() == 0)
+                {
+                    MessTextVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    MessTextVisibility = Visibility.Hidden;
+                }
 
             }
               );
@@ -224,7 +248,16 @@ namespace BookStore.ViewModel
                 if (SelectedItemType != null)
                 {
                     
-                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook("tất cả", TextAuthor, TextTheme, SelectedItemType, -1, -1, 0, 0));
+                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, TextTheme, SelectedItemType, -1, -1, 0, 0));
+
+                    if (ListBook.Count() == 0)
+                    {
+                        MessTextVisibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        MessTextVisibility = Visibility.Hidden;
+                    }
                 }
             }
               );
@@ -233,7 +266,16 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItemTheme != null)
                 {
-                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook("tất cả", TextAuthor, SelectedItemTheme, TextType, -1, -1, 0, 0));
+                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, SelectedItemTheme, TextType, -1, -1, 0, 0));
+
+                    if (ListBook.Count() == 0)
+                    {
+                        MessTextVisibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        MessTextVisibility = Visibility.Hidden;
+                    }
                 }
             }
               );
@@ -242,7 +284,16 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItemAuthor != null)
                 {
-                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook("tất cả", SelectedItemAuthor, TextTheme, TextType, -1, -1, 0, 0));
+                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, SelectedItemAuthor, TextTheme, TextType, -1, -1, 0, 0));
+
+                    if (ListBook.Count() == 0)
+                    {
+                        MessTextVisibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        MessTextVisibility = Visibility.Hidden;
+                    }
                 }
             }
               );
@@ -252,6 +303,15 @@ namespace BookStore.ViewModel
                 if (SelectedItemPrice != null)
                 {
                     ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBookPrice(90000, 1000000));
+
+                    if (ListBook.Count() == 0)
+                    {
+                        MessTextVisibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        MessTextVisibility = Visibility.Hidden;
+                    }
                 }
             }
               );
@@ -259,6 +319,15 @@ namespace BookStore.ViewModel
             SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, SelectedItemAuthor, TextTheme, TextType, -1, -1, 0, 0));
+
+                if (ListBook.Count() == 0)
+                {
+                    MessTextVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    MessTextVisibility = Visibility.Hidden;
+                }
             }
               );
         }
