@@ -10,7 +10,7 @@ using System.Windows.Media.Imaging;
 
 namespace BookStore.Model.MyClass
 {
-    public class CBook:BaseViewModel
+    public class CBook : BaseViewModel
     {
         #region design pattern singleton
 
@@ -46,7 +46,7 @@ namespace BookStore.Model.MyClass
         private float _Promotion;//Phần trăm khuyến mãi
         private float _PricePromotion;//Giá bán sách sau khuyến mãi
         private int _TotalCount;//tổng lượt mua của sách
-        private float _TotalPrice;//tổng lượt mua của sách
+        private float _TotalPrice;
 
         //Thuộc tính ẩn của cột giá sách gốc
         private Visibility _PriceVisibility;
@@ -55,9 +55,9 @@ namespace BookStore.Model.MyClass
 
         #region public properties
 
-        public int Id { get { return _Id; } set { _Id = value;OnPropertyChanged(nameof(Id)); } }
-        public string Name { get { return _Name; } set { _Name = value;OnPropertyChanged(nameof(Name)); } }
-        public string Author { get { return _Author; } set { _Author = value;OnPropertyChanged(nameof(Author)); } }
+        public int Id { get { return _Id; } set { _Id = value; OnPropertyChanged(nameof(Id)); } }
+        public string Name { get { return _Name; } set { _Name = value; OnPropertyChanged(nameof(Name)); } }
+        public string Author { get { return _Author; } set { _Author = value; OnPropertyChanged(nameof(Author)); } }
         public string Theme { get { return _Theme; } set { _Theme = value; } }
         public string Type { get { return _Type; } set { _Type = value; } }
         public string Content { get { return _Content; } set { _Content = value; } }
@@ -85,10 +85,10 @@ namespace BookStore.Model.MyClass
             try
             {
                 var sql = DataProvider.Ins.DB.Books;
-                foreach(var item in sql)
+                foreach (var item in sql)
                 {
                     CBook Book;
-                    if(item.Book_Image == null)
+                    if (item.Book_Image == null)
                     {
                         BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/" + "./Image/Book.png"));
                         Book = new CBook
@@ -119,7 +119,7 @@ namespace BookStore.Model.MyClass
                             TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum()
                         };
                     }
-                    
+
                     List.Add(Book);
                 }
             }
@@ -163,7 +163,7 @@ namespace BookStore.Model.MyClass
                         Book_Image = Help.ImageToByte(BookData.Image)
                     };
                 }
-               
+
                 DataProvider.Ins.DB.Books.Add(Book);
                 DataProvider.Ins.DB.SaveChanges();
 
@@ -236,7 +236,7 @@ namespace BookStore.Model.MyClass
                 var Theme = (from item in DataProvider.Ins.DB.Books select new { item.Book_Theme }).Distinct();
 
                 foreach (var item in Theme)
-                {              
+                {
                     List.Add(item.Book_Theme);
                 }
             }
@@ -279,7 +279,7 @@ namespace BookStore.Model.MyClass
             BitmapImage result = new BitmapImage();
             try
             {
-                var data = DataProvider.Ins.DB.Books.Where(x => x.Book_Id == Id).Select(x=>x.Book_Image).First();
+                var data = DataProvider.Ins.DB.Books.Where(x => x.Book_Id == Id).Select(x => x.Book_Image).First();
                 result = Help.ByteToImage(data);
                 return result;
             }
@@ -500,11 +500,11 @@ namespace BookStore.Model.MyClass
                         {
                             goto addnew;
                         }
-                                              
+
 #pragma warning disable CS0164 // This label has not been referenced
-                    addnew:
+                        addnew:
 #pragma warning restore CS0164 // This label has not been referenced
-                              //Tạo giá mới
+                        //Tạo giá mới
                         Book_Input_Price newPrice = new Book_Input_Price { Book_Id = Book_Id, Input_Price = NewPrice, Date_Set = DateTime.Now };
                         //Thêm vào
                         DataProvider.Ins.DB.Book_Input_Price.Add(newPrice);
@@ -568,9 +568,9 @@ namespace BookStore.Model.MyClass
                         {
                             goto addnew;
                         }
-                            
+
 #pragma warning disable CS0164 // This label has not been referenced
-                    addnew:
+                        addnew:
 #pragma warning restore CS0164 // This label has not been referenced
                         //Tạo mới
                         Book_Output_Price newPrice = new Book_Output_Price { Book_Id = Book_Id, Output_Price = NewPrice, Date_Set = DateTime.Now };
@@ -598,7 +598,7 @@ namespace BookStore.Model.MyClass
         /// </summary>
         /// <param name="Book_Id"></param>
         /// <returns></returns>
-        public List<CBook>ListHistoryOutputPrice(int Book_Id)
+        public List<CBook> ListHistoryOutputPrice(int Book_Id)
         {
             List<CBook> List = new List<CBook>();
             try
@@ -610,10 +610,10 @@ namespace BookStore.Model.MyClass
                     foreach (var item in data)
                     {
                         CBook_Price price = new CBook_Price { OutputPrice = (float)item.Output_Price, Output_Date_Set = item.Date_Set };
-                        CBook Book = new CBook { Id = item.Book_Id,Price=price };
+                        CBook Book = new CBook { Id = item.Book_Id, Price = price };
                         List.Add(Book);
                     }
-                }             
+                }
             }
             catch
             {
@@ -680,7 +680,7 @@ namespace BookStore.Model.MyClass
                 else
                 {
                     return 0;
-                }          
+                }
             }
             catch
             {
@@ -758,7 +758,7 @@ namespace BookStore.Model.MyClass
                         PricePromotion = item.promotion == 0 ? (float)item.output : (float)item.output - (float)item.output * (float)item.promotion
                     };
                     List.Add(Book);
-                }      
+                }
             }
             catch
             {
@@ -837,7 +837,7 @@ namespace BookStore.Model.MyClass
         /// <param name="Month">Tháng</param>
         /// <param name="Top">Số lượng sách cần lấy</param>
         /// <returns></returns>
-        public List<CBook> ListTopBook(int Year,int Month,int Top)
+        public List<CBook> ListTopBook(int Year, int Month, int Top)
         {
             List<CBook> List = new List<CBook>();
 
@@ -884,7 +884,7 @@ namespace BookStore.Model.MyClass
                         List.Add(Book);
                     }
                 }
-               
+
             }
             catch
             {
@@ -968,7 +968,7 @@ namespace BookStore.Model.MyClass
             {
                 var data = DataProvider.Ins.DB.Books.Where(x => x.Book_Name.ToLower().Contains(BookName.ToLower()));
 
-                foreach(var item in data)
+                foreach (var item in data)
                 {
                     CBook Book;
                     if (item.Book_Image == null)
@@ -1222,7 +1222,7 @@ namespace BookStore.Model.MyClass
         /// <param name="MinPrice"></param>
         /// <param name="MaxPrice"></param>
         /// <returns></returns>
-        public List<CBook> FindBookPrice(float MinPrice,float MaxPrice)
+        public List<CBook> FindBookPrice(float MinPrice, float MaxPrice)
         {
             List<CBook> List = new List<CBook>();
             try
@@ -1249,7 +1249,7 @@ namespace BookStore.Model.MyClass
                                promotion = pro == null ? 0 : pro.Promotion,
                                output = outp == null ? 0 : outp.Output_Price
                            };
-                
+
                 //Thêm vào list
                 foreach (var item in data)
                 {
@@ -1266,10 +1266,10 @@ namespace BookStore.Model.MyClass
 
                     //Kiểm tra nếu như sách có giá khuyến mãi thì kiểm tra theo giá gốc, nếu như có khuyến mãi thì kiểm tra theo giá khuyến mãi
                     float Check = Book.Promotion == 0 ? Book.Price.OutputPrice : Book.PricePromotion;
-                    if(Check>=MinPrice && Check <= MinPrice)
+                    if (Check >= MinPrice && Check <= MinPrice)
                     {
                         List.Add(Book);
-                    }                    
+                    }
                 }
             }
             catch
@@ -1291,22 +1291,22 @@ namespace BookStore.Model.MyClass
         /// <param name="currentPage">Trang cần lấy</param>
         /// <param name="NumberPage">Số lượng sách ở mỗi trang</param>
         /// <returns></returns>
-        public List<CBook> FindBook(string Name,string Author,string Theme,string Type,float MinPrice,float MaxPrice,int currentPage,int NumberPage)
+        public List<CBook> FindBook(string Name, string Author, string Theme, string Type, float MinPrice, float MaxPrice, int currentPage, int NumberPage)
         {
             List<CBook> List = new List<CBook>();
-            
+
             try
             {
                 List<Book> Data = DataProvider.Ins.DB.Books.ToList();
 
                 //Lọc theo tên
-                if(string.IsNullOrEmpty(Name)||Name.ToLower()=="tất cả")
+                if (string.IsNullOrEmpty(Name) || Name.ToLower() == "tất cả")
                 {
                     //do nothing
                 }
                 else
                 {
-                    Data = Data.Where(x => x.Book_Name.ToLower() == Name.ToLower()).ToList();
+                    Data = Data.Where(x => x.Book_Name.ToLower().Contains(Name.ToLower())).ToList();
                 }
 
                 //Lọc theo tác giả
@@ -1358,7 +1358,7 @@ namespace BookStore.Model.MyClass
                             Theme = item.Book_Theme,
                             Count = (int)item.Book_Count,
                             Image = image,
-                            Promotion=Promotion,
+                            Promotion = Promotion,
                             Price = new CBook_Price { OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault() },
                             PricePromotion = Promotion == 0 ? OutputPrice : OutputPrice - OutputPrice * Promotion,
                             TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum(),
@@ -1382,15 +1382,15 @@ namespace BookStore.Model.MyClass
                             Image = Help.ByteToImage(item.Book_Image),
                             Promotion = Promotion,
                             Price = new CBook_Price { OutputPrice = OutputPrice },
-                            PricePromotion = Promotion==0?OutputPrice:OutputPrice - OutputPrice*Promotion, 
+                            PricePromotion = Promotion == 0 ? OutputPrice : OutputPrice - OutputPrice * Promotion,
                             TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum(),
 
-                            PriceVisibility =Promotion==0?Visibility.Collapsed:Visibility.Visible
+                            PriceVisibility = Promotion == 0 ? Visibility.Collapsed : Visibility.Visible
                         };
                     }
 
                     List.Add(Book);
-                    
+
                 }
 
             }
