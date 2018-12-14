@@ -39,7 +39,7 @@
                                     materialDesign:HintAssist.Hint="Tìm kiếm" Margin="10,0,0,0" Text="{Binding FilterString}"/>
 
 
-                            <Button Background="#FF3EA0C3" Width="60" BorderBrush="#FF3EA0C3">
+                            <Button Background="#FF3EA0C3" Width="60" BorderBrush="#FF3EA0C3" Command="{Binding SearchCommand}">
                                 <StackPanel Orientation="Horizontal">
                                     <materialDesign:PackIcon Kind="Magnify" Height="25" Width="25" HorizontalAlignment="Right"/>
 
@@ -117,6 +117,8 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="1">
+            <TextBlock Text="Không tìm thấy sách" HorizontalAlignment="Center" 
+                       VerticalAlignment="Top" FontSize="30" FontWeight="Medium" Margin="0,40,0,0" Visibility="{Binding MessTextVisibility}"/>
             <ListView ItemsSource="{Binding ListBook}" MaxHeight="580" VerticalAlignment="Top" Margin="0,5,0,0">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>

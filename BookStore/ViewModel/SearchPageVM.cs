@@ -185,6 +185,8 @@ namespace BookStore.ViewModel
         public ICommand SelectionChangedAuthor { get; set; }
         public ICommand SelectionChangedPrice { get; set; }
 
+        public ICommand SearchCommand { get; set; }
+
         #endregion
 
         public SearchPageVM()
@@ -221,9 +223,7 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItemType != null)
                 {
-                    //ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBookType(SelectedItemType));
-
-                    //
+                    
                     ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook("tất cả", TextAuthor, TextTheme, SelectedItemType, -1, -1, 0, 0));
                 }
             }
@@ -253,6 +253,12 @@ namespace BookStore.ViewModel
                 {
                     ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBookPrice(90000, 1000000));
                 }
+            }
+              );
+
+            SearchCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, SelectedItemAuthor, TextTheme, TextType, -1, -1, 0, 0));
             }
               );
         }
