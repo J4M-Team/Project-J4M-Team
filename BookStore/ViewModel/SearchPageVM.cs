@@ -191,7 +191,7 @@ namespace BookStore.ViewModel
         {
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
+                //ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
 
 
                 ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
@@ -211,6 +211,9 @@ namespace BookStore.ViewModel
                 TextTheme = "Tất cả";
                 TextPrice = "Tất cả";
                 TextAuthor = "Tất cả";
+
+                ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook("tất cả", TextAuthor, TextTheme, TextType, -1, -1, 0, 0));
+
             }
               );
 
@@ -218,7 +221,10 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItemType != null)
                 {
-                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBookType(SelectedItemType));
+                    //ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBookType(SelectedItemType));
+
+                    //
+                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook("tất cả", TextAuthor, TextTheme, SelectedItemType, -1, -1, 0, 0));
                 }
             }
               );
@@ -227,7 +233,7 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItemTheme != null)
                 {
-                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBookTheme(SelectedItemTheme));
+                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook("tất cả", TextAuthor, SelectedItemTheme, TextType, -1, -1, 0, 0));
                 }
             }
               );
@@ -236,7 +242,7 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItemAuthor != null)
                 {
-                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBookAuthor(SelectedItemAuthor));
+                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook("tất cả", SelectedItemAuthor, TextTheme, TextType, -1, -1, 0, 0));
                 }
             }
               );

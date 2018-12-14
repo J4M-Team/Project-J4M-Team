@@ -5,6 +5,7 @@ using System.Data.Entity.SqlServer;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media.Imaging;
 
 namespace BookStore.Model.MyClass
@@ -46,6 +47,9 @@ namespace BookStore.Model.MyClass
         private float _PricePromotion;//Giá bán sách sau khuyến mãi
         private int _TotalCount;//tổng lượt mua của sách
 
+        //Thuộc tính ẩn của cột giá sách gốc
+        private Visibility _PriceVisibility;
+
         #endregion
 
         #region public properties
@@ -62,6 +66,8 @@ namespace BookStore.Model.MyClass
         public float Promotion { get { return _Promotion; } set { _Promotion = value; } }
         public float PricePromotion { get { return _PricePromotion; } set { _PricePromotion = value; } }
         public int TotalCount { get { return _TotalCount; } set { _TotalCount = value; } }
+        
+        public Visibility PriceVisibility { get { return _PriceVisibility; } set { _PriceVisibility = value; } }
 
         #endregion
 
@@ -1286,9 +1292,104 @@ namespace BookStore.Model.MyClass
         public List<CBook> FindBook(string Name,string Author,string Theme,string Type,float MinPrice,float MaxPrice,int currentPage,int NumberPage)
         {
             List<CBook> List = new List<CBook>();
-
+            
             try
             {
+                List<Book> Data = DataProvider.Ins.DB.Books.ToList();
+
+                //Lọc theo tên
+                if(string.IsNullOrEmpty(Name)||Name.ToLower()=="tất cả")
+                {
+                    //do nothing
+                }
+                else
+                {
+                    Data = Data.Where(x => x.Book_Name.ToLower() == Name.ToLower()).ToList();
+                }
+
+                //Lọc theo tác giả
+                if (string.IsNullOrEmpty(Author) || Author.ToLower() == "tất cả")
+                {
+                    //do nothing
+                }
+                else
+                {
+                    Data = Data.Where(x => x.Book_Author.ToLower() == Author.ToLower()).ToList();
+                }
+
+                //Lọc theo Chủ đề
+                if (string.IsNullOrEmpty(Theme) || Theme.ToLower() == "tất cả")
+                {
+                    //do nothing
+                }
+                else
+                {
+                    Data = Data.Where(x => x.Book_Theme.ToLower() == Theme.ToLower()).ToList();
+                }
+
+                //Lọc theo thể loại
+                if (string.IsNullOrEmpty(Type) || Type.ToLower() == "tất cả")
+                {
+                    //do nothing
+                }
+                else
+                {
+                    Data = Data.Where(x => x.Book_Type.ToLower() == Type.ToLower()).ToList();
+                }
+
+                //Thêm vào List sách lọc theo tên, tác giả,thể loại,chủ đề
+                foreach (var item in Data)
+                {
+                    CBook Book;
+                    if (item.Book_Image == null)
+                    {
+                        BitmapImage image = new BitmapImage(new Uri("pack://application:,,,/" + "./Image/Book.png"));
+                        float Promotion = (float)item.Book_Output_PromotionPrice.Select(x => x.Promotion).FirstOrDefault();
+                        float OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault();
+
+                        Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Type = item.Book_Type,
+                            Theme = item.Book_Theme,
+                            Count = (int)item.Book_Count,
+                            Image = image,
+                            Promotion=Promotion,
+                            Price = new CBook_Price { OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault() },
+                            PricePromotion = Promotion == 0 ? OutputPrice : OutputPrice - OutputPrice * Promotion,
+                            TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum(),
+
+                            PriceVisibility = Promotion == 0 ? Visibility.Collapsed : Visibility.Visible
+                        };
+                    }
+                    else
+                    {
+                        float Promotion = (float)item.Book_Output_PromotionPrice.Select(x => x.Promotion).FirstOrDefault();
+                        float OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault();
+
+                        Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book_Name,
+                            Author = item.Book_Author,
+                            Type = item.Book_Type,
+                            Theme = item.Book_Theme,
+                            Count = (int)item.Book_Count,
+                            Image = Help.ByteToImage(item.Book_Image),
+                            Promotion = Promotion,
+                            Price = new CBook_Price { OutputPrice = OutputPrice },
+                            PricePromotion = Promotion==0?OutputPrice:OutputPrice - OutputPrice*Promotion, 
+                            TotalCount = item.Bill_Info.Select(x => x.Book_Count).Sum(),
+
+                            PriceVisibility =Promotion==0?Visibility.Collapsed:Visibility.Visible
+                        };
+                    }
+
+                    List.Add(Book);
+                    
+                }
 
             }
             catch
