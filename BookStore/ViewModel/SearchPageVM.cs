@@ -210,6 +210,7 @@ namespace BookStore.ViewModel
             {
                 //ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
 ///testt
+/////test comit
 
                 ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
                 ListTheme.Add("Tất cả");
