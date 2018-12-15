@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:BookStore"
         mc:Ignorable="d"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
         TextElement.FontSize="13"
@@ -13,11 +14,15 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        DataContext="{StaticResource AddEmployeeVM}"
-        d:DesignHeight="700" d:DesignWidth="1150"
-        Title="Add Employee" Height="500" Width="400">
+        DataContext="{StaticResource AddEmployeeVM}" d:DesignWidth="1150"
+        Title="Add Employee" Height="645.954" Width="400">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
-        <materialDesign:Card Width="400" Height="469" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,-8,0">
+        <materialDesign:Card Width="400" Height="615" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,0,-8,0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="50"/>
@@ -48,7 +53,7 @@
                             <TextBox  materialDesign:HintAssist.Hint="Nguyễn Văn A" FontSize="15" Margin="5,10,20,10" Text="{Binding EmployeeName}"/>
 
                             <TextBlock Text="Địa chỉ" FontWeight="Medium" FontSize="15"></TextBlock>
-                            <TextBox  materialDesign:HintAssist.Hint="24/12 Nguyễn Văn Cừ Q1 TPHCM" FontSize="15" Margin="5,10,20,10" Text="{Binding EmployeeAddress}"/>
+                            <TextBox  materialDesign:HintAssist.Hint="227 Nguyễn Văn Cừ Q1 TPHCM" FontSize="15" Margin="5,10,20,10" Text="{Binding EmployeeAddress}"/>
 
                             <TextBlock Text="Email" FontWeight="Medium" FontSize="15"></TextBlock>
                             <TextBox  materialDesign:HintAssist.Hint="abc123@gmail.com" FontSize="15" Margin="5,10,20,10" Text="{Binding EmployeeEmail}"/>
@@ -56,15 +61,24 @@
                             <TextBlock Text="Số điện thoại" FontWeight="Medium" FontSize="15"></TextBlock>
                             <TextBox  materialDesign:HintAssist.Hint="0791234567" FontSize="15" Margin="5,10,20,10" Text="{Binding EmployeePhone}"/>
 
+                            <TextBlock Text="Ngày/tháng/năm sinh" FontWeight="Medium" FontSize="15"></TextBlock>
+                            <DatePicker DisplayDate="12-25-2018" SelectedDate="{Binding EmployeeBirthday}"  Margin="5,10,20,10" Width="350" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                            
                             <TextBlock Text="Chứng minh nhân dân" FontWeight="Medium" FontSize="15"/>
-                            <TextBox  materialDesign:HintAssist.Hint="999777555" FontSize="15" Margin="5,10,20,0" Text="{Binding EmployeeIdentity}"/>
+                            <TextBox  materialDesign:HintAssist.Hint="999777555" FontSize="15" Margin="5,10,20,10" Text="{Binding EmployeeIdentity}"/>
 
+                            <TextBlock Text= "Loại" FontWeight="Medium" FontSize="15"/>
+                            <ComboBox
+                                        Margin="5,10,0,10"
+                                        HorizontalAlignment="Left" ItemsSource="{Binding ListRoleName}" FontSize="15"  Text="{Binding ComboBoxSelectedItem}">
+                            </ComboBox>
 
                         </StackPanel>
                     </Grid>
                 </Grid>
-                <Grid Grid.Row="2" Background="#03a9f4"></Grid>
+                <Grid Grid.Row="1" Background="#03a9f4" Margin="0,520,0,0" Grid.RowSpan="2"></Grid>
             </Grid>
+
 
 
         </materialDesign:Card>

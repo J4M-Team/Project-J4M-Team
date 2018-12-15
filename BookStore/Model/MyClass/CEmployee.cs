@@ -185,14 +185,19 @@ namespace BookStore.Model.MyClass
         {
             try
             {
-                //Tạo mới Emloyee
+                
+                //Tìm loại dựa vào tên loại
+                var role = DataProvider.Ins.DB.Employee_Role.Where(x => x.Role_Name == newEmployee.Role.Name).Select(x => x.Role_Id).FirstOrDefault();
+                //Tạo nhân viên mới
                 Employee employee = new Employee
                 {
                     Employee_Name = newEmployee.Name,
                     Employee_Address = newEmployee.Address,
                     Employee_Phone = newEmployee.Phone,
                     Employee_Email = newEmployee.Email,
-                    Employee_Identity = newEmployee.Identity
+                    Employee_BirthDay = newEmployee.BirthDay,
+                    Employee_Identity = newEmployee.Identity,
+                    Role_Id = role
                 };
 
                 //Thêm
@@ -201,6 +206,7 @@ namespace BookStore.Model.MyClass
                 //Lưu thay đổi
                 DataProvider.Ins.DB.SaveChanges();
 
+                return true;
 
             }
             catch (Exception ex)
