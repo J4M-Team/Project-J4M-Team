@@ -55,6 +55,10 @@ namespace BookStore.Model.MyClass
 
         #region method
 
+        /// <summary>
+        /// Hàm trả về danh sách tất cả khách hàng
+        /// </summary>
+        /// <returns></returns>
         public List<CCustomer> Load()
         {
             var List = new List<CCustomer>();
@@ -68,8 +72,8 @@ namespace BookStore.Model.MyClass
                     {
                         Id = item.Customer_Id,
                         Name = item.Customer_Name,
-                        Address = item.Customer_Address,
-                        Email = item.Customer_Email,
+                        Address = item.Customer_Address == null ? "Không có" : item.Customer_Address,
+                        Email = item.Customer_Email == null ? "Không có" : item.Customer_Email,
                         Phone = item.Customer_Phone,
                     };
                     List.Add(Customer);
