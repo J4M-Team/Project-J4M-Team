@@ -117,6 +117,15 @@
     <Compile Include="BookWindow.xaml.cs">
       <DependentUpon>BookWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomerHistoryPage.xaml.cs">
+      <DependentUpon>CustomerHistoryPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerInfoPage.xaml.cs">
+      <DependentUpon>CustomerInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="CustomerMenuPage.xaml.cs">
+      <DependentUpon>CustomerMenuPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DeleteBill.xaml.cs">
       <DependentUpon>DeleteBill.xaml</DependentUpon>
     </Compile>
@@ -281,6 +290,9 @@
     <Compile Include="ViewModel\BanHangMainVM.cs" />
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\BookViewModel.cs" />
+    <Compile Include="ViewModel\CustomerHistoryPageVM.cs" />
+    <Compile Include="ViewModel\CustomerInfoPageVM.cs" />
+    <Compile Include="ViewModel\CustomerMenuPageVM.cs" />
     <Compile Include="ViewModel\DeleteBillVMcs.cs" />
     <Compile Include="ViewModel\EditBookPageVM.cs" />
     <Compile Include="ViewModel\ExpenseReportPageVM.cs" />
@@ -323,6 +335,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomerHistoryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomerInfoPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomerMenuPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

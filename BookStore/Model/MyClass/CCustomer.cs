@@ -33,6 +33,7 @@ namespace BookStore.Model.MyClass
         private CCustomer_Types _Type;
         private int _NumberBook;//Tổng sách đã mua từ của hàng
         private float _SumMoney;//Tổng tiền đã trả cho cửa hàng
+        private DateTime _LastDate;//Ngày cuối cùng khách mua hàng ở cửa hàng
 
         #endregion
 
@@ -41,6 +42,7 @@ namespace BookStore.Model.MyClass
         public CCustomer_Types Type { get { return _Type; } set { _Type = value; } }
         public int NumberBook { get { return _NumberBook; } set { _NumberBook = value; } }
         public float SumMoney { get { return _SumMoney; } set { _SumMoney = value; } }
+        public DateTime LastDate { get { return _LastDate; } set { _LastDate = value; } }
 
         #endregion
 
@@ -170,6 +172,9 @@ namespace BookStore.Model.MyClass
                     //Lấy ra tổng số tiền mà khách trả cho khách hàng trong bảng Bill_Info
                     float Sum = DataProvider.Ins.DB.Bill_Info.Where(x => x.Bill.Customer_Id == item.Customer_Id).Select(x => new { Sum = (float)x.Price * x.Book_Count }).Select(x => x.Sum).DefaultIfEmpty(0).Sum();
 
+                    //Lấy ra ngày cuối cùng mà khách đến cửa hàng của mình
+
+
                     //Tạo mới
                     CCustomer Customer = new CCustomer
                     {
@@ -178,7 +183,8 @@ namespace BookStore.Model.MyClass
                         Phone = item.Customer_Phone,
                         Email = item.Customer_Email == null ? "Không có" : item.Customer_Email,
                         NumberBook = Count,
-                        SumMoney = Sum
+                        SumMoney = Sum,
+                        LastDate = (DateTime)item.Bills.OrderByDescending(x => x.Bill_Date).Select(x => x.Bill_Date).FirstOrDefault()
                     };
 
                     //Thêm vào List

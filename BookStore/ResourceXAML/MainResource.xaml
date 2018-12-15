@@ -26,4 +26,7 @@
     <viewmodel:ProfitReportPageVM x:Key="ProfitReportPageVM"></viewmodel:ProfitReportPageVM>
     <viewmodel:ExpenseReportPageVM x:Key="ExpenseReportPageVM"></viewmodel:ExpenseReportPageVM>
     <viewmodel:TopBookPageVM x:Key="TopBookPageVM"></viewmodel:TopBookPageVM>
+    <viewmodel:CustomerMenuPageVM x:Key="CustomerMenuPageVM"></viewmodel:CustomerMenuPageVM>
+    <viewmodel:CustomerInfoPageVM x:Key="CustomerInfoPageVM"></viewmodel:CustomerInfoPageVM>
+    <viewmodel:CustomerHistoryPageVM x:Key="CustomerHistoryPageVM"></viewmodel:CustomerHistoryPageVM>
 </ResourceDictionary>

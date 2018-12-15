@@ -96,7 +96,7 @@ namespace BookStore.ViewModel
             CustomerCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 97 + 52 * 1, 0, 0);
-
+                FramePage = new CustomerMenuPage();
             });
 
             ReportCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
