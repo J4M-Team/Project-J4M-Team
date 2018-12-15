@@ -209,7 +209,7 @@ namespace BookStore.ViewModel
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 //ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
-
+///testt
 
                 ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
                 ListTheme.Add("Tất cả");
