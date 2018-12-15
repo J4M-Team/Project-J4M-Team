@@ -31,12 +31,16 @@ namespace BookStore.Model.MyClass
         #region private properties
 
         private CCustomer_Types _Type;
+        private int _NumberBook;//Tổng sách đã mua từ của hàng
+        private float _SumMoney;//Tổng tiền đã trả cho cửa hàng
 
         #endregion
 
         #region public properties
 
         public CCustomer_Types Type { get { return _Type; } set { _Type = value; } }
+        public int NumberBook { get { return _NumberBook; } set { _NumberBook = value; } }
+        public float SumMoney { get { return _SumMoney; } set { _SumMoney = value; } }
 
         #endregion
 
@@ -146,7 +150,50 @@ namespace BookStore.Model.MyClass
             return 0;
         }
 
-        
+        /// <summary>
+        /// Hàm trả về danh sách khách hàng bao gồm,tổng số sách đã mua, tổng số tiền đã trả cho cửa hàng
+        /// </summary>
+        /// <returns></returns>
+        public List<CCustomer> TransactionHistory()
+        {
+            List<CCustomer> List = new List<CCustomer>();
+
+            try
+            {
+                var ListCustomer = DataProvider.Ins.DB.Customers;
+
+                foreach (var item in ListCustomer)
+                {
+                    //Lấy ra tổng sách mà khách mua trong bảng Bill_info
+                    int Count = DataProvider.Ins.DB.Bill_Info.Where(x => x.Bill.Customer_Id == item.Customer_Id).Select(x => x.Book_Count).DefaultIfEmpty(0).Sum();
+
+                    //Lấy ra tổng số tiền mà khách trả cho khách hàng trong bảng Bill_Info
+                    float Sum = DataProvider.Ins.DB.Bill_Info.Where(x => x.Bill.Customer_Id == item.Customer_Id).Select(x => new { Sum = (float)x.Price * x.Book_Count }).Select(x => x.Sum).DefaultIfEmpty(0).Sum();
+
+                    //Tạo mới
+                    CCustomer Customer = new CCustomer
+                    {
+                        Id = item.Customer_Id,
+                        Name = item.Customer_Name,
+                        Phone = item.Customer_Phone,
+                        Email = item.Customer_Email == null ? "Không có" : item.Customer_Email,
+                        NumberBook = Count,
+                        SumMoney = Sum
+                    };
+
+                    //Thêm vào List
+                    List.Add(Customer);
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
+
+
 
 
         #endregion
