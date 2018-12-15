@@ -150,6 +150,14 @@ namespace BookStore.Model.MyClass
                             find.Employee_Identity = Employee.Identity;
                         }
 
+                        //Kiểm tra loại nhân 
+                       
+                        if (find.Employee_Role.Role_Name != Employee.Role.Name)
+                        {
+                            var findId = DataProvider.Ins.DB.Employee_Role.Where(x => x.Role_Name == Employee.Role.Name).Select(x => x.Role_Id).FirstOrDefault();
+                            find.Role_Id = findId;
+
+                        }
 
                         //Lưu thay đổi
                         DataProvider.Ins.DB.SaveChanges();

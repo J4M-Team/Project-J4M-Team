@@ -177,6 +177,31 @@ namespace BookStore.Model.MyClass
             return List;
         }
 
+        /// <summary>
+        /// Hàm trả về danh sách loại nhân viên
+        /// </summary>
+        /// <returns></returns>
+        public List<string> ListRoleName()
+        {
+            List<string> List = new List<string>();
+            try
+            {
+                var data = DataProvider.Ins.DB.Employee_Role.Select(x => x.Role_Name);
+                if (data.Count() > 0)
+                {
+                    foreach (var item in data)
+                    {
+                        List.Add(item);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
         public bool AddRole(CRole newRole)
         {
             

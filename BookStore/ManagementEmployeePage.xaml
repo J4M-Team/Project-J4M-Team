@@ -72,7 +72,9 @@
                     <DataGrid.Resources>
                         <local:BindingProxy x:Key="proxy" Data="{Binding}"/>
                     </DataGrid.Resources>
+                    
                     <DataGrid.Columns>
+                        
                         <DataGridTextColumn
                             Binding="{Binding Id}"
                             Header="Mã"                            
@@ -132,9 +134,9 @@
                         </materialDesign:MaterialDataGridTextColumn>
 
                         <materialDesign:MaterialDataGridTextColumn                               
-                                Binding="{Binding BirthDay}"
+                               Binding="{Binding BirthDay, StringFormat ='dd/MM/yyyy'}"
                                 Header="Ngày sinh" 
-                                IsReadOnly="{Binding Data.BirthDayReadOnly,Source={StaticResource proxy}}"
+                                IsReadOnly= "True"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
                                 Width="120" MinWidth="120">
                             <DataGridTextColumn.ElementStyle>
@@ -157,18 +159,28 @@
                             </DataGridTextColumn.ElementStyle>
                         </materialDesign:MaterialDataGridTextColumn>
 
+
                         <materialDesign:MaterialDataGridTextColumn
                                 Binding="{Binding Role.Name}"
                                 Header="Loại" 
-                                IsReadOnly="{Binding Data.RoleReadOnly,Source={StaticResource proxy}}"
-                                EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnPopupEditingStyle}"
-                                Width="140" MinWidth="140">
+                                Visibility="{Binding Data.TextBlockColumnVisibility,Source={StaticResource proxy}}"
+                                IsReadOnly="True" Width="140" MinWidth="140">
                             <DataGridTextColumn.ElementStyle>
                                 <Style TargetType="TextBlock">
                                     <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
                                 </Style>
                             </DataGridTextColumn.ElementStyle>
                         </materialDesign:MaterialDataGridTextColumn>
+
+                        <materialDesign:MaterialDataGridComboBoxColumn
+                                Width="140"
+                                MinWidth="140"
+                                Header="Loại"
+                                Visibility="{Binding Data.ComboboxColumnVisibility,Source={StaticResource proxy}}"
+                                SelectedItemBinding="{Binding Role.Name,UpdateSourceTrigger=PropertyChanged}"                             
+                                ItemsSourceBinding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}, Path=DataContext.ListRoleName}">
+
+                        </materialDesign:MaterialDataGridComboBoxColumn>
 
                         <DataGridTemplateColumn x:Name="ButtonColumn" Visibility="{Binding Data.EditColumnVisibility,Source={StaticResource proxy}}">
                             <DataGridTemplateColumn.CellTemplate>

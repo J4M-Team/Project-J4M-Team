@@ -27,6 +27,29 @@ namespace BookStore.ViewModel
             }
         }
 
+        private ObservableCollection<string> _ListRoleName;
+        public ObservableCollection<string> ListRoleName
+        {
+            get { return _ListRoleName; }
+            set
+            {
+                _ListRoleName = value;
+                OnPropertyChanged(nameof(ListRoleName));
+            }
+        }
+
+        //Loại của nhân viên mới
+        private string _ComboBoxSelectedItem;
+        public string ComboBoxSelectedItem
+        {
+            get { return _ComboBoxSelectedItem; }
+            set
+            {
+                _ComboBoxSelectedItem = value;
+                OnPropertyChanged(nameof(ComboBoxSelectedItem));
+            }
+        }
+
         private CEmployee _SelectedItem;
         public CEmployee SelectedItem
         {
@@ -98,16 +121,7 @@ namespace BookStore.ViewModel
             }
         }
 
-        private bool _BirthDayReadOnly;
-        public bool BirthDayReadOnly
-        {
-            get { return _BirthDayReadOnly; }
-            set
-            {
-                _BirthDayReadOnly = value;
-                OnPropertyChanged(nameof(BirthDayReadOnly));
-            }
-        }
+        
 
         private bool _IdentityReadOnly;
         public bool IdentityReadOnly
@@ -120,14 +134,27 @@ namespace BookStore.ViewModel
             }
         }
 
-        private bool _RoleReadOnly;
-        public bool RoleReadOnly
+        //Thuộc tính ẩn cột loại mới (combobox)
+        private Visibility _ComboboxColumnVisibility;
+        public Visibility ComboboxColumnVisibility
         {
-            get { return _RoleReadOnly; }
+            get { return _ComboboxColumnVisibility; }
             set
             {
-                _RoleReadOnly = value;
-                OnPropertyChanged(nameof(RoleReadOnly));
+                _ComboboxColumnVisibility = value;
+                OnPropertyChanged(nameof(ComboboxColumnVisibility));
+            }
+        }
+
+        //Thuộc tính ẩn cột loại cũ (textbox)
+        private Visibility _TextBlockColumnVisibility;
+        public Visibility TextBlockColumnVisibility
+        {
+            get { return _TextBlockColumnVisibility; }
+            set
+            {
+                _TextBlockColumnVisibility = value;
+                OnPropertyChanged(nameof(TextBlockColumnVisibility));
             }
         }
 
@@ -178,16 +205,23 @@ namespace BookStore.ViewModel
                 AddressReadOnly = true;
                 PhoneReadOnly = true;
                 EmailReadOnly = true;
-                BirthDayReadOnly = true;
+               
                 IdentityReadOnly = true;
-                RoleReadOnly = true;
 
+                //Ẩn cột Combobox trong datagrid
+                ComboboxColumnVisibility = Visibility.Hidden;
+
+                //Hiện cột text
+                TextBlockColumnVisibility = Visibility.Visible;
 
                 //Ẩn cột chỉnh sửa
                 EditColumnVisibility = Visibility.Hidden;
 
                 //Ẩn chỉnh sửa
                 IsChecked = false;
+
+                //Thêm data vào combobox
+                ListRoleName = new ObservableCollection<string>(CRole.Ins.ListRoleName());
 
                 //lấy data từ cơ sở dữ liệu
                 ListEmployee = new ObservableCollection<CEmployee>(CEmployee.Ins.ListEmployee());
@@ -206,9 +240,14 @@ namespace BookStore.ViewModel
                     AddressReadOnly = false;
                     PhoneReadOnly = false;
                     EmailReadOnly = false;
-                    BirthDayReadOnly = false;
+                   
                     IdentityReadOnly = false;
-                    RoleReadOnly = false;
+
+                    //Hiện cột combobox
+                    ComboboxColumnVisibility = Visibility.Visible;
+
+                    //Ẩn cột text
+                    TextBlockColumnVisibility = Visibility.Hidden;
 
                 }
                 else
@@ -220,9 +259,11 @@ namespace BookStore.ViewModel
                     AddressReadOnly = true;
                     PhoneReadOnly = true;
                     EmailReadOnly = true;
-                    BirthDayReadOnly = true;
+                   
                     IdentityReadOnly = true;
-                    RoleReadOnly = true;
+
+                    ComboboxColumnVisibility = Visibility.Hidden;
+                    TextBlockColumnVisibility = Visibility.Visible;
                 }
 
             }
