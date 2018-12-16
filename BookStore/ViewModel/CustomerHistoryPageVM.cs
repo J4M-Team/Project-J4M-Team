@@ -124,6 +124,7 @@ namespace BookStore.ViewModel
         public ICommand SearchTextChangeCommand { get; set; }
         public ICommand SelectionChangedCommand { get; set; }
         public ICommand HistorySelectionChangedCommand { get; set; }
+       
 
         #endregion
 
@@ -140,6 +141,28 @@ namespace BookStore.ViewModel
             }
         }
 
+        private Visibility _BillInfoVisibility;
+        public Visibility BillInfoVisibility
+        {
+            get { return _BillInfoVisibility; }
+            set
+            {
+                _BillInfoVisibility = value;
+                OnPropertyChanged(nameof(BillInfoVisibility));
+            }
+        }
+
+        private Visibility _CardVisibility;
+        public Visibility CardVisibility
+        {
+            get { return _CardVisibility; }
+            set
+            {
+                _CardVisibility = value;
+                OnPropertyChanged(nameof(CardVisibility));
+            }
+        }
+
         #endregion
 
         #region method
@@ -149,6 +172,9 @@ namespace BookStore.ViewModel
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 CustomerInfoVisibility = Visibility.Collapsed;
+                BillInfoVisibility = Visibility.Visible;
+                CardVisibility = Visibility.Visible;
+
                 DataListCustomer = new ObservableCollection<CCustomer>(CCustomer.Ins.TransactionHistory().OrderByDescending(x => x.NumberBook));
 
                 ListCustomer = DataListCustomer;
@@ -158,6 +184,9 @@ namespace BookStore.ViewModel
             SearchTextChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 CustomerInfoVisibility = Visibility.Collapsed;
+                BillInfoVisibility = Visibility.Visible;
+                CardVisibility = Visibility.Visible;
+
                 Search();
             }
                );
@@ -167,6 +196,9 @@ namespace BookStore.ViewModel
                 if (SelectedItem != null)
                 {
                     CustomerInfoVisibility = Visibility.Collapsed;
+                    BillInfoVisibility = Visibility.Visible;
+                    CardVisibility = Visibility.Visible;
+
                     CustomerHistory = new ObservableCollection<CReport>(CCustomer.Ins.CustomerHistory(SelectedItem.Id).OrderByDescending(x => x.Date));
 
                     ListBook = new ObservableCollection<CBook>();
@@ -181,7 +213,10 @@ namespace BookStore.ViewModel
                 {                   
                     Date = HistorySelectedItem.Date;
                     CustomerName = SelectedItem.Name;
+
                     CustomerInfoVisibility = Visibility.Visible;
+                    BillInfoVisibility = Visibility.Visible;
+                    CardVisibility = Visibility.Visible;
 
                     ListBook = new ObservableCollection<CBook>(CCustomer.Ins.CustomerDateHistory(HistorySelectedItem.Date, SelectedItem.Id));                 
                 }

@@ -140,13 +140,23 @@ namespace BookStore.ViewModel
         public ICommand CheckCommand { get; set; }
         public ICommand loadCommand { get; set; }
         public ICommand SearchTextChangeCommand { get; set; }
-
+        public ICommand EditCommand { get; set; }
         #endregion
 
         #region method
 
         public CustomerInfoPageVM()
         {
+            EditCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (SelectedItem != null)
+                {
+                    CCustomer.Ins.Update(SelectedItem);
+                }
+                
+            }
+               );
+
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 NameisReadOnly = true;

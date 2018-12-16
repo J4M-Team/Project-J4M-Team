@@ -154,6 +154,59 @@ namespace BookStore.Model.MyClass
         }
 
         /// <summary>
+        /// Hàm cập nhật thông tin của khách hàng
+        /// </summary>
+        /// <param name="Customer"></param>
+        /// <returns></returns>
+        public bool Update(CCustomer Customer)
+        {
+            try
+            {
+                //Kiểm tra thông tin đầu vào
+                if(string.IsNullOrEmpty(Customer.Name)||string.IsNullOrEmpty(Customer.Phone) || string.IsNullOrEmpty(Customer.Address) || string.IsNullOrEmpty(Customer.Email))
+                {
+                    return false;
+                }
+                //Tìm khách hàng theo ID
+                var find = DataProvider.Ins.DB.Customers.Find(Customer.Id);
+
+                if (find != null)
+                {
+                    //Kiểm tra thông tin cập nhật có như cũ hay không
+
+                    //Kiểm tra thông tin cập nhật có trùng với một khách hàng khác không
+                    var check = DataProvider.Ins.DB.Customers.Where(x => x.Customer_Name.ToLower() == Customer.Name.ToLower() && x.Customer_Phone == Customer.Phone);
+                    if (check.Count() > 0)
+                    {
+                        return false;
+                    }
+
+                    //Cập nhật lại thông tin mới
+                    find.Customer_Name = Customer.Name;
+                    find.Customer_Phone = Customer.Phone;
+                    find.Customer_Address = Customer.Address;
+                    find.Customer_Email = Customer.Email;
+
+                    //Lưu thay đổi
+                    DataProvider.Ins.DB.SaveChanges();
+
+                    return true;
+
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch
+            {
+
+            }
+
+            return false;
+        }
+
+        /// <summary>
         /// Hàm trả về danh sách khách hàng bao gồm,tổng số sách đã mua, tổng số tiền đã trả cho cửa hàng
         /// </summary>
         /// <returns></returns>

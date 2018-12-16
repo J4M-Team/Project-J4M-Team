@@ -214,12 +214,12 @@
                         Background="#03a9f4"
                         Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
                         Width="auto"
-                        Padding="8" Margin="5,0,5,0">
+                        Padding="8" Margin="5,0,5,0" Visibility="{Binding CardVisibility}">
                         <TextBlock HorizontalAlignment="Center"
                             FontSize="16" Text="Thông tin chi tiết">
                         </TextBlock>
                     </materialDesign:Card>
-                    <ListView
+                    <ListView Visibility="{Binding BillInfoVisibility}"
                         ItemsSource="{Binding ListBook}" MaxHeight="200">
                         <!-- https://social.msdn.microsoft.com/Forums/vstudio/en-US/0944b3ed-dce9-4e19-9ab4-99193d682b2c/align-each-columns-cell-text-in-a-listview-using-a-gridview?forum=wpf-->
                         <!-- Đặt text ở giữa mỗi côt-->
