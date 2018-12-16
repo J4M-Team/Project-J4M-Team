@@ -252,7 +252,45 @@ namespace BookStore.Model.MyClass
             return List;
         }
 
+        /// <summary>
+        /// hàm trả về Danh sách sách mua trong ngày của khách hàng
+        /// </summary>
+        /// <param name="Date">Ngày cần hiển thị</param>
+        /// <param name="Customer_Id">Id khách hàng</param>
+        /// <returns></returns>
+        public List<CBook> CustomerDateHistory(DateTime Date,int Customer_Id)
+        {
+            List<CBook> List = new List<CBook>();
 
+            try
+            {
+                var Data = DataProvider.Ins.DB.Bill_Info.Where(x => EntityFunctions.TruncateTime(x.Bill.Bill_Date) == EntityFunctions.TruncateTime(Date)
+                && x.Bill.Customer_Id == Customer_Id);
+
+                if (Data.Count() > 0)
+                {
+                    foreach (var item in Data)
+                    {
+                        CBook Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book.Book_Name,
+                            Count = item.Book_Count,
+                            PricePromotion = (float)item.Price,
+                            TotalPrice = (float)item.Price * item.Book_Count
+                        };
+
+                        List.Add(Book);
+                    }
+                }            
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
 
 
 

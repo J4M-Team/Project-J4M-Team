@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace BookStore.ViewModel
@@ -45,6 +46,17 @@ namespace BookStore.ViewModel
                 OnPropertyChanged(nameof(CustomerHistory));
             }
         }
+     
+        private ObservableCollection<CBook> _ListBook;
+        public ObservableCollection<CBook> ListBook
+        {
+            get { return _ListBook; }
+            set
+            {
+                _ListBook = value;
+                OnPropertyChanged(nameof(ListBook));
+            }
+        }
 
         private string _FilterString;
         public string FilterString
@@ -80,6 +92,30 @@ namespace BookStore.ViewModel
             }
         }
 
+
+
+        private DateTime _Date;
+        public DateTime Date
+        {
+            get { return _Date; }
+            set
+            {
+                _Date = value;
+                OnPropertyChanged(nameof(Date));
+            }
+        }
+
+        private string _CustomerName;
+        public string CustomerName
+        {
+            get { return _CustomerName; }
+            set
+            {
+                _CustomerName = value;
+                OnPropertyChanged(nameof(CustomerName));
+            }
+        }
+
         #endregion
 
         #region command binding
@@ -91,13 +127,28 @@ namespace BookStore.ViewModel
 
         #endregion
 
+        #region properties command
+
+        private Visibility _CustomerInfoVisibility;
+        public Visibility CustomerInfoVisibility
+        {
+            get { return _CustomerInfoVisibility; }
+            set
+            {
+                _CustomerInfoVisibility = value;
+                OnPropertyChanged(nameof(CustomerInfoVisibility));
+            }
+        }
+
+        #endregion
+
         #region method
 
         public CustomerHistoryPageVM()
         {
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-
+                CustomerInfoVisibility = Visibility.Collapsed;
                 DataListCustomer = new ObservableCollection<CCustomer>(CCustomer.Ins.TransactionHistory().OrderByDescending(x => x.NumberBook));
 
                 ListCustomer = DataListCustomer;
@@ -106,6 +157,7 @@ namespace BookStore.ViewModel
 
             SearchTextChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                CustomerInfoVisibility = Visibility.Collapsed;
                 Search();
             }
                );
@@ -114,7 +166,10 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItem != null)
                 {
-                    CustomerHistory = new ObservableCollection<CReport>(CCustomer.Ins.CustomerHistory(SelectedItem.Id));
+                    CustomerInfoVisibility = Visibility.Collapsed;
+                    CustomerHistory = new ObservableCollection<CReport>(CCustomer.Ins.CustomerHistory(SelectedItem.Id).OrderByDescending(x => x.Date));
+
+                    ListBook = new ObservableCollection<CBook>();
                 }
                 
             }
@@ -122,10 +177,13 @@ namespace BookStore.ViewModel
 
             HistorySelectionChangedCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                if (HistorySelectedItem != null)
-                {
-                    //CustomerHistory = new ObservableCollection<CReport>(CCustomer.Ins.CustomerHistory(SelectedItem.Id));
-                    System.Windows.MessageBox.Show(HistorySelectedItem.Date.ToLongDateString());
+                if (HistorySelectedItem != null && SelectedItem != null)
+                {                   
+                    Date = HistorySelectedItem.Date;
+                    CustomerName = SelectedItem.Name;
+                    CustomerInfoVisibility = Visibility.Visible;
+
+                    ListBook = new ObservableCollection<CBook>(CCustomer.Ins.CustomerDateHistory(HistorySelectedItem.Date, SelectedItem.Id));                 
                 }
 
             }

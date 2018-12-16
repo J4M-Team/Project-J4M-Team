@@ -191,6 +191,24 @@
                         </ListView.View>
                     </ListView>
                 </StackPanel>
+                <materialDesign:Card
+                        Background="#03a9f4"
+                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                        Width="auto"
+                        Padding="8" Margin="5,10,5,0" Visibility="{Binding CustomerInfoVisibility}">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal" Margin="0,0,0,5">
+                            <TextBlock Text="Ngày:" Margin="0,0,5,0" FontSize="15"/>
+                            <TextBlock Text="{Binding Date,StringFormat=dd-MM-yyyy}" FontSize="15"/>
+                        </StackPanel>
+
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="Tên khách hàng:" Margin="0,0,5,0" FontSize="15"/>
+                            <TextBlock Text="{Binding CustomerName}" FontSize="15"/>
+                        </StackPanel>
+                    </StackPanel>
+                    
+                </materialDesign:Card>
                 <StackPanel Margin="0,5,0,0">
                     <materialDesign:Card
                         Background="#03a9f4"
@@ -202,24 +220,53 @@
                         </TextBlock>
                     </materialDesign:Card>
                     <ListView
-                        ItemsSource="{Binding OutputHistory}" MaxHeight="200">
+                        ItemsSource="{Binding ListBook}" MaxHeight="200">
+                        <!-- https://social.msdn.microsoft.com/Forums/vstudio/en-US/0944b3ed-dce9-4e19-9ab4-99193d682b2c/align-each-columns-cell-text-in-a-listview-using-a-gridview?forum=wpf-->
+                        <!-- Đặt text ở giữa mỗi côt-->
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
                         <ListView.View>
                             <GridView>
                                 <GridViewColumn
                                     DisplayMemberBinding="{Binding Id}"
                                     Header="Mã sách" />
+                                <GridViewColumn                                 
+                                    Header="Tên sách"
+                                    Width="120">
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}" TextWrapping="WrapWithOverflow"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                                 <GridViewColumn
-                                    DisplayMemberBinding="{Binding Price.OutputPrice}"
-                                    Header="Tên sách" />
-                                <GridViewColumn
-                                    DisplayMemberBinding="{Binding Price.Output_Date_Set}"
-                                    Header="Số lượng" />
-                                <GridViewColumn
-                                    DisplayMemberBinding="{Binding Price.Output_Date_Set}"
-                                    Header="Giá tiền" />
-                                <GridViewColumn
-                                    DisplayMemberBinding="{Binding Price.Output_Date_Set}"
-                                    Header="Tổng tiền" />
+                                    Header="Số lượng" >
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Count,StringFormat='0,0'}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn      
+                                    Header="Giá tiền">
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding PricePromotion,StringFormat='0,0.0'}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn                                  
+                                    Header="Tổng tiền">
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0'}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>
