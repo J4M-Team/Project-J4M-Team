@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -173,7 +174,11 @@ namespace BookStore.Model.MyClass
                     float Sum = DataProvider.Ins.DB.Bill_Info.Where(x => x.Bill.Customer_Id == item.Customer_Id).Select(x => new { Sum = (float)x.Price * x.Book_Count }).Select(x => x.Sum).DefaultIfEmpty(0).Sum();
 
                     //Lấy ra ngày cuối cùng mà khách đến cửa hàng của mình
-
+                    DateTime date = new DateTime();
+                    if (item.Bills.Count() > 0)
+                    {
+                        date = (DateTime)item.Bills.OrderByDescending(x => x.Bill_Date).Select(x => x.Bill_Date).First();
+                    }
 
                     //Tạo mới
                     CCustomer Customer = new CCustomer
@@ -184,7 +189,7 @@ namespace BookStore.Model.MyClass
                         Email = item.Customer_Email == null ? "Không có" : item.Customer_Email,
                         NumberBook = Count,
                         SumMoney = Sum,
-                        LastDate = (DateTime)item.Bills.OrderByDescending(x => x.Bill_Date).Select(x => x.Bill_Date).FirstOrDefault()
+                        LastDate = date
                     };
 
                     //Thêm vào List
@@ -198,6 +203,55 @@ namespace BookStore.Model.MyClass
 
             return List;
         }
+
+        /// <summary>
+        /// Hàm trả về lịch sử giao dịch của khách hàng
+        /// </summary>
+        /// <param name="Customer_Id"></param>
+        /// <returns></returns>
+        public List<CReport> CustomerHistory(int Customer_Id)
+        {
+            List<CReport> List = new List<CReport>();
+            try
+            {
+                //Lấy ra list date trong danh sách hóa đơn (lấy ra những ngày khác nhau không lấy ra giờ vì trong một ngày có thể có nhiều hóa đơn)
+                //Chỉ lấy ra những hóa đơn có id khách ha
+                var ListDate = DataProvider.Ins.DB.Bills.Where(x => x.Customer_Id == Customer_Id).Select(x => EntityFunctions.TruncateTime(x.Bill_Date)).Distinct();
+                if (ListDate.Count() > 0)
+                {
+                    //Duyệt trong listday và so sánh với 
+                    foreach (var date in ListDate)
+                    {
+                        //Lấy ra danh sách thông tin hóa đơn theo ngày (như là groupby)
+                        var dataBillInfo = DataProvider.Ins.DB.Bill_Info.Where(x => EntityFunctions.TruncateTime(x.Bill.Bill_Date) == date);
+
+                        //Lấy ra tổng số sách                            
+                        int CountBook = dataBillInfo.Sum(x => x.Book_Count);
+
+                        //Tính toán số tiền mà khách đã bỏ ra trong ngày                      
+                        float TotalMoney = (float)dataBillInfo.Select(x => new { sum = (float)x.Book_Count * x.Price }).Select(x => x.sum).DefaultIfEmpty(0).Sum();
+
+                        //Tạo mới CReport
+                        CReport Report = new CReport
+                        {
+                            Date = (DateTime)date,
+                            CountBook = CountBook,
+                            TotalMoney = TotalMoney,
+                        };
+
+                        //Thêm vào list
+                        List.Add(Report);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
+
 
 
 

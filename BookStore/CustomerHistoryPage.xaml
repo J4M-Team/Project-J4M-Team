@@ -24,6 +24,208 @@
     </i:Interaction.Triggers>
 
     <Grid>
-        <TextBlock Text="22121212"/>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="660"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <StackPanel>
+                <Grid>
+                    <!--Thanh tìm kiếm -->
+                    <materialDesign:Card Width="620" Margin="30,20,0,0" HorizontalAlignment="Left">
+                        <StackPanel Orientation="Horizontal">
+
+                            <TextBox Width="560" FontSize="15" Height="35"
+                                    x:Name="CommentTextBox"
+                                    materialDesign:HintAssist.Hint="   Tên Khách hàng" Text="{Binding FilterString,UpdateSourceTrigger=PropertyChanged}">
+                                <i:Interaction.Triggers>
+                                    <i:EventTrigger EventName="TextChanged">
+                                        <i:InvokeCommandAction Command="{Binding SearchTextChangeCommand}"/>
+                                    </i:EventTrigger>
+                                </i:Interaction.Triggers>
+                            </TextBox>
+                            <Button Background="#FF3EA0C3" Width="60" BorderBrush="#FF3EA0C3" Command="{Binding SearchCommand}">
+                                <StackPanel Orientation="Horizontal">
+                                    <materialDesign:PackIcon Kind="Magnify" Height="25" Width="25" HorizontalAlignment="Right"/>
+                                </StackPanel>
+                            </Button>
+                        </StackPanel>
+                    </materialDesign:Card>
+                </Grid>
+
+                <materialDesign:Card Margin="20,10,0,20" Width="auto" HorizontalAlignment="Left">
+                    <DataGrid
+                        Margin="0 0 0 0"
+                        MaxHeight="630"                   
+                        ItemsSource="{Binding ListCustomer}"
+                        CanUserSortColumns="True"
+                        CanUserAddRows="False"
+                        AutoGenerateColumns="False"
+                        Width="630"
+                        materialDesign:DataGridAssist.CellPadding="13 8 8 8"
+                        materialDesign:DataGridAssist.ColumnHeaderPadding="8"
+                        SelectedItem="{Binding SelectedItem}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                        <DataGrid.Resources>
+                            <local:BindingProxy x:Key="proxy" Data="{Binding}"/>
+                        </DataGrid.Resources>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn
+                                Binding="{Binding Id}"
+                                Header="Mã"
+                                IsReadOnly="True"
+                                Width="50" MinWidth="50">
+                            </DataGridTextColumn>
+
+                            <materialDesign:MaterialDataGridTextColumn
+                                Binding="{Binding Name}"     
+                                Header="Tên"
+                                Width="130"
+                                MinWidth="130"
+                                IsReadOnly="True"
+                                >
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:MaterialDataGridTextColumn>
+                                                                               
+                            <materialDesign:MaterialDataGridTextColumn
+                                Binding="{Binding NumberBook,StringFormat='0,0'}"
+                                Header="Tổng sách đã mua"                           
+                                MinWidth="140"
+                                Width="140"
+                                IsReadOnly="True"
+                                >
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextBlock.TextWrapping" Value="Wrap"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:MaterialDataGridTextColumn>
+
+                            <materialDesign:MaterialDataGridTextColumn
+                                Binding="{Binding SumMoney,StringFormat='0,0.00'}"
+                                Header="Tổng tiền đã trả"                           
+                                MinWidth="140"
+                                Width="140"
+                                IsReadOnly="True"
+                                >
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:MaterialDataGridTextColumn>
+
+                            <materialDesign:MaterialDataGridTextColumn
+                                Binding="{Binding LastDate,StringFormat=dd-MM-yyyy}"
+                                Header="Ngày giao dịch cuối"                           
+                                MinWidth="140"
+                                Width="140"
+                                IsReadOnly="True"
+                                 >
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </materialDesign:MaterialDataGridTextColumn>
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </materialDesign:Card>
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Column="1">
+            <StackPanel VerticalAlignment="Top" Margin="0,20,0,0">
+                <StackPanel>
+                    <materialDesign:Card
+                        Background="#03a9f4"
+                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                       
+                        Padding="8" Width="auto" Margin="5,0,5.2,0">
+                        <TextBlock HorizontalAlignment="Center"
+                            FontSize="16" Text="Lịch sử mua sách">
+                        </TextBlock>
+                    </materialDesign:Card>
+                    <ListView
+                        ItemsSource="{Binding CustomerHistory}" MaxHeight="200"
+                        SelectedItem="{Binding HistorySelectedItem}">
+                        <!-- https://social.msdn.microsoft.com/Forums/vstudio/en-US/0944b3ed-dce9-4e19-9ab4-99193d682b2c/align-each-columns-cell-text-in-a-listview-using-a-gridview?forum=wpf-->
+                        <!-- Đặt text ở giữa mỗi côt-->
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                            </Style>
+                        </ListView.ItemContainerStyle>
+
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectionChanged">
+                                <i:InvokeCommandAction Command="{Binding HistorySelectionChangedCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn
+                                    DisplayMemberBinding="{Binding Date,StringFormat=dd-MM-yyyy}"
+                                    Header="Ngày" />
+                                <GridViewColumn                                   
+                                    Header="Tổng sách" >
+                                    <GridViewColumn.CellTemplate >
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding CountBook,StringFormat='0,0'}" HorizontalAlignment="Center"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn
+                                    DisplayMemberBinding="{Binding TotalMoney,StringFormat='0,0.0'}"
+                                    Header="Tổng tiền" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+                <StackPanel Margin="0,5,0,0">
+                    <materialDesign:Card
+                        Background="#03a9f4"
+                        Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                        Width="auto"
+                        Padding="8" Margin="5,0,5,0">
+                        <TextBlock HorizontalAlignment="Center"
+                            FontSize="16" Text="Thông tin chi tiết">
+                        </TextBlock>
+                    </materialDesign:Card>
+                    <ListView
+                        ItemsSource="{Binding OutputHistory}" MaxHeight="200">
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn
+                                    DisplayMemberBinding="{Binding Id}"
+                                    Header="Mã sách" />
+                                <GridViewColumn
+                                    DisplayMemberBinding="{Binding Price.OutputPrice}"
+                                    Header="Tên sách" />
+                                <GridViewColumn
+                                    DisplayMemberBinding="{Binding Price.Output_Date_Set}"
+                                    Header="Số lượng" />
+                                <GridViewColumn
+                                    DisplayMemberBinding="{Binding Price.Output_Date_Set}"
+                                    Header="Giá tiền" />
+                                <GridViewColumn
+                                    DisplayMemberBinding="{Binding Price.Output_Date_Set}"
+                                    Header="Tổng tiền" />
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </StackPanel>
+            </StackPanel>
+        </Grid>
+
     </Grid>
 </Page>

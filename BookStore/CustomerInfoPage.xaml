@@ -25,7 +25,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="800"/>
+            <ColumnDefinition Width="740"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid Grid.Column="0">
@@ -55,7 +55,7 @@
                     <ToggleButton
                     Style="{StaticResource MaterialDesignSwitchToggleButton}"
                     ToolTip="MaterialDesignSwitchToggleButton with Content and ToggleButtonAssist.OnContent"
-                    HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="730,0,0,5" Command="{Binding CheckCommand}" IsChecked="{Binding IsChecked}">
+                    HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="700,0,0,5" Command="{Binding CheckCommand}" IsChecked="{Binding IsChecked}">
                         <materialDesign:PackIcon Kind="BorderColor" RenderTransformOrigin=".5,.5">
                             <materialDesign:PackIcon.RenderTransform>
                                 <RotateTransform Angle="45" />

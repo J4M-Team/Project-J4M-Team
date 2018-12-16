@@ -55,6 +55,7 @@ namespace BookStore.ViewModel
 
         public ICommand InfoCustomerCommand { get; set; }
         public ICommand HistoryCommand { get; set; }
+        public ICommand loadCommand { get; set; }
 
         #endregion
 
@@ -62,6 +63,14 @@ namespace BookStore.ViewModel
 
         public CustomerMenuPageVM()
         {
+            loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(10, 0, 0, 0);
+
+                FramePage = new CustomerInfoPage();
+            }
+              );
+
             InfoCustomerCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(10, 0, 0, 0);
