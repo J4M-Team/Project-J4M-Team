@@ -223,7 +223,7 @@ namespace BookStore.Model.MyClass
                     foreach (var date in ListDate)
                     {
                         //Lấy ra danh sách thông tin hóa đơn theo ngày (như là groupby)
-                        var dataBillInfo = DataProvider.Ins.DB.Bill_Info.Where(x => EntityFunctions.TruncateTime(x.Bill.Bill_Date) == date);
+                        var dataBillInfo = DataProvider.Ins.DB.Bill_Info.Where(x => EntityFunctions.TruncateTime(x.Bill.Bill_Date) == date && x.Bill.Customer_Id == Customer_Id);
 
                         //Lấy ra tổng số sách                            
                         int CountBook = dataBillInfo.Sum(x => x.Book_Count);
