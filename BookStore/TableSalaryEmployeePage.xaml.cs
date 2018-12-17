@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace BookStore
 {
     /// <summary>
-    /// Interaction logic for TableSalaryEmployee.xaml
+    /// Interaction logic for TableSalaryEmployeePage.xaml
     /// </summary>
-    public partial class TableSalaryEmployee : Page
+    public partial class TableSalaryEmployeePage : Page
     {
-        public TableSalaryEmployee()
+        public TableSalaryEmployeePage()
         {
             InitializeComponent();
         }
