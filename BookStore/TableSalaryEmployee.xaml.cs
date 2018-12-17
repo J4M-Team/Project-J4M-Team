@@ -10,6 +10,7 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace BookStore
@@ -17,7 +18,7 @@ namespace BookStore
     /// <summary>
     /// Interaction logic for TableSalaryEmployee.xaml
     /// </summary>
-    public partial class TableSalaryEmployee : Window
+    public partial class TableSalaryEmployee : Page
     {
         public TableSalaryEmployee()
         {
