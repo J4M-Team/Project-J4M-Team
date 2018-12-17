@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -99,6 +100,130 @@ namespace BookStore.Model.MyClass
 
             }
             return false;
+        }
+
+        /// <summary>
+        /// Hàm trả về lịch sử nhập kho
+        /// </summary>
+        /// <param name="Employee_Name"></param>
+        /// <param name="MinDate"></param>
+        /// <param name="MaxDate"></param>
+        /// <returns></returns>
+        public List<CInput_History> InputHistory(string Employee_Name, DateTime MinDate, DateTime MaxDate)
+        {
+            List<CInput_History> List = new List<CInput_History>();
+
+            try
+            {
+                IQueryable<Book_Input> data = DataProvider.Ins.DB.Book_Input.Select(x => x);
+
+                if (MinDate > MaxDate)
+                {
+                    return List;
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(Employee_Name))
+                    {
+                        data = DataProvider.Ins.DB.Book_Input.Where(x => x.Employee.Employee_Name.ToLower().Contains(Employee_Name.ToLower())
+                        && EntityFunctions.TruncateTime(x.Input_Date) >= EntityFunctions.TruncateTime(MinDate) &&
+                        EntityFunctions.TruncateTime(x.Input_Date) <= EntityFunctions.TruncateTime(MaxDate));
+                    }
+                    else
+                    {
+                        data = DataProvider.Ins.DB.Book_Input.Where(x => EntityFunctions.TruncateTime(x.Input_Date) >= EntityFunctions.TruncateTime(MinDate) &&
+                        EntityFunctions.TruncateTime(x.Input_Date) <= EntityFunctions.TruncateTime(MaxDate));
+                    }
+                }
+
+
+                if (data.Count() > 0)
+                {
+                    foreach (var item in data)
+                    {
+                        //Tạo mới
+
+                        CInput_History History = new CInput_History
+                        {
+                            Id=item.Input_Id,
+                            WareHouse = new CWarehouse
+                            {
+                                Id = item.Employee_Id,
+                                Name = item.Employee.Employee_Name
+                            },
+                            Book = new CBook
+                            {
+                                Id = item.Book_Id,
+                                Name = item.Book.Book_Name,
+                                Count = item.Book_Count,
+                                Price = new CBook_Price
+                                {
+                                    InputPrice = (float)item.Input_Price
+                                },
+                                TotalPrice = item.Book_Count * (float)item.Input_Price
+                            },
+                            Date = (DateTime)item.Input_Date
+                        };
+
+                        //Thêm vào List
+                        List.Add(History);
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về ngày nhỏ nhất trong lịch sử nhập kho
+        /// </summary>
+        /// <returns></returns>
+        public DateTime MinDateInput()
+        {
+            DateTime MinDate = new DateTime();
+
+            try
+            {
+                var data = DataProvider.Ins.DB.Book_Input.OrderBy(x => x.Input_Date).Select(x => x.Input_Date).FirstOrDefault();
+
+                MinDate = (DateTime)data;
+
+                return MinDate;
+            }
+            catch
+            {
+
+            }
+
+            return MinDate;
+        }
+
+        /// <summary>
+        /// Hàm trả về ngày lớn nhất trong lịch sử nhập kho
+        /// </summary>
+        /// <returns></returns>
+        public DateTime MaxDateInput()
+        {
+            DateTime MaxDate = new DateTime();
+
+            try
+            {
+                var data = DataProvider.Ins.DB.Book_Input.OrderByDescending(x => x.Input_Date).Select(x => x.Input_Date).FirstOrDefault();
+
+                MaxDate = (DateTime)data;
+
+                return MaxDate;
+            }
+            catch
+            {
+
+            }
+
+            return MaxDate;
         }
 
         #endregion
