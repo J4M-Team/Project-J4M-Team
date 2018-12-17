@@ -47,7 +47,7 @@ namespace BookStore.ViewModel
 
         public ICommand loadCommand { get; set; }
         public ICommand InformationCommand { get; set; }
-
+        public ICommand SalaryCommand { get; set; }
         #endregion
 
         public ManagementEmployeeVM()
@@ -71,6 +71,17 @@ namespace BookStore.ViewModel
 
             }
               );
+           SalaryCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                //Thay đổi vị trí của thanh ngang
+                if (GridCursorMargin != new Thickness(10, 0, 0, 0))
+                {
+                    GridCursorMargin = new Thickness(10, 0, 0, 0);
+                    FramePage = new TableSalaryEmployeePage();
+                }
+
+            }
+             );
         }
 
     }

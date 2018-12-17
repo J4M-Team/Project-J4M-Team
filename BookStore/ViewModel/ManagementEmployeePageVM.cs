@@ -38,7 +38,6 @@ namespace BookStore.ViewModel
             }
         }
 
-        //Loại của nhân viên mới
         private string _ComboBoxSelectedItem;
         public string ComboBoxSelectedItem
         {

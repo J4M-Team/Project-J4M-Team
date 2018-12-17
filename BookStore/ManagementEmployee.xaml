@@ -38,7 +38,15 @@
                         <TextBlock Text="Thông tin" Margin="5,0,0,0" Foreground="Black"/>
                     </StackPanel>
                 </Button>
+                <Button Command="{Binding SalaryCommand}"
+                        Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Width="170">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="Bitcoin"  Foreground="Black"/>
+                        <TextBlock Text="Bảng lương" Margin="5,0,0,0" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
             </StackPanel>
+            
             <Grid Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="{Binding GridCursorMargin}"></Grid>
         </Grid>
         <Grid Grid.Row="1">

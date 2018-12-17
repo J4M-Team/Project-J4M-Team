@@ -1,95 +1,14 @@
-﻿ <Page x:Class="BookStore.TableSalaryEmployee"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BookStore"
-        mc:Ignorable="d"
-          xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
-      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-      TextElement.FontWeight="Regular"
-      TextElement.FontSize="13"
-      TextOptions.TextFormattingMode="Ideal"
-      TextOptions.TextRenderingMode="Auto"
-      Background="{DynamicResource MaterialDesignPaper}"
-      FontFamily="{DynamicResource MaterialDesignFont}"
-      DataContext="{StaticResource TableSalaryEmployee}"
-      d:DesignHeight="700" d:DesignWidth="1150">
-
-    <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Loaded">
-            <i:InvokeCommandAction Command="{Binding loadCommand}"/>
-        </i:EventTrigger>
-    </i:Interaction.Triggers>
+﻿<Page x:Class="BookStore.TableSalaryEmployeePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:BookStore"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="TableSalaryEmployeePage">
 
     <Grid>
-
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-
-        <Grid Grid.Row="1">
-            <!-- List bảng lương nhân viên-->
-            <materialDesign:Card Margin="15,10,0,0" Width="800" HorizontalAlignment="Left">
-                <DataGrid x:Name="Grid"
-                    ItemsSource="{Binding ListSalary}"
-                    CanUserSortColumns="True"
-                    CanUserAddRows="False"
-                    AutoGenerateColumns="False"
-                    materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                    materialDesign:DataGridAssist.ColumnHeaderPadding="8"
-                    SelectedItem="{Binding SelectedItem}" MaxHeight="550" >
-                    <DataGrid.Resources>
-                        <local:BindingProxy x:Key="proxy" Data="{Binding}"/>
-                    </DataGrid.Resources>
-
-                    <DataGrid.Columns>
-
-                        <DataGridTextColumn
-                            Binding="{Binding Id}"
-                            Header="Mã"                            
-                            IsReadOnly="True" 
-                            Width="50" MinWidth="50"/>
-
-                        <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Employee_Id}"
-                            Header="Mã nhân viên"
-                            IsReadOnly="True"
-                            Width="110" MinWidth="110">
-                        </materialDesign:MaterialDataGridTextColumn>
-
-                        <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding DateStart}"
-                                Header="Ngày bắt đầu làm việc" 
-                                IsReadOnly="True"
-                                Width="160" MinWidth="160">
-                        </materialDesign:MaterialDataGridTextColumn>
-
-                        <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding SumDate}"
-                                Header="Tông ngày làm việc" 
-                                IsReadOnly="True"
-                                Width="140" MinWidth="140">
-                        </materialDesign:MaterialDataGridTextColumn>
-
-                        <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding DateWork}"
-                                Header="Ngày làm việc trong tháng" 
-                                IsReadOnly="True"
-                                Width="180" MinWidth="180">
-                        </materialDesign:MaterialDataGridTextColumn>
-
-                        <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Salary}"
-                                Header="Lương" 
-                                IsReadOnly="True"
-                                Width="160" MinWidth="160">
-                        </materialDesign:MaterialDataGridTextColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
-            </materialDesign:Card>
-        </Grid>
+        
     </Grid>
 </Page>
