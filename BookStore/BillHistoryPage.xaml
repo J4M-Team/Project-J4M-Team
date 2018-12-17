@@ -32,8 +32,8 @@
             
         </Grid>
         <Grid Grid.Row="1">
-            <materialDesign:Card Width="930" Margin="0,15,0,0" VerticalAlignment="Top" HorizontalAlignment="Center">
-                <ListView ItemsSource="{Binding ListBill}" MaxHeight="650">
+            <materialDesign:Card Width="960"  Margin="0,15,0,0" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <ListView ItemsSource="{Binding ListBill}" MaxHeight="550">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
@@ -68,13 +68,19 @@
                                         <ItemsControl ItemsSource="{Binding ListBook}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="Tên sách: "></TextBlock>
-                                                        <TextBlock Text="{Binding Name}"></TextBlock>
-                                                        <TextBlock Text=", Số lượng: "></TextBlock>
-                                                        <TextBlock Text="{Binding Count}"></TextBlock>
+                                                    <StackPanel>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="T: "/>
+                                                            <TextBlock Text="{Binding Name}" TextWrapping="WrapWithOverflow" Width="120"></TextBlock>
+                                                            <TextBlock Text="SL: " Margin="5,0,0,0"/>
+                                                            <TextBlock Text="{Binding Count}"></TextBlock>
+                                                            <TextBlock Text="G: " Margin="5,0,0,0"/>
+                                                            <TextBlock Text="{Binding PricePromotion,StringFormat='0,0.0'}"/>
+                                                            <TextBlock Text="TT: " Margin="5,0,0,0"/>
+                                                            <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0'}"/>
+                                                        </StackPanel>
                                                     </StackPanel>
-
+                                                                                                
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
@@ -86,7 +92,7 @@
                         Header="Nhân viên thanh toán">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <StackPanel>
+                                        <StackPanel VerticalAlignment="Center">
                                             <TextBlock Text="{Binding Salesman.Id,StringFormat=Mã: {0}}"/>
                                             <TextBlock Text="{Binding Salesman.Name,StringFormat=Tên: {0}}"/>
                                         </StackPanel>
@@ -98,7 +104,7 @@
                         Header="Ngày thanh toán">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Date}"/>
+                                        <TextBlock Text="{Binding Date}" VerticalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
