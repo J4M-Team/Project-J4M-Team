@@ -72,7 +72,9 @@ namespace BookStore.ViewModel
         public ICommand ReportCommand { get; set; }
         public ICommand AccountCommand { get; set; }
         public ICommand ExitCommand { get; set; }
-        public ICommand loadCommand { get; set; }       
+        public ICommand loadCommand { get; set; }     
+        public ICommand HistoryCommand { get; set; }
+
         #endregion
 
 
@@ -108,20 +110,26 @@ namespace BookStore.ViewModel
 
             AccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 4, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 5, 0, 0);
 
             });
 
             ExitCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 5, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 6, 0, 0);
 
             });
 
             SettingCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 3, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 4, 0, 0);
                 FramePage = new SettingPage();
+            });
+
+            HistoryCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 97 + 52 * 3, 0, 0);
+                FramePage = new HistoryMenuPage();
             });
         } 
     }

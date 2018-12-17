@@ -30,5 +30,8 @@
     <viewmodel:CustomerMenuPageVM x:Key="CustomerMenuPageVM"></viewmodel:CustomerMenuPageVM>
     <viewmodel:CustomerInfoPageVM x:Key="CustomerInfoPageVM"></viewmodel:CustomerInfoPageVM>
     <viewmodel:CustomerHistoryPageVM x:Key="CustomerHistoryPageVM"></viewmodel:CustomerHistoryPageVM>
-    
+    <viewmodel:HistoryMenuPageVM x:Key="HistoryMenuPageVM"></viewmodel:HistoryMenuPageVM>
+    <viewmodel:BillHistoryPageVM x:Key="BillHistoryPageVM"></viewmodel:BillHistoryPageVM>
+    <viewmodel:InputHistoryPageVM x:Key="InputHistoryPageVM"></viewmodel:InputHistoryPageVM>
+    <viewmodel:OutputHistoryPageVM x:Key="OutputHistoryPageVM"></viewmodel:OutputHistoryPageVM>
 </ResourceDictionary>

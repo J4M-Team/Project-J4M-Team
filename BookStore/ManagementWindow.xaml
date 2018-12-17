@@ -67,6 +67,16 @@
                                 </StackPanel>
                             </Button>
                         </ListViewItem>
+
+                        <ListViewItem Padding="1">
+                            <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding HistoryCommand}" Height="50" Width="148">
+                                <StackPanel Orientation="Horizontal" Margin="-45,0,0,0">
+                                    <materialDesign:PackIcon Kind="History" Foreground="Black"/>
+                                    <TextBlock Text="Lịch sử" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>
+                                </StackPanel>
+                            </Button>
+                        </ListViewItem>
+
                         <ListViewItem Padding="1">
                             <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding SettingCommand}" Height="50" Width="148">
                                 <StackPanel Orientation="Horizontal" Margin="-45,0,0,0">
