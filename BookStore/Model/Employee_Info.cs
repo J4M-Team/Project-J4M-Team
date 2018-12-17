@@ -14,7 +14,7 @@ namespace BookStore.Model
     
     public partial class Employee_Info
     {
-        public int Employee_Info_Id { get; set; }
+        public int Emplouee_Info_Id { get; set; }
         public int Employee_Id { get; set; }
         public System.DateTime Date_Start { get; set; }
         public Nullable<int> Sum_Date { get; set; }

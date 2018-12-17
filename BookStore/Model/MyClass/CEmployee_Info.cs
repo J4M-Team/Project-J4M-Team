@@ -73,7 +73,7 @@ namespace BookStore.Model.MyClass
                         //tạo mới
                         CEmployee_Info EmployeeInfo = new CEmployee_Info
                         {
-                            IdInfo = item.Employee_Info_Id,
+                            IdInfo = item.Emplouee_Info_Id,
                             IdEmloyee = item.Employee_Id,
                             DateStart = item.Date_Start,
                             SumDay = (int)item.Sum_Date,
