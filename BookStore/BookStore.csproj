@@ -252,6 +252,7 @@
     <Compile Include="Model\MyClass\CEmployee_Info.cs" />
     <Compile Include="Model\MyClass\CEvaluate.cs" />
     <Compile Include="Model\MyClass\CHuman.cs" />
+    <Compile Include="Model\MyClass\CInput_History.cs" />
     <Compile Include="Model\MyClass\CReport.cs" />
     <Compile Include="Model\MyClass\CRole.cs" />
     <Compile Include="Model\MyClass\CSalesman.cs" />

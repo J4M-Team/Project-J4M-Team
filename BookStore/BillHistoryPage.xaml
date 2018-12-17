@@ -25,15 +25,53 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="70"/>
+            <RowDefinition Height="60"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,15,0,0">
+                <materialDesign:Card Width="300">
+                    <TextBox Width="300" FontSize="15" Height="35"
+                                    x:Name="CommentTextBox"
+                                    materialDesign:HintAssist.Hint=" Tên nhân viên" Margin="10,0,0,0" Text="{Binding FilterString,UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding SearchTextChangeCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                </materialDesign:Card>
+                <materialDesign:Card Margin="10,0,0,5">
+                    <DatePicker
+                            Width="100"
+                            materialDesign:HintAssist.Hint="Từ ngày" SelectedDate="{Binding MinDate}"
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectedDateChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedDateMinChanged}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </DatePicker>
+                </materialDesign:Card>
+
+                <materialDesign:Card Margin="10,0,0,5">
+                    <DatePicker
+                            Width="100"
+                            materialDesign:HintAssist.Hint="Đến ngày" SelectedDate="{Binding MaxDate}"
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectedDateChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedDateMaxChanged}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </DatePicker>
+                </materialDesign:Card>
+
+            </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
-            <materialDesign:Card Width="930" Margin="0,15,0,0" VerticalAlignment="Top" HorizontalAlignment="Center">
-                <ListView ItemsSource="{Binding ListBill}" MaxHeight="650">
+            <materialDesign:Card Width="960"  Margin="0,15,0,0" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <ListView ItemsSource="{Binding ListBill}" MaxHeight="570">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
@@ -68,13 +106,19 @@
                                         <ItemsControl ItemsSource="{Binding ListBook}">
                                             <ItemsControl.ItemTemplate>
                                                 <DataTemplate>
-                                                    <StackPanel Orientation="Horizontal">
-                                                        <TextBlock Text="Tên sách: "></TextBlock>
-                                                        <TextBlock Text="{Binding Name}"></TextBlock>
-                                                        <TextBlock Text=", Số lượng: "></TextBlock>
-                                                        <TextBlock Text="{Binding Count}"></TextBlock>
+                                                    <StackPanel Margin="0,3,0,3">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="T: "/>
+                                                            <TextBlock Text="{Binding Name}" TextWrapping="WrapWithOverflow" Width="120"></TextBlock>
+                                                            <TextBlock Text="SL: " Margin="5,0,0,0"/>
+                                                            <TextBlock Text="{Binding Count}"></TextBlock>
+                                                            <TextBlock Text="G: " Margin="5,0,0,0"/>
+                                                            <TextBlock Text="{Binding PricePromotion,StringFormat='0,0.0'}"/>
+                                                            <TextBlock Text="TT: " Margin="5,0,0,0"/>
+                                                            <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0'}"/>
+                                                        </StackPanel>
                                                     </StackPanel>
-
+                                                                                                
                                                 </DataTemplate>
                                             </ItemsControl.ItemTemplate>
                                         </ItemsControl>
@@ -86,9 +130,9 @@
                         Header="Nhân viên thanh toán">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <StackPanel>
-                                            <TextBlock Text="{Binding Salesman.Id,StringFormat=Mã: {0}}"/>
-                                            <TextBlock Text="{Binding Salesman.Name,StringFormat=Tên: {0}}"/>
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Salesman.Id,StringFormat=Mã: {0}}" Margin="0,3,0,3"/>
+                                            <TextBlock Text="{Binding Salesman.Name,StringFormat=Tên: {0}}" Margin="0,3,0,3"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -98,7 +142,7 @@
                         Header="Ngày thanh toán">
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Date}"/>
+                                        <TextBlock Text="{Binding Date}" VerticalAlignment="Center"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>

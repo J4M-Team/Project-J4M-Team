@@ -67,7 +67,7 @@ namespace BookStore.ViewModel
             {
                 GridCursorMargin = new Thickness(10, 0, 0, 0);
 
-
+                FramePage = new BillHistoryPage();
             }
               );
 
