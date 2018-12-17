@@ -108,7 +108,7 @@ namespace BookStore.ViewModel
                     ListBill = DataListBill;
                 }
 
-                DataListBill = new ObservableCollection<CBill>(CBill.Ins.ListAllBill(0, MinDate, MaxDate).OrderByDescending(x => x.Date));
+                DataListBill = new ObservableCollection<CBill>(CBill.Ins.ListAllBill(FilterString, MinDate, MaxDate).OrderByDescending(x => x.Date));
                 ListBill = DataListBill;
 
             }
@@ -125,7 +125,7 @@ namespace BookStore.ViewModel
                     ListBill = DataListBill;
                 }
 
-                DataListBill = new ObservableCollection<CBill>(CBill.Ins.ListAllBill(0, MinDate, MaxDate).OrderByDescending(x => x.Date));
+                DataListBill = new ObservableCollection<CBill>(CBill.Ins.ListAllBill(FilterString, MinDate, MaxDate).OrderByDescending(x => x.Date));
                 ListBill = DataListBill;
 
             }
@@ -133,8 +133,7 @@ namespace BookStore.ViewModel
 
             SearchTextChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                Search();
-                //System.Windows.MessageBox.Show("fsf");
+                Search();                
             }
                );
         }
