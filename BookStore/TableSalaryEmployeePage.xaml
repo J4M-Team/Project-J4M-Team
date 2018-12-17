@@ -32,7 +32,7 @@
 
         <Grid Grid.Row="1">
             <!-- List bảng lương nhân viên-->
-            <materialDesign:Card Margin="15,10,0,0" Width="800" HorizontalAlignment="Left">
+            <materialDesign:Card Margin="15,10,0,0" Width="1000" HorizontalAlignment="Left">
                 <DataGrid x:Name="Grid"
                     ItemsSource="{Binding ListSalary}"
                     CanUserSortColumns="True"
@@ -51,45 +51,57 @@
                             Binding="{Binding IdInfo}"
                             Header="Mã"                            
                             IsReadOnly="True" 
-                            Width="50" MinWidth="50"/>
+                            Width="60" MinWidth="60"/>
 
                         <materialDesign:MaterialDataGridTextColumn
                             Binding="{Binding IdEmployee}"
                             Header="Mã nhân viên"
                             IsReadOnly="True"
-                            Width="110" MinWidth="110">
+                            Width="120" MinWidth="120">
                         </materialDesign:MaterialDataGridTextColumn>
 
                         <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding DateStart}"
+                                Binding="{Binding DateStart, StringFormat='dd/MM/yy'}"
                                 Header="Ngày bắt đầu làm việc" 
                                 IsReadOnly="True"
-                                Width="160" MinWidth="160">
+                                Width="170" MinWidth="170">
                         </materialDesign:MaterialDataGridTextColumn>
 
                         <materialDesign:MaterialDataGridTextColumn
                                 Binding="{Binding SumDay}"
                                 Header="Tông ngày làm việc" 
                                 IsReadOnly="True"
-                                Width="140" MinWidth="140">
+                                Width="150" MinWidth="150">
                         </materialDesign:MaterialDataGridTextColumn>
 
                         <materialDesign:MaterialDataGridTextColumn
                                 Binding="{Binding DateWork}"
                                 Header="Ngày làm việc trong tháng" 
                                 IsReadOnly="True"
-                                Width="180" MinWidth="180">
+                                Width="190" MinWidth="190">
                         </materialDesign:MaterialDataGridTextColumn>
 
                         <materialDesign:MaterialDataGridTextColumn
                                 Binding="{Binding Salary}"
                                 Header="Lương" 
                                 IsReadOnly="True"
-                                Width="160" MinWidth="160">
+                                Width="170" MinWidth="170">
                         </materialDesign:MaterialDataGridTextColumn>
+
+                        <DataGridTemplateColumn x:Name="ButtonColumn">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Button x:Name="ButtonPayment" Content="Thanh toán" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                                            Command="{Binding Path=DataContext.PaymentCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
+                                            CommandParameter="{Binding}"></Button>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        
                     </DataGrid.Columns>
                 </DataGrid>
             </materialDesign:Card>
+            
         </Grid>
     </Grid>
 </Page>

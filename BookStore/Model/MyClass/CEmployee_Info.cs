@@ -42,7 +42,7 @@ namespace BookStore.Model.MyClass
         #region public properties
         
         public int IdInfo { get { return _IdInfo; } set { _IdInfo = value; } }
-        public int IdEmloyee { get { return _IdEmployee; } set { _IdEmployee = value; } }
+        public int IdEmployee { get { return _IdEmployee; } set { _IdEmployee = value; } }
         public DateTime DateStart { get { return _DateStart; } set { _DateStart = value; } }
         public int SumDay{ get { return _SumDay; } set { _SumDay = value; } }
         public int DateWork { get { return _DateWork; } set { _DateWork = value; } }
@@ -74,7 +74,7 @@ namespace BookStore.Model.MyClass
                         CEmployee_Info EmployeeInfo = new CEmployee_Info
                         {
                             IdInfo = item.Emplouee_Info_Id,
-                            IdEmloyee = item.Employee_Id,
+                            IdEmployee = item.Employee_Id,
                             DateStart = item.Date_Start,
                             SumDay = (int)item.Sum_Date,
                             DateWork = (int)item.Date_In_Month,
@@ -96,6 +96,56 @@ namespace BookStore.Model.MyClass
 
             return List;
         }
+
+ 
+        /// <summary>
+        /// Hàm thanh toán
+        /// </summary>
+        /// <returns></returns>   
+        public bool Payment(CEmployee_Info employeeInfo)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Employee_Info.Find(employeeInfo.IdInfo);
+                if (find != null)
+                {
+                    //Thanh toán xong reset lại số ngày làm việc bằng 0
+                    find.Date_In_Month = 0;
+                }
+                else
+                {
+                    return false;
+                }
+
+                //Lấy full employee từ id employee trong info
+                var employee = DataProvider.Ins.DB.Employees.Find(employeeInfo.IdEmployee);
+                //Đưa thông tin thanh toán vào lịch sử thanh toán 
+                PayWage_History paywate = new PayWage_History
+                {
+
+                    Employee_Id = employeeInfo.IdInfo,
+                    PayWage_Date = DateTime.Now,
+                    Employee_Salary = employeeInfo.Salary,
+                    Employee = employee,
+
+                };
+
+
+                //Thêm vào lịch sử thanh toán lương
+                DataProvider.Ins.DB.PayWage_History.Add(paywate);
+
+                //Lưu lại
+                DataProvider.Ins.DB.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
         #endregion
     }
 }

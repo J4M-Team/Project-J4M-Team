@@ -63,22 +63,20 @@ namespace BookStore.ViewModel
             InformationCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 //Thay đổi vị trí của thanh ngang
-                if (GridCursorMargin != new Thickness(10, 0, 0, 0))
-                {
+              
                     GridCursorMargin = new Thickness(10, 0, 0, 0);
                     FramePage = new ManagementEmployeePage();
-                }
+                
 
             }
               );
            SalaryCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 //Thay đổi vị trí của thanh ngang
-                if (GridCursorMargin != new Thickness(10, 0, 0, 0))
-                {
-                    GridCursorMargin = new Thickness(10, 0, 0, 0);
+                
+                    GridCursorMargin = new Thickness(10 + 170, 0, 0, 0);
                     FramePage = new TableSalaryEmployeePage();
-                }
+                
 
             }
              );
