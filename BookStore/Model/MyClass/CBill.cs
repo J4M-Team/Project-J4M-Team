@@ -147,6 +147,112 @@ namespace BookStore.Model.MyClass
             return false;
         }
 
+        /// <summary>
+        /// Hàm trả về danh sách hóa đơn, kèm tên khách hàng, tên người thanh toán và chi tiết hóa đơn
+        /// </summary>
+        /// <returns></returns>
+        public List<CBill> ListAllBill()
+        {
+            List<CBill> List = new List<CBill>();
+
+            try
+            {
+                var data = DataProvider.Ins.DB.Bill_Info;
+
+                foreach (var item in data)
+                {
+                    CBill Bill;
+                    if (List.Count == 0)
+                    {
+                        CCustomer Customer = new CCustomer { Name = item.Bill.Customer.Customer_Name };
+
+                        CBook Book = new CBook
+                        {
+                            Id = item.Book_Id,
+                            Name = item.Book.Book_Name,
+                            Count = item.Book_Count,
+                            PricePromotion = (float)item.Price,
+                            TotalPrice = (float)item.Price * item.Book_Count
+                        };
+
+                        CSalesman Salesman = new CSalesman
+                        {
+                            Id = item.Bill.Employee_Id,
+                            Name = item.Bill.Employee.Employee_Name
+                        };
+
+                        List<CBook> ListBook = new List<CBook>() { Book };
+
+                        Bill = new CBill
+                        {
+                            Id = item.Bill_Id,
+                            Customer = Customer,
+                            Salesman = Salesman,
+                            ListBook = ListBook,
+                            Date = (DateTime)item.Bill.Bill_Date
+                        };
+
+                        List.Add(Bill);
+                    }
+                    else
+                    {
+
+                        if (List.Where(x => x.Id == item.Bill_Id).Count() > 0)
+                        {
+                            CBook Book = new CBook
+                            {
+                                Id = item.Book_Id,
+                                Name = item.Book.Book_Name,
+                                Count = item.Book_Count,
+                                PricePromotion = (float)item.Price,
+                                TotalPrice = (float)item.Price * item.Book_Count
+                            };
+
+                            //Thêm sách vào List
+                            (List.Where(x => x.Id == item.Bill_Id).ToList<CBill>()).ForEach(p => p.ListBook.Add(Book));
+                        }
+                        else
+                        {
+                            CCustomer Customer = new CCustomer { Name = item.Bill.Customer.Customer_Name };
+
+                            CBook Book = new CBook
+                            {
+                                Id = item.Book_Id,
+                                Name = item.Book.Book_Name,
+                                Count = item.Book_Count,
+                                PricePromotion = (float)item.Price,
+                                TotalPrice = (float)item.Price * item.Book_Count
+                            };
+
+                            CSalesman Salesman = new CSalesman
+                            {
+                                Id = item.Bill.Employee_Id,
+                                Name = item.Bill.Employee.Employee_Name
+                            };
+
+                            List<CBook> ListBook = new List<CBook>() { Book };
+
+                            Bill = new CBill
+                            {
+                                Id = item.Bill_Id,
+                                Customer = Customer,
+                                Salesman = Salesman,
+                                ListBook = ListBook,
+                                Date = (DateTime)item.Bill.Bill_Date
+                            };
+
+                            List.Add(Bill);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
         #endregion
     }
 }
