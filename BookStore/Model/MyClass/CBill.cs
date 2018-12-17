@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -251,6 +252,181 @@ namespace BookStore.Model.MyClass
 
             }
             return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về danh sách hóa đơn từ ngày đến ngày........
+        /// </summary>
+        /// <param name="Customer_Id"></param>
+        /// <param name="MinDate"></param>
+        /// <param name="MaxDate"></param>
+        /// <returns></returns>
+        public List<CBill> ListAllBill(int Customer_Id,DateTime MinDate,DateTime MaxDate)
+        {
+            List<CBill> List = new List<CBill>();
+
+            try
+            {
+                IQueryable<Bill_Info> data = DataProvider.Ins.DB.Bill_Info.Select(x => x);
+
+                if (MinDate > MaxDate)
+                {
+                    return List;
+                }
+                else
+                {
+                    if (Customer_Id > 0)
+                    {
+                        data = DataProvider.Ins.DB.Bill_Info.Where(x => x.Bill.Employee_Id == Customer_Id
+                        && EntityFunctions.TruncateTime(x.Bill.Bill_Date) >= EntityFunctions.TruncateTime(MinDate) &&
+                        EntityFunctions.TruncateTime(x.Bill.Bill_Date) <= EntityFunctions.TruncateTime(MaxDate));
+                    }
+                    else
+                    {
+                        data = DataProvider.Ins.DB.Bill_Info.Where(x => EntityFunctions.TruncateTime(x.Bill.Bill_Date) >= EntityFunctions.TruncateTime(MinDate) &&
+                        EntityFunctions.TruncateTime(x.Bill.Bill_Date) <= EntityFunctions.TruncateTime(MaxDate));
+                    }
+                }
+
+                if (data.Count() > 0)
+                {
+                    foreach (var item in data)
+                    {
+                        CBill Bill;
+                        if (List.Count == 0)
+                        {
+                            CCustomer Customer = new CCustomer { Name = item.Bill.Customer.Customer_Name };
+
+                            CBook Book = new CBook
+                            {
+                                Id = item.Book_Id,
+                                Name = item.Book.Book_Name,
+                                Count = item.Book_Count,
+                                PricePromotion = (float)item.Price,
+                                TotalPrice = (float)item.Price * item.Book_Count
+                            };
+
+                            CSalesman Salesman = new CSalesman
+                            {
+                                Id = item.Bill.Employee_Id,
+                                Name = item.Bill.Employee.Employee_Name
+                            };
+
+                            List<CBook> ListBook = new List<CBook>() { Book };
+
+                            Bill = new CBill
+                            {
+                                Id = item.Bill_Id,
+                                Customer = Customer,
+                                Salesman = Salesman,
+                                ListBook = ListBook,
+                                Date = (DateTime)item.Bill.Bill_Date
+                            };
+
+                            List.Add(Bill);
+                        }
+                        else
+                        {
+
+                            if (List.Where(x => x.Id == item.Bill_Id).Count() > 0)
+                            {
+                                CBook Book = new CBook
+                                {
+                                    Id = item.Book_Id,
+                                    Name = item.Book.Book_Name,
+                                    Count = item.Book_Count,
+                                    PricePromotion = (float)item.Price,
+                                    TotalPrice = (float)item.Price * item.Book_Count
+                                };
+
+                                //Thêm sách vào List
+                                (List.Where(x => x.Id == item.Bill_Id).ToList<CBill>()).ForEach(p => p.ListBook.Add(Book));
+                            }
+                            else
+                            {
+                                CCustomer Customer = new CCustomer { Name = item.Bill.Customer.Customer_Name };
+
+                                CBook Book = new CBook
+                                {
+                                    Id = item.Book_Id,
+                                    Name = item.Book.Book_Name,
+                                    Count = item.Book_Count,
+                                    PricePromotion = (float)item.Price,
+                                    TotalPrice = (float)item.Price * item.Book_Count
+                                };
+
+                                CSalesman Salesman = new CSalesman
+                                {
+                                    Id = item.Bill.Employee_Id,
+                                    Name = item.Bill.Employee.Employee_Name
+                                };
+
+                                List<CBook> ListBook = new List<CBook>() { Book };
+
+                                Bill = new CBill
+                                {
+                                    Id = item.Bill_Id,
+                                    Customer = Customer,
+                                    Salesman = Salesman,
+                                    ListBook = ListBook,
+                                    Date = (DateTime)item.Bill.Bill_Date
+                                };
+
+                                List.Add(Bill);
+                            }
+                        }
+                    }
+                }                                             
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm lấy ra ngày nhỏ nhất trong lịch sử thanh toán hóa đơn
+        /// </summary>
+        /// <returns></returns>
+        public DateTime MinDate()
+        {
+            DateTime MinDate = new DateTime();
+
+            try
+            {
+                var data = DataProvider.Ins.DB.Bills.OrderBy(x => x.Bill_Date).Select(x => x.Bill_Date).FirstOrDefault();
+
+                MinDate = (DateTime)data;
+            }
+            catch
+            {
+
+            }
+
+            return MinDate;
+        }
+
+        /// <summary>
+        /// Hàm trả về ngày lớn nhất trong lịch sử thanh toán hóa đơn
+        /// </summary>
+        /// <returns></returns>
+        public DateTime MaxDate()
+        {
+            DateTime MaxDate = new DateTime();
+
+            try
+            {
+                var data = DataProvider.Ins.DB.Bills.OrderByDescending(x => x.Bill_Date).Select(x => x.Bill_Date).FirstOrDefault();
+
+                MaxDate = (DateTime)data;
+            }
+            catch
+            {
+
+            }
+
+            return MaxDate;
         }
 
         #endregion
