@@ -261,7 +261,7 @@ namespace BookStore.Model.MyClass
         /// <param name="MinDate"></param>
         /// <param name="MaxDate"></param>
         /// <returns></returns>
-        public List<CBill> ListAllBill(int Customer_Id,DateTime MinDate,DateTime MaxDate)
+        public List<CBill> ListAllBill(string Customer_Name,DateTime MinDate,DateTime MaxDate)
         {
             List<CBill> List = new List<CBill>();
 
@@ -275,9 +275,9 @@ namespace BookStore.Model.MyClass
                 }
                 else
                 {
-                    if (Customer_Id > 0)
+                    if (!string.IsNullOrEmpty(Customer_Name))
                     {
-                        data = DataProvider.Ins.DB.Bill_Info.Where(x => x.Bill.Employee_Id == Customer_Id
+                        data = DataProvider.Ins.DB.Bill_Info.Where(x => x.Bill.Employee.Employee_Name.ToLower().Contains(Customer_Name.ToLower())
                         && EntityFunctions.TruncateTime(x.Bill.Bill_Date) >= EntityFunctions.TruncateTime(MinDate) &&
                         EntityFunctions.TruncateTime(x.Bill.Bill_Date) <= EntityFunctions.TruncateTime(MaxDate));
                     }
