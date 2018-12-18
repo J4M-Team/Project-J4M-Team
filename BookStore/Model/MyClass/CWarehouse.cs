@@ -226,6 +226,138 @@ namespace BookStore.Model.MyClass
             return MaxDate;
         }
 
+        /// <summary>
+        /// Hàm trả về lịch sử xuất kho
+        /// </summary>
+        /// <param name="Employee_Name"></param>
+        /// <param name="MinDate"></param>
+        /// <param name="MaxDate"></param>
+        /// <returns></returns>
+        public List<CBill> OutPutHistory(string Employee_Name, DateTime MinDate, DateTime MaxDate)
+        {
+            List<CBill> List = new List<CBill>();
+
+            try
+            {
+                //IQueryable<Bill_Info> data = DataProvider.Ins.DB.Bill_Info.Select(x => x);
+
+                IQueryable<Book_Output> data = DataProvider.Ins.DB.Book_Output.Select(x => x);
+
+                if (MinDate > MaxDate)
+                {
+                    return List;
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(Employee_Name))
+                    {
+                        data = DataProvider.Ins.DB.Book_Output.Where(x => x.Employee.Employee_Name.ToLower().Contains(Employee_Name.ToLower())
+                        && EntityFunctions.TruncateTime(x.Output_Date) >= EntityFunctions.TruncateTime(MinDate) &&
+                        EntityFunctions.TruncateTime(x.Output_Date) <= EntityFunctions.TruncateTime(MaxDate));
+                    }
+                    else
+                    {
+                        data = DataProvider.Ins.DB.Book_Output.Where(x => EntityFunctions.TruncateTime(x.Output_Date) >= EntityFunctions.TruncateTime(MinDate) &&
+                        EntityFunctions.TruncateTime(x.Output_Date) <= EntityFunctions.TruncateTime(MaxDate));
+                    }
+                }
+
+                if (data.Count() > 0)
+                {
+                    foreach (var item in data)
+                    {
+                        CBill History = new CBill
+                        {
+                            Id = item.Output_Id,
+                            Salesman = new CSalesman
+                            {
+                                Id = item.Employee_Id,
+                                Name = item.Employee.Employee_Name
+                            },
+                            Date = (DateTime)item.Output_Date,
+                            Customer = new CCustomer
+                            {
+                                Name = item.Bill.Customer.Customer_Name
+                            },
+                            ListBook = new List<CBook>()
+
+                        };
+                        //Duyệt trong bảng Bill_info để lấy thông tin sách thêm vào list
+                        foreach(var item2 in item.Bill.Bill_Info)
+                        {
+                            //Tạo mới Book
+                            CBook Book = new CBook
+                            {
+                                Id = item2.Book_Id,
+                                Name = item2.Book.Book_Name,
+                                Count = item2.Book_Count
+                            };
+
+                            //Thêm vào trong List
+                            History.ListBook.Add(Book);
+                        }
+
+                        //Thêm vào trong List
+                        List.Add(History);
+                                            
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm trả về ngày nhỏ nhất trong lịch sử xuất kho
+        /// </summary>
+        /// <returns></returns>
+        public DateTime MinDateOutput()
+        {
+            DateTime MinDate = new DateTime();
+
+            try
+            {
+                var data = DataProvider.Ins.DB.Book_Output.OrderBy(x => x.Output_Date).Select(x => x.Output_Date).FirstOrDefault();
+
+                MinDate = (DateTime)data;
+
+                return MinDate;
+            }
+            catch
+            {
+
+            }
+
+            return MinDate;
+        }
+
+        /// <summary>
+        /// Hàm trả về ngày lớn nhất trong lịch sử xuất kho
+        /// </summary>
+        /// <returns></returns>
+        public DateTime MaxDateOutput()
+        {
+            DateTime MaxDate = new DateTime();
+
+            try
+            {
+                var data = DataProvider.Ins.DB.Book_Output.OrderByDescending(x => x.Output_Date).Select(x => x.Output_Date).FirstOrDefault();
+
+                MaxDate = (DateTime)data;
+
+                return MaxDate;
+            }
+            catch
+            {
+
+            }
+
+            return MaxDate;
+        }
+
         #endregion
     }
 }
