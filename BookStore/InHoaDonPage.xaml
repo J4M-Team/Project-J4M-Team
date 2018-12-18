@@ -29,10 +29,10 @@
         </Grid>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition>
+                <ColumnDefinition Width="300">
 
                 </ColumnDefinition>
-                <ColumnDefinition>
+                <ColumnDefinition Width="*">
 
                 </ColumnDefinition>
             </Grid.ColumnDefinitions>
@@ -86,40 +86,6 @@
 
             </Grid>
             <Grid Grid.Column="1">
-                <!--<Grid>
-                    <StackPanel  Margin="40">
-                        <Label Content="THÔNG TIN SÁCH" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="13" />
-                        <TextBox
-                    Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Center"
-                    AcceptsReturn="True"
-                    TextWrapping="Wrap"
-                    Width="200"
-                    Margin="20,10"
-                    materialDesign:HintAssist.Hint="Tên sách"
-             />
-
-                        <TextBox
-                    Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Center"
-                    AcceptsReturn="True"
-                    TextWrapping="Wrap"
-                    Width="200"
-                    Margin="20,10"
-                    materialDesign:HintAssist.Hint="Số lượng sách"/>
-                        <TextBox
-                    Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
-                    VerticalAlignment="Top"
-                    HorizontalAlignment="Center"
-                    AcceptsReturn="True"
-                    TextWrapping="Wrap"
-                    Width="200"
-                    Margin="20,10"
-                    materialDesign:HintAssist.Hint="Giá/Sản phẩm"/>
-                    </StackPanel>
-                </Grid>-->
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"></RowDefinition>
@@ -131,7 +97,11 @@
                         <Label Content="THÔNG TIN HOÁ ĐƠN" HorizontalAlignment="Center" VerticalAlignment="Top" Foreground="Gray" FontSize="13" />
                     </Grid>
                     <Grid Grid.Row="1">
-                        <ListView  ItemsSource="{Binding ListSelectedBooks}"  SelectedItem="{Binding SelectedItem}"  SelectedIndex="{Binding SelectedIndex}" SelectionMode="Single" Name="ListBill" IsSynchronizedWithCurrentItem="True">
+                        <ListView  ItemsSource="{Binding ListSelectedBooks}"  
+                                   SelectedItem="{Binding SelectedItem}"  
+                                   SelectedIndex="{Binding SelectedIndex}" 
+                                   SelectionMode="Single" Name="ListBill" 
+                                   IsSynchronizedWithCurrentItem="True" Margin="0,0,10,0">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Style.Triggers>
@@ -148,19 +118,37 @@
                         DisplayMemberBinding="{Binding Id}"
                         Header="Mã Sách" />
                                     <GridViewColumn
-                                         Width="Auto"
-                        DisplayMemberBinding="{Binding Name}"
-                        Header="Tên Sách" />
+                                         Width="Auto"                     
+                                         Header="Tên Sách">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Name}" Width="200" TextWrapping="Wrap"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                     <GridViewColumn
-                                         Width="Auto"
-                        DisplayMemberBinding="{Binding Price.OutputPrice}"
-                        Header="Giá" />
-                                    <GridViewColumn
-                        DisplayMemberBinding="{Binding Count}"
-                        Header="Số lượng" />
-                                    <GridViewColumn
-                        DisplayMemberBinding="{Binding TotalPrice}"
-                        Header="Thành tiền" />
+                                         Width="Auto"                       
+                                        Header="Giá" >
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding PricePromotion,StringFormat='0,0.0'}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Số lượng">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Count,StringFormat='0,0'}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+                                    <GridViewColumn Header="Thành tiền">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0'}"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
@@ -179,8 +167,8 @@
                     </Grid>
                     <Grid Grid.Row="2">
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock FontSize="18" Foreground="Gray" Text="Tổng tiền:"></TextBlock>
-                            <TextBlock  FontSize="18" Foreground="Gray"  Text="{Binding TotalOfPrice}"></TextBlock>
+                            <TextBlock FontSize="18" Foreground="Gray" Text="Tổng tiền: "></TextBlock>
+                            <TextBlock  FontSize="18" Foreground="Gray"  Text="{Binding TotalOfPrice,StringFormat='0,0.0'}"></TextBlock>
                         </StackPanel>
 
                     </Grid>

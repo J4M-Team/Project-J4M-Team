@@ -123,14 +123,14 @@ namespace BookStore.ViewModel
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 //lấy data từ cơ sở dữ liệu
-                DataListBook = new ObservableCollection<CBook>(CBook.Ins.ListPriceBook());
+                DataListBook = new ObservableCollection<CBook>(CBook.Ins.ListPromotionBook());
                 ListBook = DataListBook;
             }
               );
             SearchTextChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 Search();
-                //System.Windows.MessageBox.Show(FilterString.ToString());
+                
             }
                );
             SelectBookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -138,10 +138,10 @@ namespace BookStore.ViewModel
                 if (SelectedItem != null)
                 {
                     Name = SelectedItem.Name;
-                    Price = SelectedItem.Price.OutputPrice.ToString();
+                    Price = SelectedItem.PricePromotion.ToString();
                     
                 }
-                //System.Windows.MessageBox.Show(FilterString.ToString());
+                
             }
               );
             NumberOfBookChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -162,14 +162,19 @@ namespace BookStore.ViewModel
                 }
                 else
                 {
-                    //DataTransfer.BookBill.Add(_SelectedItem);
-                    //DataTransfer.NumberOfBook = int.Parse(_NumberOfBook);
-                    _SelectedItem.Count= int.Parse(_NumberOfBook);
-                    _SelectedItem.TotalPrice = _SelectedItem.Price.OutputPrice * _SelectedItem.Count;
-                    //DataTransfer.TotalMoney += _SelectedItem.TotalPrice;
-                    DataTransfer.ListBooks.Add(_SelectedItem);
-                    
-                    
+                    if (SelectedItem != null)
+                    {
+                        CBook Book = new CBook
+                        {
+                            Id = SelectedItem.Id,
+                            Name = SelectedItem.Name,
+                            Count = int.Parse(_NumberOfBook),
+                            PricePromotion = SelectedItem.PricePromotion,
+                            TotalPrice = SelectedItem.PricePromotion * int.Parse(_NumberOfBook)
+                        };
+                        
+                        DataTransfer.ListBooks.Add(Book);
+                    }                                                        
                 }
             }
               );

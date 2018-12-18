@@ -9,18 +9,15 @@
         Title="AddBookBillInformation"    
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
-          TextElement.FontWeight="Regular"
-          TextElement.FontSize="13"
-          TextOptions.TextFormattingMode="Ideal"
-          TextOptions.TextRenderingMode="Auto"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
-          FontFamily="{DynamicResource MaterialDesignFont}"
-          DataContext="{StaticResource AddBookBillInformation}"
-          Width="650" Height="400"
-         
-            WindowStartupLocation="CenterScreen"
-        
-        >
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        DataContext="{StaticResource AddBookBillInformation}"
+        Width="1000" Height="550"        
+        WindowStartupLocation="CenterScreen">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding loadCommand}"/>
@@ -28,20 +25,16 @@
     </i:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*"></RowDefinition>
+            <RowDefinition Height="5*"></RowDefinition>
             <RowDefinition ></RowDefinition>
         </Grid.RowDefinitions>
-
-
-
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition></ColumnDefinition>
-                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition Width="270"></ColumnDefinition>
+                <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
             <Grid Grid.Column="0">
-               
-                    <StackPanel>
+                <StackPanel>
                         <Label Content="THÔNG TIN HOÁ ĐƠN" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="13" />
                         <TextBox
                      IsReadOnly="True"
@@ -54,8 +47,7 @@
                     Margin="5,5"
                     materialDesign:HintAssist.Hint="Tên sách"
                    
-                    Text="{Binding Name}"
-             />
+                    Text="{Binding Name}"/>
                         <TextBox
                             IsReadOnly="True"
                             Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
@@ -66,8 +58,7 @@
                             Width="200"
                             Margin="5,5"
                             materialDesign:HintAssist.Hint="Giá Sách"
-                            Text="{Binding Price}"
-             />
+                            Text="{Binding Price}"/>
                     <TextBox
                     Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
                     VerticalAlignment="Top"
@@ -83,10 +74,8 @@
                                 <i:InvokeCommandAction Command="{Binding NumberOfBookChangeCommand}"/>
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-
                     </TextBox>
-
-                    </StackPanel>
+                </StackPanel>
                
             </Grid>
             <Grid Grid.Column="1">
@@ -97,14 +86,9 @@
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0">
                     <Label Content="TÌM KIẾM SÁCH" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="13" />
-
                 </Grid>
                 <Grid Grid.Row="1">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*"></ColumnDefinition>
-                        <ColumnDefinition Width="Auto"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                    <Grid Grid.Column="0">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                         <TextBox  FontSize="15" Height="35"
                                     x:Name="CommentTextBox"
                                     materialDesign:HintAssist.Hint="Tìm kiếm" Width="260" Text="{Binding FilterString,UpdateSourceTrigger=PropertyChanged}">
@@ -115,27 +99,18 @@
                             </i:Interaction.Triggers>
 
                         </TextBox>
-                    </Grid>
-
-                    <Grid Grid.Column="1">
                         <Button Background="#FF3EA0C3" Width="60" BorderBrush="#FF3EA0C3">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon Kind="Magnify" Height="25" Width="40" HorizontalAlignment="Right"/>
-
                             </StackPanel>
                         </Button>
-                    </Grid>
-                    
-
-                   
+                    </StackPanel>
                 </Grid>
                 <Grid Grid.Row="2">
                     <ListView ItemsSource="{Binding ListBook}" SelectedItem="{Binding SelectedItem}" 
                                       VerticalContentAlignment="Top"  
-          ScrollViewer.VerticalScrollBarVisibility="Visible"
-          ScrollViewer.CanContentScroll="False"
-                                      
-                                      >
+                                      ScrollViewer.VerticalScrollBarVisibility="Visible"
+                                      ScrollViewer.CanContentScroll="False" Margin="0,0,10,0">
                         <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectionChanged">
                                 <i:InvokeCommandAction Command="{Binding SelectBookCommand}"/>
@@ -145,9 +120,52 @@
 
                             <GridView >
 
-                                <GridViewColumn Width="auto" Header="ID" DisplayMemberBinding="{Binding Id}" />
-                                <GridViewColumn Width="auto" Header="Tên sách" DisplayMemberBinding="{Binding Name}" />
-                                <GridViewColumn Width="auto" Header="Giá" DisplayMemberBinding="{Binding Price.OutputPrice}" />
+                                <GridViewColumn Width="auto" Header="ID">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Id}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="auto" Header="Tên sách">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Name}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn Width="auto" Header="Giá gốc">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Price.OutputPrice,StringFormat='00.0'}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="auto" Header="Khuyến mãi">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Promotion,StringFormat='0.0'}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="auto" Header="Giá khuyến mãi">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding PricePromotion,StringFormat='0,0.0'}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+
+                                <GridViewColumn Width="auto" Header="Số lượng tồn">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding Count,StringFormat='0,0'}"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
                             </GridView>
                         </ListView.View>
                     </ListView>

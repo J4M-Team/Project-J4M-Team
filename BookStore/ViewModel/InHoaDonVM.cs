@@ -95,11 +95,9 @@ namespace BookStore.ViewModel
 
                 AddBookBillInformation wd = new AddBookBillInformation();
                 wd.ShowDialog();
-                for (int i = 0; i < ListSelectedBooks.Count; i++)
-                {
-                    TotalOfPrice += ListSelectedBooks[i].Price.OutputPrice;
-                }
-                 MessageBox.Show(TotalOfPrice.ToString());
+
+                TotalOfPrice = ListSelectedBooks.Sum(x => x.TotalPrice);
+                                          
             }
               );
 
