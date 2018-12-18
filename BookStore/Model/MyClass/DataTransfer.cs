@@ -18,7 +18,9 @@ namespace BookStore.Model.MyClass
         public static int Employee_Id;
 
 
-
+        //Biến của Hứa Thanh Sơn
+        //Biến truyền truyền id nhân viên qua màn hình add account
+        public static int IDEmployee;
 
         //Biến của Phạm Ngọc Sơn
         //Biến truyền sách 

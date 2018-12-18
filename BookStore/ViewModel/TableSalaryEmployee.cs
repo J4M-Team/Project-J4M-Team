@@ -63,6 +63,8 @@ namespace BookStore.ViewModel
                  {
                      CEmployee_Info.Ins.Payment(SelectedItem);
                  }
+                 //load lại csdl
+                 ListSalary = new ObservableCollection<CEmployee_Info>(CEmployee_Info.Ins.ListSalary());
              }
                 );
         }

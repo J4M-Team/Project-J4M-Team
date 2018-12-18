@@ -5,8 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BookStore"
         mc:Ignorable="d"
-        Title="AddAccountEmployee" Height="450" Width="800">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        DataContext="{StaticResource AddAccountEmployeeVM}" d:DesignWidth="1150"
+        Title="Add Account Employee" Height="420" Width="400">
     <Grid>
-        
+        <materialDesign:Card Width="392" Height="389" HorizontalAlignment="Left" VerticalAlignment="Top">
+            <Grid Margin="0,0,0,238">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Background="#03a9f4">
+                    <TextBlock Text="Thêm tài khoản" FontWeight="Medium" Foreground="White" FontSize="17"
+                                   HorizontalAlignment="Center" VerticalAlignment="Center" Grid.ColumnSpan="2" Margin="134,15,133,10" Height="25" Width="125"></TextBlock>
+
+                </Grid>
+                <Grid Grid.Row="1" Margin="0,0,0,-235" >
+                    <StackPanel Margin="0,0,0,26">
+                        <TextBlock Text="Tên tài khoản" FontWeight="Medium" FontSize="15" Margin="5,30,20,0"></TextBlock>
+                        <TextBox FontSize="15" Margin="5,10,20,20" Text="{Binding UserName}" Height="30"/>
+
+                        <TextBlock Text="Mật khẩu" FontWeight="Medium" FontSize="15" Margin="5,10,20,0"></TextBlock>
+                        <PasswordBox Name="Password" Height="32" Margin="5,0,20,20" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding PasswordCommand,UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding ElementName=Password}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+
+                        <TextBlock Text="Nhập lại mật khẩu" FontWeight="Medium" FontSize="15" Margin="5,10,20,0"></TextBlock>
+                        <PasswordBox Name="PasswordAgain" Height="32" Margin="5,0,20,20">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding PasswordAgainCommand,UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding ElementName=PasswordAgain}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+                        <Button Margin="126,10,126,0" Content="Thêm"
+                            Command="{Binding AddAccountCommand}"/>
+
+                    </StackPanel>
+                </Grid>
+            </Grid>
+        </materialDesign:Card>
     </Grid>
 </Window>

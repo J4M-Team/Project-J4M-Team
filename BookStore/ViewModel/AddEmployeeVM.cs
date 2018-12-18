@@ -137,28 +137,40 @@ namespace BookStore.ViewModel
                     return;
                 }
                 else
-                {                 
+                {
                     //Tạo mới CRole
                     CRole role = new CRole
                     {
                         Name = ComboBoxSelectedItem
                     };
                     CEmployee Employee = new CEmployee
-                   
-                    { Name = EmployeeName,
-                      Address = EmployeeAddress,
-                      Email = EmployeeEmail,
-                      Phone = EmployeePhone,
-                      BirthDay = EmployeeBirthday,
-                      Identity = EmployeeIdentity,
-                      Role = role
+
+                    {
+                        Name = EmployeeName,
+                        Address = EmployeeAddress,
+                        Email = EmployeeEmail,
+                        Phone = EmployeePhone,
+                        BirthDay = EmployeeBirthday,
+                        Identity = EmployeeIdentity,
+                        Role = role
                     };
 
                     //Thêm vào cơ sở dữ liệu
                     CEmployee.Ins.AddEmployee(Employee);
 
                     MessageBox.Show("Thêm vào thành công ", "Thông báo !!");
+
+                    //Lấy ID đc khởi tạo tự động trong cơ sở dữ liệu để truyền qua cửa sổ tạo account
+                    int employeeID = DataProvider.Ins.DB.Employees.Where(x => x.Employee_Identity == Employee.Identity).Select(x => x.Employee_Id).First();
+                    //Hiện cửa sổ thêm account cho nhân viên
+                    DataTransfer.IDEmployee =  employeeID;
+                    AddAccountEmployee wd = new AddAccountEmployee();
+                    wd.ShowDialog();
+
+
+
                 }
+
 
             }
                 );
