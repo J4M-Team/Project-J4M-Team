@@ -104,8 +104,22 @@ namespace BookStore.ViewModel
             }
         }
 
+        private string _MinExist;
+        public string MinExist
+        {
+            get { return _MinExist; }
+            set
+            {
+                _MinExist = value;
+                OnPropertyChanged(nameof(MinExist));
+            }
+        }
+
+        int IMinExist;
+
 
         #endregion
+
         #region command binding
         public ICommand loadCommand { get; set; }
         public ICommand SearchTextChangeCommand { get; set; }
@@ -116,6 +130,7 @@ namespace BookStore.ViewModel
 
 
         #endregion
+
         public AddBookBillInformationVM()
         {
            
@@ -125,6 +140,8 @@ namespace BookStore.ViewModel
                 //lấy data từ cơ sở dữ liệu
                 DataListBook = new ObservableCollection<CBook>(CBook.Ins.ListPromotionBook());
                 ListBook = DataListBook;
+
+                MinExist = "10";
             }
               );
             SearchTextChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -164,15 +181,39 @@ namespace BookStore.ViewModel
                 {
                     if (SelectedItem != null)
                     {
+                        //Kiểm tra số lượng tồn tối thiểu
+                        if(int.TryParse(MinExist,out IMinExist) == false)
+                        {
+                            MessageBox.Show("Giá trị số lượng tồn tối thiểu không hợp lệ");
+                            return;
+                        }
+
+                        if (IMinExist < 0)
+                        {
+                            MessageBox.Show("Giá trị số lượng tồn tối thiểu không hợp lệ");
+                            return;
+                        }
+
+                        //Kiểm tra số lượng tồn tối thiểu
+                        if(SelectedItem.Count- int.Parse(NumberOfBook) < IMinExist)
+                        {
+                            MessageBox.Show("Sách không còn đủ trong kho");
+                            return;
+                        }
+
                         CBook Book = new CBook
                         {
                             Id = SelectedItem.Id,
                             Name = SelectedItem.Name,
                             Count = int.Parse(_NumberOfBook),
                             PricePromotion = SelectedItem.PricePromotion,
-                            TotalPrice = SelectedItem.PricePromotion * int.Parse(_NumberOfBook)
+                            TotalPrice = SelectedItem.PricePromotion * int.Parse(NumberOfBook)
                         };
-                        
+
+                        //Trừ số lượng của sách trên List
+                        SelectedItem.Count = SelectedItem.Count - int.Parse(NumberOfBook);
+
+
                         DataTransfer.ListBooks.Add(Book);
                     }                                                        
                 }

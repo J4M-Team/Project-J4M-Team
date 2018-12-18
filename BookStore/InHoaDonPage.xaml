@@ -42,7 +42,7 @@
                         <Label Content="THÔNG TIN KHÁC HÀNG" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="5" Foreground="Gray" FontSize="13" />
                         <TextBox
                     Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
-                    IsReadOnly="True"
+                    IsReadOnly="False"
                     VerticalAlignment="Top"
                     HorizontalAlignment="Center"
                     AcceptsReturn="True"
@@ -50,6 +50,7 @@
                     Width="200"
                     Margin="5,5"
                     materialDesign:HintAssist.Hint="Tên khách hàng"
+                            Text="{Binding CustomerName}"                        
              />
 
                         <TextBox
@@ -60,7 +61,7 @@
                     TextWrapping="Wrap"
                     Width="200"
                     Margin="5,5"
-                    materialDesign:HintAssist.Hint="Số điện thoại"/>
+                    materialDesign:HintAssist.Hint="Số điện thoại" Text="{Binding CustomerPhone}"/>
                         <TextBox
                     Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
                     VerticalAlignment="Top"
@@ -69,7 +70,7 @@
                     TextWrapping="Wrap"
                     Width="200"
                     Margin="5,5"
-                    materialDesign:HintAssist.Hint="Địa chỉ"
+                    materialDesign:HintAssist.Hint="Địa chỉ" Text="{Binding CustomerAddress}"
              />
                         <TextBox
                     Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
@@ -79,7 +80,7 @@
                     TextWrapping="Wrap"
                     Width="200"
                     Margin="5,5"
-                    materialDesign:HintAssist.Hint="Email"
+                    materialDesign:HintAssist.Hint="Email" Text="{Binding CustomerEmail}"
              />
                     </StackPanel>
                 </Grid>
@@ -182,8 +183,10 @@
             </Grid>
         </Grid>
         <Grid Grid.Row="2">
-            <Button     Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Width="150" HorizontalAlignment="Center" VerticalAlignment="Center" Content="THANH TOÁN" Margin="0,0,0,0" BorderThickness="7"
-                       />
+            <Button     Background="#FF3EA0C3" 
+                        BorderBrush="#FF3EA0C3" Width="150" 
+                        HorizontalAlignment="Center" VerticalAlignment="Center" Content="THANH TOÁN" Margin="0,0,0,0" BorderThickness="7"
+                       Command="{Binding PayCommand}"/>
 
         </Grid>
     </Grid>

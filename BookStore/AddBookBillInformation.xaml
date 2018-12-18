@@ -75,6 +75,12 @@
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </TextBox>
+
+                    <StackPanel Orientation="Vertical" Margin="10,20,0,0">
+                        <TextBlock Text="Số lượng tồn tối thiểu:"  FontSize="15" FontWeight="Medium" Foreground="DarkGray"></TextBlock>
+                        <TextBox  materialDesign:HintAssist.Hint="10" FontSize="15" Margin="20,5,180,0" Text="{Binding MinExist,UpdateSourceTrigger=PropertyChanged}"/>
+
+                    </StackPanel>
                 </StackPanel>
                
             </Grid>

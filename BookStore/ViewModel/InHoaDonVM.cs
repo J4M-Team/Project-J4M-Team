@@ -64,11 +64,55 @@ namespace BookStore.ViewModel
             }
         }
 
+        private string _CustomerEmail;
+        public string CustomerEmail
+        {
+            get { return _CustomerEmail; }
+            set
+            {
+                _CustomerEmail = value;
+                OnPropertyChanged(nameof(CustomerEmail));
+            }
+        }
+
+        private string _CustomerName;
+        public string CustomerName
+        {
+            get { return _CustomerName; }
+            set
+            {
+                _CustomerName = value;
+                OnPropertyChanged(nameof(CustomerName));
+            }
+        }
+
+        private string _CustomerPhone;
+        public string CustomerPhone
+        {
+            get { return _CustomerPhone; }
+            set
+            {
+                _CustomerPhone = value;
+                OnPropertyChanged(nameof(CustomerPhone));
+            }
+        }
+
+        private string _CustomerAddress;
+        public string CustomerAddress
+        {
+            get { return _CustomerAddress; }
+            set
+            {
+                _CustomerAddress = value;
+                OnPropertyChanged(nameof(CustomerAddress));
+            }
+        }
         #endregion
         public ICommand AddBookCommand { get; set; }
         public ICommand DeleteCommand { get; set; }
         public ICommand ShowListBookCommand { get; set; }
         public ICommand TotalOfPriceCommand { get; set; }
+        public ICommand PayCommand { get; set; }
 
 
         public InHoaDonVM()
@@ -106,8 +150,66 @@ namespace BookStore.ViewModel
                 // ListSelectedBooks = new ObservableCollection<CBook>(DataTransfer.BookBill);
             }
               );
-           
 
+            PayCommand = new RelayCommand<object>((p) => {
+                if (ListSelectedBooks.Count() == 0)
+                {
+                    return false;
+                }
+                if (string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(CustomerPhone))
+                {
+                    return false;
+                }
+                return true;
+            }, 
+            (p) =>
+            {
+                //Thêm danh khách hàng vào trong danh sách khách hàng nếu chưa có
+                //Lấy id của khách hàng
+                int CustomerId = CCustomer.Ins.AddCustomer(new CCustomer
+                {
+                    Name = CustomerName,
+                    Phone = CustomerPhone,
+                    Address = CustomerAddress,
+                    Email = CustomerEmail
+                });
+
+                //Thêm mới Bill
+                CBill Bill = new CBill
+                {
+                    Customer = new CCustomer { Id = CustomerId },
+                    Salesman = new CSalesman { Id = DataTransfer.Employee_Id },
+                    Type = 1,
+                    TotalMoney = TotalOfPrice,
+                    Date = DateTime.Now,
+                    ListBook = ListSelectedBooks.ToList()
+                };
+
+                //Thêm vào lịch sử thanh toán, thông tin hóa đơn
+                int Check = CSalesman.Ins_Salesman.AddBill(Bill);
+
+                if (Check > 0)
+                {
+                    MessageBox.Show("Thanh toán thành công");
+
+                    //Xóa bảng
+                    CustomerAddress = "";
+                    CustomerEmail = "";
+                    CustomerName = "";
+                    CustomerPhone = "";
+
+                    //Xóa List book
+                    DataTransfer.ListBooks = new ObservableCollection<CBook>();
+                    ListSelectedBooks = new ObservableCollection<CBook>();
+                    //Trả tổng giá về 0
+                    TotalOfPrice = 0;
+                }
+                else
+                {
+                    MessageBox.Show("Thanh toán thất bại");
+                }
+            }
+              );
         }
     }
 }
