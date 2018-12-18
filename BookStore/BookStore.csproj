@@ -315,7 +315,7 @@
     <Compile Include="ViewModel\CustomerHistoryPageVM.cs" />
     <Compile Include="ViewModel\CustomerInfoPageVM.cs" />
     <Compile Include="ViewModel\CustomerMenuPageVM.cs" />
-    <Compile Include="ViewModel\DeleteBillVMcs.cs" />
+    <Compile Include="ViewModel\DeleteBillVM.cs" />
     <Compile Include="ViewModel\EditBookPageVM.cs" />
     <Compile Include="ViewModel\ExpenseReportPageVM.cs" />
     <Compile Include="ViewModel\HistoryMenuPageVM.cs" />

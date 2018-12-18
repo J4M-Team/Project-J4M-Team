@@ -64,14 +64,6 @@
                             </Button>
                         </ListViewItem>
                         <ListViewItem Padding="1">
-                            <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding ExchangeCommand}" Height="50" Width="148">
-                                <StackPanel Orientation="Horizontal" Margin="-45,0,0,0">
-                                    <materialDesign:PackIcon Kind="Arrow" Foreground="Black"/>
-                                    <TextBlock Text="Đổi trả" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>
-                                </StackPanel>
-                            </Button>
-                        </ListViewItem>
-                        <ListViewItem Padding="1">
                             <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding AccountCommand}" Height="50" Width="148">
                                 <StackPanel Orientation="Horizontal" Margin="-28,0,0,0">
                                     <materialDesign:PackIcon Kind="AccountEdit" Foreground="Black"/>

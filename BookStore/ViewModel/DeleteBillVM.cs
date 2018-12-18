@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace BookStore.ViewModel
 {
-    class DeleteBillVMcs
+    public class DeleteBillVM:BaseViewModel
     {
+
     }
 }

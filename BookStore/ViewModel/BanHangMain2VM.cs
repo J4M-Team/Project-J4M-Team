@@ -67,7 +67,6 @@ namespace BookStore.ViewModel
 
         public ICommand DeleteCommand { get; set; }
         public ICommand PrintCommand { get; set; }
-        public ICommand ExchangeCommand { get; set; }
         public ICommand AccountCommand { get; set; }
         public ICommand ExitCommand { get; set; }
         public ICommand loadCommand { get; set; }
@@ -98,22 +97,16 @@ namespace BookStore.ViewModel
                 FramePage = new InHoaDonPage();
             }
                );
-
-            ExchangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            
+            AccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 97 + 52 * 2, 0, 0);
             }
                );
 
-            AccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
-            {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 3, 0, 0);
-            }
-               );
-
             ExitCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 4, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 3, 0, 0);
             }
                );
         }

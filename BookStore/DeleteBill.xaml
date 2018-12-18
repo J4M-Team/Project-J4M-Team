@@ -3,6 +3,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       xmlns:local="clr-namespace:BookStore"
       mc:Ignorable="d" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -11,72 +12,146 @@
       TextElement.FontSize="13"
       TextOptions.TextFormattingMode="Ideal"
       TextOptions.TextRenderingMode="Auto"
-      Background="White"
       FontFamily="{DynamicResource MaterialDesignFont}"
-      d:DesignHeight="450" d:DesignWidth="800"
+      Background="{DynamicResource MaterialDesignPaper}"
+      DataContext="{StaticResource DeleteBillVM}"
+       d:DesignHeight="750" d:DesignWidth="1150"
       Title="DeleteBill">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+
     <Grid>
-        <Grid >
-            <materialDesign:Card Margin="0,10,20,20" Width="750" HorizontalAlignment="Right">
-                <DataGrid
-                    Margin="0 0 0 0"
-                    ItemsSource="{Binding ListBook}"
-                    CanUserSortColumns="True"
-                    CanUserAddRows="False"
-                    AutoGenerateColumns="False"
-                    materialDesign:DataGridAssist.CellPadding="13 8 8 8"
-                    materialDesign:DataGridAssist.ColumnHeaderPadding="8"
-                    SelectedItem="{Binding SelectedItem}">
-                    <!--<i:Interaction.Triggers>
-                        <i:EventTrigger EventName="SelectionChanged">
-                            <i:InvokeCommandAction Command="{Binding SelectionChangedCommand}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>-->
-                    <DataGrid.Columns>
-                        <DataGridTextColumn
-                            Binding="{Binding Id}"
-                            Header="Mã hoá đơn"
-                            IsReadOnly="True" />
-                        <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Name}"
-                            IsReadOnly="True"
-                            Header="Tên khách hàng"
-                            />
-                        <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Author}"
-                            Header="ID Sách"
-                            IsReadOnly="True"
-                            MaxLength="255"
-                           />
-                        <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Type}"
-                            Header="Tên Sách"
-                            MaxLength="255"
-                             IsReadOnly="True"
-                            />
-                        <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Theme}"
-                            Header="Số lượng"
-                            MaxLength="255"
-                             IsReadOnly="True"
-                            />
-                        <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Count}"
-                            IsReadOnly="True"
-                            Header="Giá"
-                            />
-                        <DataGridTemplateColumn>
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <Button x:Name="ButtonEdit" Content="Huỷ" Background="Red" BorderBrush="#FF3EA0C3"
-                                            Command="{Binding Path=DataContext.EditCommand,RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type DataGrid}}}"
-                                            CommandParameter="{Binding}"></Button>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                    </DataGrid.Columns>
-                </DataGrid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Grid.Row="0">
+            <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,15,0,0">
+                <materialDesign:Card Width="300">
+                    <TextBox Width="300" FontSize="15" Height="35"
+                                    x:Name="CommentTextBox"
+                                    materialDesign:HintAssist.Hint=" Tên nhân viên" Margin="10,0,0,0" Text="{Binding FilterString,UpdateSourceTrigger=PropertyChanged}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="TextChanged">
+                                <i:InvokeCommandAction Command="{Binding SearchTextChangeCommand}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </TextBox>
+                </materialDesign:Card>
+                <materialDesign:Card Margin="10,0,0,5">
+                    <DatePicker
+                            Width="100"
+                            materialDesign:HintAssist.Hint="Từ ngày" SelectedDate="{Binding MinDate}"
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectedDateChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedDateMinChanged}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </DatePicker>
+                </materialDesign:Card>
+
+                <materialDesign:Card Margin="10,0,0,5">
+                    <DatePicker
+                            Width="100"
+                            materialDesign:HintAssist.Hint="Đến ngày" SelectedDate="{Binding MaxDate}"
+                            Style="{StaticResource MaterialDesignFloatingHintDatePicker}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectedDateChanged">
+                                <i:InvokeCommandAction Command="{Binding SelectedDateMaxChanged}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </DatePicker>
+                </materialDesign:Card>
+
+            </StackPanel>
+        </Grid>
+        <Grid Grid.Row="1">
+            <materialDesign:Card Width="960"  Margin="0,15,0,0" VerticalAlignment="Top" HorizontalAlignment="Center">
+                <ListView ItemsSource="{Binding ListBill}" MaxHeight="570">
+                    <ListView.ItemContainerStyle>
+                        <Style TargetType="ListViewItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                            <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                            <Setter Property="BorderBrush" Value="LightGray" />
+                            <Setter Property="BorderThickness" Value="0,0,0,1" />
+                        </Style>
+                    </ListView.ItemContainerStyle>
+
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn                    
+                        Header="Mã hóa đơn">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Id}" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn                       
+                        Header="Tên khách hàng" >
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Customer.Name}" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+                            <GridViewColumn Header="Chi tiết hóa đơn">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <!--<Button Content="chi tiết" Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"></Button>-->
+                                        <ItemsControl ItemsSource="{Binding ListBook}">
+                                            <ItemsControl.ItemTemplate>
+                                                <DataTemplate>
+                                                    <StackPanel Margin="0,3,0,3">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <TextBlock Text="T: "/>
+                                                            <TextBlock Text="{Binding Name}" TextWrapping="WrapWithOverflow" Width="120"></TextBlock>
+                                                            <TextBlock Text="SL: " Margin="5,0,0,0"/>
+                                                            <TextBlock Text="{Binding Count,StringFormat='0,0'}"></TextBlock>
+                                                            <TextBlock Text="G: " Margin="5,0,0,0"/>
+                                                            <TextBlock Text="{Binding PricePromotion,StringFormat='0,0.0'}"/>
+                                                            <TextBlock Text="TT: " Margin="5,0,0,0"/>
+                                                            <TextBlock Text="{Binding TotalPrice,StringFormat='0,0.0'}"/>
+                                                        </StackPanel>
+                                                    </StackPanel>
+
+                                                </DataTemplate>
+                                            </ItemsControl.ItemTemplate>
+                                        </ItemsControl>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn
+                        Header="Nhân viên thanh toán">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <StackPanel VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Salesman.Id,StringFormat=Mã: {0}}" Margin="0,3,0,3"/>
+                                            <TextBlock Text="{Binding Salesman.Name,StringFormat=Tên: {0}}" Margin="0,3,0,3"/>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                            <GridViewColumn
+                        Header="Ngày thanh toán">
+                                <GridViewColumn.CellTemplate>
+                                    <DataTemplate>
+                                        <TextBlock Text="{Binding Date}" VerticalAlignment="Center"/>
+                                    </DataTemplate>
+                                </GridViewColumn.CellTemplate>
+                            </GridViewColumn>
+
+                        </GridView>
+                    </ListView.View>
+                </ListView>
             </materialDesign:Card>
         </Grid>
+
     </Grid>
 </Page>
