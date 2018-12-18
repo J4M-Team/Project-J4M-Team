@@ -10,6 +10,7 @@ namespace BookStore.Model.MyClass
     {
         #region private properties
 
+        private int _Id;
         private CEmployee _WareHouse;
         private CBook _Book;
         private DateTime _Date;
@@ -18,6 +19,7 @@ namespace BookStore.Model.MyClass
 
         #region public properties
 
+        public int Id { get { return _Id; } set { _Id = value; } }
         public CEmployee WareHouse { get { return _WareHouse; } set { _WareHouse = value; } }
         public CBook Book { get { return _Book; } set { _Book = value; } }
         public DateTime Date { get { return _Date; } set { _Date = value; } }
