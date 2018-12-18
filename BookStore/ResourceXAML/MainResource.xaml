@@ -20,6 +20,7 @@
     <viewmodel:ManagementEmployeeVM x:Key="ManagementEmployeeVM"></viewmodel:ManagementEmployeeVM>
     <viewmodel:AddEmployeeVM x:Key="AddEmployeeVM"></viewmodel:AddEmployeeVM>
     <viewmodel:TableSalaryEmployee x:Key="TableSalaryEmployee"></viewmodel:TableSalaryEmployee>
+    <viewmodel:AddAccountEmployeeVM x:Key="AddAccountEmployeeVM"></viewmodel:AddAccountEmployeeVM>
     <viewmodel:SettingPromotionBookpageVM x:Key="SettingPromotionBookpageVM"></viewmodel:SettingPromotionBookpageVM>
 
     <viewmodel:AddBookBillInformationVM x:Key="AddBookBillInformation"></viewmodel:AddBookBillInformationVM>
@@ -34,4 +35,5 @@
     <viewmodel:BillHistoryPageVM x:Key="BillHistoryPageVM"></viewmodel:BillHistoryPageVM>
     <viewmodel:InputHistoryPageVM x:Key="InputHistoryPageVM"></viewmodel:InputHistoryPageVM>
     <viewmodel:OutputHistoryPageVM x:Key="OutputHistoryPageVM"></viewmodel:OutputHistoryPageVM>
+    
 </ResourceDictionary>

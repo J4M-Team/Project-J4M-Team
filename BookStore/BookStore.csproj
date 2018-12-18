@@ -101,6 +101,9 @@
     <Compile Include="AccountPage.xaml.cs">
       <DependentUpon>AccountPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="AddAccountEmployee.xaml.cs">
+      <DependentUpon>AddAccountEmployee.xaml</DependentUpon>
+    </Compile>
     <Compile Include="AddBookBillInformation.xaml.cs">
       <DependentUpon>AddBookBillInformation.xaml</DependentUpon>
     </Compile>
@@ -300,6 +303,7 @@
       <DependentUpon>TopBookPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModel\AccepBillPageVM.cs" />
+    <Compile Include="ViewModel\AddAccountEmployeeVM.cs" />
     <Compile Include="ViewModel\AddBookBillInformationVM.cs" />
     <Compile Include="ViewModel\AddEmployeeVM.cs" />
     <Compile Include="ViewModel\AddNewBookWindowVM.cs" />
@@ -337,6 +341,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AccountPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AddAccountEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
