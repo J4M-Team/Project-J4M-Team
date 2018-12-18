@@ -164,6 +164,11 @@ namespace BookStore.ViewModel
                     {
                         Name = ComboBoxSelectedItem
                     };
+                    if(role.Name == null)
+                    {
+                        MessageBox.Show("Chưa nhập loại nhân viên !!", "Thông báo");
+                        return;
+                    }
                     CEmployee Employee = new CEmployee
 
                     {
