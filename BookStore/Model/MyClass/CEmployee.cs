@@ -33,6 +33,7 @@ namespace BookStore.Model.MyClass
         private string _Identity; //Lưu số chứng minh nhân dân
         private CRole _Role;//Lưu chức vụ của nhân viên
         private CEmployee_Info _Info;//Lưu thông tin của nhân viên
+        private CAccount _Account;//Lưu tài khoản của nhân viên
 
         #endregion
 
@@ -42,6 +43,7 @@ namespace BookStore.Model.MyClass
         public string Identity { get { return _Identity; } set { _Identity = value; } }
         public CRole Role { get { return _Role; } set { _Role = value; } }
         public CEmployee_Info Info { get { return _Info; } set { _Info = value; } }
+        public CAccount Acount { get { return _Account; } set { _Account = value; } }
 
         #endregion
 
@@ -231,11 +233,29 @@ namespace BookStore.Model.MyClass
                         Name = find.Employee_Name,
                         Id = find.Employee_Id,
                         Identity = find.Employee_Identity,
-                        Role = new CRole { Name = find.Employee_Role.Role_Name, Id = find.Employee_Role.Role_Id },
+                        Role = new CRole
+                        {
+                            Name = find.Employee_Role.Role_Name,
+                            Id = find.Employee_Role.Role_Id,
+                            Salary = (float)find.Employee_Role.Role_Salary,
+                            Decentralization = find.Employee_Role.Decentralization1.Describe
+                        },
                         BirthDay = (DateTime)find.Employee_BirthDay,
                         Address = find.Employee_Address,
                         Email = find.Employee_Email,
-                        Phone = find.Employee_Phone
+                        Phone = find.Employee_Phone,
+                        Info = new CEmployee_Info
+                        {
+                            DateStart = find.Employee_Info.Where(x => x.Employee_Id == find.Employee_Id).Select(x => x.Date_Start).FirstOrDefault(),
+                            SumDay = (int)find.Employee_Info.Where(x => x.Employee_Id == find.Employee_Id).Select(x => x.Sum_Date).FirstOrDefault(),
+                            DateWork = (int)find.Employee_Info.Where(x => x.Employee_Id == find.Employee_Id).Select(x => x.Date_In_Month).FirstOrDefault(),
+                            Salary = (float)find.Employee_Role.Role_Salary * (int)find.Employee_Info.Where(x => x.Employee_Id == find.Employee_Id).Select(x => x.Date_In_Month).FirstOrDefault()
+                        },
+                        Acount = new CAccount
+                        {
+                            User = find.Employee_Account.Where(x => x.Employee_Id == find.Employee_Id).Select(x => x.Account_User).FirstOrDefault(),
+                            Password = find.Employee_Account.Where(x => x.Employee_Id == find.Employee_Id).Select(x => x.Account_Password).FirstOrDefault()
+                        }
                     };
                 }
                 else

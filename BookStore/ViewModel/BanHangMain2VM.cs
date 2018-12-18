@@ -101,6 +101,7 @@ namespace BookStore.ViewModel
             AccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 97 + 52 * 2, 0, 0);
+                FramePage = new SettingInfoPage();
             }
                );
 
