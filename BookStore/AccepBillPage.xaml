@@ -14,7 +14,7 @@
       TextOptions.TextRenderingMode="Auto"
       Background="White"
       FontFamily="{DynamicResource MaterialDesignFont}"
-      d:DesignHeight="450" d:DesignWidth="1100" 
+      d:DesignHeight="750" d:DesignWidth="1150" 
       DataContext="{StaticResource AccepBillPageVM}"
       Title="AccepBillPage">
     <i:Interaction.Triggers>
@@ -36,10 +36,10 @@
             <Grid Grid.Row="1">
                 
                 <StackPanel>
-                    <materialDesign:Card Width="650" Margin="0,20,0,0">
+                    <materialDesign:Card Width="700" Margin="0,20,0,0">
                         <StackPanel Orientation="Horizontal">
 
-                            <TextBox Width="590" FontSize="15" Height="35"
+                            <TextBox Width="640" FontSize="15" Height="35"
                                     x:Name="CommentTextBox"
                                     materialDesign:HintAssist.Hint="Mã hóa đơn/Tên khách hàng" Text="{Binding FilterString,UpdateSourceTrigger=PropertyChanged}">
                                 <i:Interaction.Triggers>
@@ -55,8 +55,10 @@
                             </Button>
                         </StackPanel>
                     </materialDesign:Card>
-                    <materialDesign:Card Width="650" Margin="0,15,0,0">
-                        <ListView ItemsSource="{Binding ListBill}" SelectedItem="{Binding SelectedItem}" SelectionMode="Single" Name="ListBill" IsSynchronizedWithCurrentItem="True">
+                    <materialDesign:Card Width="950" Margin="0,15,0,0">
+                        <ListView ItemsSource="{Binding ListBill}" SelectedItem="{Binding SelectedItem}" 
+                                  SelectionMode="Single" Name="ListBill" 
+                                  IsSynchronizedWithCurrentItem="True" MaxHeight="550">
                             <ListView.ItemContainerStyle>
                                 <Style TargetType="{x:Type ListViewItem}">
                                     <Style.Triggers>
@@ -64,16 +66,30 @@
                                             <Setter Property="IsSelected" Value="True"/>
                                         </Trigger>
                                     </Style.Triggers>
+                                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                                    <Setter Property="VerticalContentAlignment" Value="Stretch"></Setter>
+                                    <Setter Property="BorderBrush" Value="LightGray" />
+                                    <Setter Property="BorderThickness" Value="0,0,0,1" />
                                 </Style>
                             </ListView.ItemContainerStyle>
                             <ListView.View>
                                 <GridView>
+                                    <GridViewColumn                                        
+                                        Header="Mã hóa đơn" >
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Id}" VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                     <GridViewColumn
-                        DisplayMemberBinding="{Binding Id}"
-                        Header="Mã hóa đơn" />
-                                    <GridViewColumn
-                        DisplayMemberBinding="{Binding Customer.Name}"
-                        Header="Tên khách hàng" />
+                                        Header="Tên khách hàng">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Customer.Name}" VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
                                     <GridViewColumn Header="Chi tiết hóa đơn">
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
@@ -81,11 +97,15 @@
                                                 <ItemsControl ItemsSource="{Binding ListBook}">
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate>
-                                                            <StackPanel Orientation="Horizontal">
-                                                                <TextBlock Text="Tên sách: "></TextBlock>
-                                                                <TextBlock Text="{Binding Name}"></TextBlock>
-                                                                <TextBlock Text=", Số lượng: "></TextBlock>
-                                                                <TextBlock Text="{Binding Count}"></TextBlock>
+                                                            <StackPanel Margin="0,3,0,3">
+                                                                <StackPanel Orientation="Horizontal">
+                                                                    <TextBlock Text="Id: "/>
+                                                                    <TextBlock Text="{Binding Id}"/>
+                                                                    <TextBlock Text="T: "/>
+                                                                    <TextBlock Text="{Binding Name}" TextWrapping="WrapWithOverflow" Width="150"></TextBlock>
+                                                                    <TextBlock Text="SL: " Margin="5,0,0,0"/>
+                                                                    <TextBlock Text="{Binding Count,StringFormat='0,0'}"></TextBlock>
+                                                                </StackPanel>
                                                             </StackPanel>
 
                                                         </DataTemplate>
@@ -94,6 +114,28 @@
                                             </DataTemplate>
                                         </GridViewColumn.CellTemplate>
                                     </GridViewColumn>
+
+                                    <GridViewColumn
+                                        Header="Nhân viên thanh toán">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <StackPanel VerticalAlignment="Center">
+                                                    <TextBlock Text="{Binding Salesman.Id,StringFormat=Mã: {0}}" Margin="0,3,0,3"/>
+                                                    <TextBlock Text="{Binding Salesman.Name,StringFormat=Tên: {0}}" Margin="0,3,0,3"/>
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
+                                    <GridViewColumn
+                        Header="Ngày thanh toán">
+                                        <GridViewColumn.CellTemplate>
+                                            <DataTemplate>
+                                                <TextBlock Text="{Binding Date}" VerticalAlignment="Center"/>
+                                            </DataTemplate>
+                                        </GridViewColumn.CellTemplate>
+                                    </GridViewColumn>
+
                                     <GridViewColumn>
                                         <GridViewColumn.CellTemplate>
                                             <DataTemplate>
@@ -116,7 +158,7 @@
                     Width="650"
                     Padding="8"
                     UniformCornerRadius="6"
-                    Margin="0,20,0,0">
+                    Margin="0,30,0,0">
                     <TextBlock TextWrapping="Wrap" Text="Danh sách hóa đơn vừa thanh toán" FontSize="16" HorizontalAlignment="Center"></TextBlock>
                 </materialDesign:Card>
             </Grid>

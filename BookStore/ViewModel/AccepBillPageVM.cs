@@ -92,7 +92,7 @@ namespace BookStore.ViewModel
                 if (SelectedItem != null)
                 {
                     //Thêm vào lịch sử
-                    //CWarehouse.Ins_Warehouse.AddHistoryOutput(SelectedItem.Id, 5);
+                    CWarehouse.Ins_Warehouse.AddHistoryOutput(SelectedItem.Id, DataTransfer.Employee_Id);
 
                     //Xóa hóa đơn khỏi dach sách cần xử lí
                     CBill.Ins.RemoveBillInOutputinfo(SelectedItem.Id);

@@ -80,7 +80,10 @@ namespace BookStore.Model.MyClass
                                item2.Bill.Customer.Customer_Name,
                                item2.Book_Id,
                                item2.Book.Book_Name,
-                               item2.Book_Count
+                               item2.Book_Count,
+                               item1.Bill.Bill_Date,
+                               item1.Bill.Employee.Employee_Name,
+                               item1.Bill.Employee_Id
                            };
 
                 foreach (var item in data)
@@ -91,7 +94,18 @@ namespace BookStore.Model.MyClass
                         CCustomer Customer = new CCustomer { Name = item.Customer_Name };
                         CBook Book = new CBook { Id = item.Book_Id, Name = item.Book_Name, Count = item.Book_Count };
                         List<CBook> ListBook = new List<CBook>() { Book };
-                        Bill = new CBill { Id = item.Bill_Id, Customer = Customer, ListBook = ListBook };
+                        Bill = new CBill
+                        {
+                            Id = item.Bill_Id,
+                            Customer = Customer,
+                            ListBook = ListBook,
+                            Date = (DateTime)item.Bill_Date,
+                            Salesman = new CSalesman
+                            {
+                                Id = item.Employee_Id,
+                                Name = item.Employee_Name
+                            }
+                        };
                         List.Add(Bill);
                     }
                     else
@@ -108,7 +122,18 @@ namespace BookStore.Model.MyClass
                             CCustomer Customer = new CCustomer { Name = item.Customer_Name };
                             CBook Book = new CBook { Id = item.Book_Id, Name = item.Book_Name, Count = item.Book_Count };
                             List<CBook> ListBook = new List<CBook>() { Book };
-                            Bill = new CBill { Id = item.Bill_Id, Customer = Customer, ListBook = ListBook };
+                            Bill = new CBill
+                            {
+                                Id = item.Bill_Id,
+                                Customer = Customer,
+                                ListBook = ListBook,
+                                Date = (DateTime)item.Bill_Date,
+                                Salesman = new CSalesman
+                                {
+                                    Id = item.Employee_Id,
+                                    Name = item.Employee_Name
+                                }
+                            };
                             List.Add(Bill);
                         }
                     }

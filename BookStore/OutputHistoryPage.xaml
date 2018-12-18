@@ -71,7 +71,7 @@
             </StackPanel>
         </Grid>
         <Grid Grid.Row="1">
-            <materialDesign:Card Width="1050"  Margin="0,15,0,0" VerticalAlignment="Top" HorizontalAlignment="Center">
+            <materialDesign:Card Width="1100"  Margin="0,15,0,0" VerticalAlignment="Top" HorizontalAlignment="Center">
                 <ListView ItemsSource="{Binding History}" MaxHeight="570">
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
@@ -96,7 +96,7 @@
                                  Header="Tên khách hàng" >
                                 <GridViewColumn.CellTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding Bill.Customer.Name}" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding Bill.Customer.Name}" VerticalAlignment="Center" Width="150" TextWrapping="Wrap"/>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
@@ -141,7 +141,7 @@
                                     <DataTemplate>
                                         <StackPanel VerticalAlignment="Center">
                                             <TextBlock Text="{Binding Bill.Salesman.Id,StringFormat=Mã: {0}}" Margin="0,3,0,3"/>
-                                            <TextBlock Text="{Binding Bill.Salesman.Name,StringFormat=Tên: {0}}" Margin="0,3,0,3"/>
+                                            <TextBlock Text="{Binding Bill.Salesman.Name,StringFormat=Tên: {0}}" Width="150" TextWrapping="Wrap" Margin="0,3,0,3"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
@@ -153,7 +153,7 @@
                                     <DataTemplate>
                                         <StackPanel VerticalAlignment="Center">
                                             <TextBlock Text="{Binding WareHouse.Id,StringFormat=Mã: {0}}" Margin="0,3,0,3"/>
-                                            <TextBlock Text="{Binding WareHouse.Name,StringFormat=Tên: {0}}" Margin="0,3,0,3"/>
+                                            <TextBlock Text="{Binding WareHouse.Name,StringFormat=Tên: {0}}" Width="150" TextWrapping="Wrap" Margin="0,3,0,3"/>
                                         </StackPanel>
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>

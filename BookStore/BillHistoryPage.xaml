@@ -111,7 +111,7 @@
                                                             <TextBlock Text="T: "/>
                                                             <TextBlock Text="{Binding Name}" TextWrapping="WrapWithOverflow" Width="120"></TextBlock>
                                                             <TextBlock Text="SL: " Margin="5,0,0,0"/>
-                                                            <TextBlock Text="{Binding Count}"></TextBlock>
+                                                            <TextBlock Text="{Binding Count,StringFormat='0,0'}"></TextBlock>
                                                             <TextBlock Text="G: " Margin="5,0,0,0"/>
                                                             <TextBlock Text="{Binding PricePromotion,StringFormat='0,0.0'}"/>
                                                             <TextBlock Text="TT: " Margin="5,0,0,0"/>
