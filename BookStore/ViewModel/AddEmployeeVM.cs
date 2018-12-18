@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -138,6 +139,26 @@ namespace BookStore.ViewModel
                 }
                 else
                 {
+                    //Kiểm tra nhập số cho SĐT và CMND
+                    double test;
+                    if(!double.TryParse(EmployeePhone, out test) || !double.TryParse(EmployeeIdentity, out test))
+                    {
+                        MessageBox.Show("Cần nhập SĐT hoặc CMND bằng số !!", "Thông báo");
+                        return;
+                    }
+
+                    //Kiểm tra nhập email
+
+                    string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" 
+                                           + @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" 
+                                           + @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
+                    Regex re = new Regex(strRegex);
+                    if (!re.IsMatch(EmployeeEmail))
+                    {
+                        MessageBox.Show("Nhập sai định dạng email !!", "Thông báo");
+                        return;
+                    }
+
                     //Tạo mới CRole
                     CRole role = new CRole
                     {
