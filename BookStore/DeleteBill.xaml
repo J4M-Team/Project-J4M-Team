@@ -30,18 +30,7 @@
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <StackPanel Orientation="Horizontal" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,15,0,0">
-                <materialDesign:Card Width="300">
-                    <TextBox Width="300" FontSize="15" Height="35"
-                                    x:Name="CommentTextBox"
-                                    materialDesign:HintAssist.Hint=" Tên nhân viên" Margin="10,0,0,0" Text="{Binding FilterString,UpdateSourceTrigger=PropertyChanged}">
-                        <i:Interaction.Triggers>
-                            <i:EventTrigger EventName="TextChanged">
-                                <i:InvokeCommandAction Command="{Binding SearchTextChangeCommand}"/>
-                            </i:EventTrigger>
-                        </i:Interaction.Triggers>
-                    </TextBox>
-                </materialDesign:Card>
-                <materialDesign:Card Margin="10,0,0,5">
+                <materialDesign:Card Margin="15,0,15,5">
                     <DatePicker
                             Width="100"
                             materialDesign:HintAssist.Hint="Từ ngày" SelectedDate="{Binding MinDate}"
@@ -54,7 +43,7 @@
                     </DatePicker>
                 </materialDesign:Card>
 
-                <materialDesign:Card Margin="10,0,0,5">
+                <materialDesign:Card Margin="15,0,15,5">
                     <DatePicker
                             Width="100"
                             materialDesign:HintAssist.Hint="Đến ngày" SelectedDate="{Binding MaxDate}"
@@ -125,19 +114,6 @@
                                     </DataTemplate>
                                 </GridViewColumn.CellTemplate>
                             </GridViewColumn>
-
-                            <GridViewColumn
-                        Header="Nhân viên thanh toán">
-                                <GridViewColumn.CellTemplate>
-                                    <DataTemplate>
-                                        <StackPanel VerticalAlignment="Center">
-                                            <TextBlock Text="{Binding Salesman.Id,StringFormat=Mã: {0}}" Margin="0,3,0,3"/>
-                                            <TextBlock Text="{Binding Salesman.Name,StringFormat=Tên: {0}}" Margin="0,3,0,3"/>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </GridViewColumn.CellTemplate>
-                            </GridViewColumn>
-
                             <GridViewColumn
                         Header="Ngày thanh toán">
                                 <GridViewColumn.CellTemplate>

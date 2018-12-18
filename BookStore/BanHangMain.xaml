@@ -57,9 +57,9 @@
                         </ListViewItem>
                         <ListViewItem Padding="1">
                             <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding DeleteCommand}" Height="50" Width="148">
-                                <StackPanel Orientation="Horizontal" Margin="-8,0,0,0">
+                                <StackPanel Orientation="Horizontal" Margin="-43,0,0,0">
                                     <materialDesign:PackIcon Kind="RemoveShoppingCart" Foreground="Black"/>
-                                    <TextBlock Text="Hủy hóa đơn" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>
+                                    <TextBlock Text="Lịch sử" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>
                                 </StackPanel>
                             </Button>
                         </ListViewItem>
