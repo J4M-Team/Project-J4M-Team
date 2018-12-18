@@ -13,8 +13,8 @@ namespace BookStore.ViewModel
     {
         #region databinding
 
-        private ObservableCollection<CBill> _History;
-        public ObservableCollection<CBill> History
+        private ObservableCollection<COutput_History> _History;
+        public ObservableCollection<COutput_History> History
         {
             get { return _History; }
             set
@@ -24,8 +24,8 @@ namespace BookStore.ViewModel
             }
         }
 
-        private ObservableCollection<CBill> _DataHistory;
-        public ObservableCollection<CBill> DataHistory
+        private ObservableCollection<COutput_History> _DataHistory;
+        public ObservableCollection<COutput_History> DataHistory
         {
             get { return _DataHistory; }
             set
@@ -89,11 +89,105 @@ namespace BookStore.ViewModel
                 MinDate = CWarehouse.Ins_Warehouse.MinDateOutput();
                 MaxDate = CWarehouse.Ins_Warehouse.MaxDateOutput();
 
-                DataHistory = new ObservableCollection<CBill>(CWarehouse.Ins_Warehouse.OutPutHistory(FilterString, MinDate, MaxDate));
+                DataHistory = new ObservableCollection<COutput_History>(CWarehouse.Ins_Warehouse.OutPutHistory(FilterString, MinDate, MaxDate).OrderByDescending(x => x.Date));
                 History = DataHistory;
 
             }
                );
+
+            SelectedDateMinChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (MinDate > MaxDate)
+                {
+                    MinDate = CWarehouse.Ins_Warehouse.MinDateOutput();
+                    MaxDate = CWarehouse.Ins_Warehouse.MaxDateOutput();
+
+                    DataHistory = new ObservableCollection<COutput_History>(CWarehouse.Ins_Warehouse.OutPutHistory(FilterString, MinDate, MaxDate).OrderByDescending(x => x.Date));
+                    History = DataHistory;
+                }
+
+                DataHistory = new ObservableCollection<COutput_History>(CWarehouse.Ins_Warehouse.OutPutHistory(FilterString, MinDate, MaxDate).OrderByDescending(x => x.Date));
+                History = DataHistory;
+
+            }
+               );
+
+            SelectedDateMaxChanged = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (MinDate > MaxDate)
+                {
+                    MinDate = CWarehouse.Ins_Warehouse.MinDateOutput();
+                    MaxDate = CWarehouse.Ins_Warehouse.MaxDateOutput();
+
+                    DataHistory = new ObservableCollection<COutput_History>(CWarehouse.Ins_Warehouse.OutPutHistory(FilterString, MinDate, MaxDate).OrderByDescending(x => x.Date));
+                    History = DataHistory;
+                }
+
+                DataHistory = new ObservableCollection<COutput_History>(CWarehouse.Ins_Warehouse.OutPutHistory(FilterString, MinDate, MaxDate).OrderByDescending(x => x.Date));
+                History = DataHistory;
+
+            }
+               );
+
+            SearchTextChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Search();
+            }
+               );
+        }
+
+        /// <summary>
+        /// Hàm tìm kiếm sách theo mã hoặc theo tên
+        /// </summary>
+        private void Search()
+        {
+            if (DataHistory.Count > 0)
+            {
+
+                if (string.IsNullOrEmpty(FilterString))
+                {
+                    History = DataHistory;
+                }
+                else
+                {
+                    int Id;
+                    //Tìm theo ID
+                    if (int.TryParse(FilterString, out Id) == true)
+                    {
+                        var data = DataHistory.Where(x => x.WareHouse.Id == Id).Select(x => x);
+                        if (data.Count() > 0)
+                        {
+                            //Tạo list với kết quả trả về là Id
+                            History = new ObservableCollection<COutput_History>(data);
+                        }
+                        else
+                        {
+                            //Tạo list rỗng
+                            History = new ObservableCollection<COutput_History>();
+                        }
+                    }
+                    //Tìm theo tên sách
+                    else
+                    {
+                        var data = DataHistory.Where(x => x.WareHouse.Name.ToLower().Contains(FilterString.ToLower()) == true).Select(x => x);
+                        if (data.Count() > 0)
+                        {
+                            //Tạo list với kết quả trả về là tên sách
+                            History = new ObservableCollection<COutput_History>(data);
+                        }
+                        else
+                        {
+                            //Tạo list rỗng
+                            History = new ObservableCollection<COutput_History>();
+                        }
+                    }
+                }
+            }
+            else
+            {
+                History = new ObservableCollection<COutput_History>();
+            }
+
         }
 
         #endregion

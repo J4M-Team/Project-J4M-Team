@@ -233,9 +233,9 @@ namespace BookStore.Model.MyClass
         /// <param name="MinDate"></param>
         /// <param name="MaxDate"></param>
         /// <returns></returns>
-        public List<CBill> OutPutHistory(string Employee_Name, DateTime MinDate, DateTime MaxDate)
+        public List<COutput_History> OutPutHistory(string Employee_Name, DateTime MinDate, DateTime MaxDate)
         {
-            List<CBill> List = new List<CBill>();
+            List<COutput_History> List = new List<COutput_History>();
 
             try
             {
@@ -266,15 +266,15 @@ namespace BookStore.Model.MyClass
                 {
                     foreach (var item in data)
                     {
-                        CBill History = new CBill
+                        CBill Bill = new CBill
                         {
-                            Id = item.Output_Id,
+                            Id = item.Bill.Bill_Id,
                             Salesman = new CSalesman
                             {
-                                Id = item.Employee_Id,
-                                Name = item.Employee.Employee_Name
+                                Id = item.Bill.Employee_Id,
+                                Name = item.Bill.Employee.Employee_Name
                             },
-                            Date = (DateTime)item.Output_Date,
+                            Date = (DateTime)item.Bill.Bill_Date,
                             Customer = new CCustomer
                             {
                                 Name = item.Bill.Customer.Customer_Name
@@ -294,8 +294,21 @@ namespace BookStore.Model.MyClass
                             };
 
                             //Thêm vào trong List
-                            History.ListBook.Add(Book);
+                            Bill.ListBook.Add(Book);
                         }
+
+                        //Tạo mới history
+                        COutput_History History = new COutput_History
+                        {
+                            Id = item.Output_Id,
+                            WareHouse = new CWarehouse
+                            {
+                                Id = item.Employee_Id,
+                                Name = item.Employee.Employee_Name
+                            },
+                            Date = (DateTime)item.Output_Date,
+                            Bill = Bill
+                        };
 
                         //Thêm vào trong List
                         List.Add(History);
