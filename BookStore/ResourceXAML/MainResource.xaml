@@ -21,6 +21,7 @@
     <viewmodel:AddEmployeeVM x:Key="AddEmployeeVM"></viewmodel:AddEmployeeVM>
     <viewmodel:TableSalaryEmployee x:Key="TableSalaryEmployee"></viewmodel:TableSalaryEmployee>
     <viewmodel:AddAccountEmployeeVM x:Key="AddAccountEmployeeVM"></viewmodel:AddAccountEmployeeVM>
+    <viewmodel:ManagementAccountVM x:Key="ManagementAccountVM"></viewmodel:ManagementAccountVM>
     <viewmodel:SettingPromotionBookpageVM x:Key="SettingPromotionBookpageVM"></viewmodel:SettingPromotionBookpageVM>
 
     <viewmodel:AddBookBillInformationVM x:Key="AddBookBillInformation"></viewmodel:AddBookBillInformationVM>

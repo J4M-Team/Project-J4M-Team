@@ -159,6 +159,9 @@
     <Compile Include="BookPage.xaml.cs">
       <DependentUpon>BookPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ManagementAccountPage.xaml.cs">
+      <DependentUpon>ManagementAccountPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ManagementEmployee.xaml.cs">
       <DependentUpon>ManagementEmployee.xaml</DependentUpon>
     </Compile>
@@ -323,6 +326,7 @@
     <Compile Include="ViewModel\InHoaDonVM.cs" />
     <Compile Include="ViewModel\InputHistoryPageVM.cs" />
     <Compile Include="ViewModel\LoginViewModel.cs" />
+    <Compile Include="ViewModel\ManagementAccountVM.cs" />
     <Compile Include="ViewModel\ManagementEmployeePageVM.cs" />
     <Compile Include="ViewModel\ManagementEmployeeVM.cs" />
     <Compile Include="ViewModel\ManagementWindowVM.cs" />
@@ -429,6 +433,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="BookPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ManagementAccountPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
