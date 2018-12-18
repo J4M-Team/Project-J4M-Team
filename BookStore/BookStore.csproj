@@ -293,6 +293,9 @@
     <Compile Include="SettingEmployeePage.xaml.cs">
       <DependentUpon>SettingEmployeePage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SettingInfoPage.xaml.cs">
+      <DependentUpon>SettingInfoPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
     </Compile>
@@ -336,6 +339,7 @@
     <Compile Include="ViewModel\SearchPageVM.cs" />
     <Compile Include="ViewModel\SettingBookPageVM.cs" />
     <Compile Include="ViewModel\SettingEmployeePageVM.cs" />
+    <Compile Include="ViewModel\SettingInfoPageVM.cs" />
     <Compile Include="ViewModel\SettingPageVM.cs" />
     <Compile Include="ViewModel\SettingPromotionBookpageVM.cs" />
     <Compile Include="ViewModel\TableSalaryEmployee.cs" />
@@ -477,6 +481,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SettingEmployeePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SettingInfoPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
