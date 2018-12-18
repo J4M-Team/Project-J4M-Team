@@ -62,6 +62,7 @@ namespace BookStore.ViewModel
                 {
                     if (SelectedItem != null)
                     {
+                        PassWord = Help.Base64Encode(PassWord);
                         int EmployeeId = CAccount.Ins.IsAccount(new CAccount { User = UserName, Password = PassWord });
                         //Kiểm tra tài khoản có tồn tại trong cơ sở dữ liệu
                         if (EmployeeId == 0)

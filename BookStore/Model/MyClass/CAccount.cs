@@ -137,6 +137,7 @@ namespace BookStore.Model.MyClass
                 if (find != null)
                 {
                     string newpass = Help.RandomPassword();
+                    newpass = Help.Base64Encode(newpass); //mã hóa 
                     find.Account_Password = newpass;
                     //Lưu lại
                     DataProvider.Ins.DB.SaveChanges();

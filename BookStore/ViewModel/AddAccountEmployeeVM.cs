@@ -93,9 +93,10 @@ namespace BookStore.ViewModel
                         return;
                     }
 
+                    Password = Help.Base64Encode(Password); //mã hóa password
                     Employee_Account account = new Employee_Account
                     {
-                        Account_User = UserName,
+                        Account_User = UserName,                       
                         Account_Password = Password,
                         Employee_Id = DataTransfer.IDEmployee,
                     };
