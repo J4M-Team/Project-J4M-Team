@@ -250,6 +250,103 @@ namespace BookStore.Model.MyClass
             return Employee;
         }
 
+        /// <summary>
+        /// Hàm trả về danh sách lương của nhân viên
+        /// </summary>
+        /// <returns></returns>
+        public List<CEmployee> ListSalary()
+        {
+            List<CEmployee> List = new List<CEmployee>();
+            try
+            {
+                //Lấy ra danh sách dữ liệu
+                var data = DataProvider.Ins.DB.Employee_Info;
+
+                if (data.Count() > 0)
+                {
+                    foreach (var item in data)
+                    {
+
+                        //tạo mới
+                        CEmployee Employee = new CEmployee
+                        {
+                            Id = item.Employee.Employee_Id,
+                            Name = item.Employee.Employee_Name,
+                            Role = new CRole
+                            {
+                                Name = item.Employee.Employee_Role.Role_Name,
+                                Salary = (float)item.Employee.Employee_Role.Role_Salary
+                            },
+
+                            Info = new CEmployee_Info
+                            {
+                                DateStart = item.Date_Start,
+                                SumDay = (int)item.Sum_Date,
+                                DateWork = (int)item.Date_In_Month,
+                                Salary = (float)item.Employee.Employee_Role.Role_Salary * (float)item.Date_In_Month
+                            }
+
+                        };
+
+                        //Thêm vào List
+                        List.Add(Employee);
+
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm thanh toán lương cho nhân viên
+        /// </summary>
+        /// <param name="Employee"></param>
+        /// <returns></returns>
+        public bool Payment(CEmployee Employee)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Employee_Info.Where(x => x.Employee_Id == Employee.Id).FirstOrDefault();
+                if (find != null)
+                {
+                    //Thanh toán xong reset lại số ngày làm việc bằng 0
+                    find.Date_In_Month = 0;
+
+                    //Lưu thay đổi
+                    DataProvider.Ins.DB.SaveChanges();
+                }
+                else
+                {
+                    return false;
+                }
+                
+                PayWage_History paywage = new PayWage_History
+                {
+
+                    Employee_Id = Employee.Id,
+                    PayWage_Date = DateTime.Now,
+                    Employee_Salary = Employee.Info.Salary,                    
+                };
+
+                //Thêm vào lịch sử thanh toán lương
+                DataProvider.Ins.DB.PayWage_History.Add(paywage);
+
+                //Lưu lại
+                DataProvider.Ins.DB.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
         #endregion
 
 

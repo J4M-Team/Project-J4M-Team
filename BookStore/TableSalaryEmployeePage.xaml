@@ -32,7 +32,7 @@
 
         <Grid Grid.Row="1">
             <!-- List bảng lương nhân viên-->
-            <materialDesign:Card Margin="15,10,0,0" Width="1000" HorizontalAlignment="Left">
+            <materialDesign:Card Margin="10,10,10,0" Width="1130" HorizontalAlignment="Left">
                 <DataGrid x:Name="Grid"
                     ItemsSource="{Binding ListSalary}"
                     CanUserSortColumns="True"
@@ -46,43 +46,49 @@
                     </DataGrid.Resources>
 
                     <DataGrid.Columns>
-
-                        <DataGridTextColumn
-                            Binding="{Binding IdInfo}"
-                            Header="Mã"                            
-                            IsReadOnly="True" 
-                            Width="60" MinWidth="60"/>
-
+                    
                         <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding IdEmployee}"
+                            Binding="{Binding Id}"
                             Header="Mã nhân viên"
                             IsReadOnly="True"
                             Width="120" MinWidth="120">
                         </materialDesign:MaterialDataGridTextColumn>
 
                         <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding DateStart, StringFormat='dd/MM/yy'}"
+                            Binding="{Binding Name}"
+                            Header="Tên nhân viên"
+                            IsReadOnly="True"
+                            Width="120" MinWidth="120">
+                            <DataGridTextColumn.ElementStyle>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="TextBlock.TextWrapping" Value="Wrap" />
+                                </Style>
+                            </DataGridTextColumn.ElementStyle>
+                        </materialDesign:MaterialDataGridTextColumn>
+
+                        <materialDesign:MaterialDataGridTextColumn
+                                Binding="{Binding Info.DateStart, StringFormat='dd/MM/yyyy'}"
                                 Header="Ngày bắt đầu làm việc" 
                                 IsReadOnly="True"
                                 Width="170" MinWidth="170">
                         </materialDesign:MaterialDataGridTextColumn>
 
                         <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding SumDay}"
-                                Header="Tông ngày làm việc" 
+                                Binding="{Binding Info.SumDay,StringFormat='0,0'}"
+                                Header="Tông ngày làm" 
                                 IsReadOnly="True"
                                 Width="150" MinWidth="150">
                         </materialDesign:MaterialDataGridTextColumn>
 
                         <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding DateWork}"
-                                Header="Ngày làm việc trong tháng" 
+                                Binding="{Binding Info.DateWork,StringFormat='0,0'}"
+                                Header="Ngày làm trong tháng" 
                                 IsReadOnly="True"
                                 Width="190" MinWidth="190">
                         </materialDesign:MaterialDataGridTextColumn>
 
                         <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Salary}"
+                                Binding="{Binding Info.Salary,StringFormat='0,0.0'}"
                                 Header="Lương" 
                                 IsReadOnly="True"
                                 Width="170" MinWidth="170">

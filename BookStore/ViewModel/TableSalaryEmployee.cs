@@ -14,8 +14,8 @@ namespace BookStore.ViewModel
     class TableSalaryEmployee : BaseViewModel
     {
         #region data binding
-        private ObservableCollection<CEmployee_Info> _ListSalary;
-        public ObservableCollection<CEmployee_Info> ListSalary
+        private ObservableCollection<CEmployee> _ListSalary;
+        public ObservableCollection<CEmployee> ListSalary
         {
             get { return _ListSalary; }
             set
@@ -24,8 +24,8 @@ namespace BookStore.ViewModel
                 OnPropertyChanged(nameof(ListSalary));
             }
         }
-        private CEmployee_Info _SelectedItem;
-        public CEmployee_Info SelectedItem
+        private CEmployee _SelectedItem;
+        public CEmployee SelectedItem
         {
             get { return _SelectedItem; }
             set
@@ -52,7 +52,7 @@ namespace BookStore.ViewModel
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 //lấy data từ cơ sở dữ liệu
-                ListSalary = new ObservableCollection<CEmployee_Info>(CEmployee_Info.Ins.ListSalary());
+                ListSalary = new ObservableCollection<CEmployee>(CEmployee.Ins.ListSalary());
 
             }
                 );
@@ -61,10 +61,10 @@ namespace BookStore.ViewModel
              {
                  if(SelectedItem != null)
                  {
-                     CEmployee_Info.Ins.Payment(SelectedItem);
+                     CEmployee.Ins.Payment(SelectedItem);
                  }
                  //load lại csdl
-                 ListSalary = new ObservableCollection<CEmployee_Info>(CEmployee_Info.Ins.ListSalary());
+                 ListSalary = new ObservableCollection<CEmployee>(CEmployee.Ins.ListSalary());
              }
                 );
         }
