@@ -64,7 +64,6 @@ namespace BookStore.Model.MyClass
             {
                 //Lấy ra danh sách dữ liệu
                 var data = DataProvider.Ins.DB.Employees;
-                var a = data.Count();
                 if (data.Count() > 0)
                 {
                     foreach (var item in data)

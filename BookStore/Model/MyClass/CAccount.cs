@@ -29,15 +29,19 @@ namespace BookStore.Model.MyClass
 
         #region private properties
 
+        private int _IdAccount;
         private string _User;
         private string _Password;
+        private int _EmployeeID;
 
         #endregion
 
         #region public properties
 
+        public int IdAccount { get { return _IdAccount; } set { _IdAccount = value; } }
         public string User { get { return _User; } set { _User = value; } }
         public string Password { get { return _Password; } set { _Password = value; } }
+        public int EmployeeID { get { return _EmployeeID; } set { _EmployeeID = value; } }
 
         #endregion
 
@@ -87,6 +91,65 @@ namespace BookStore.Model.MyClass
             return 0;
         }
 
+        /// <summary>
+        /// Hàm trả về danh sách account trong csdl
+        /// </summary>
+        public List<CAccount> ListAccount()
+        {
+
+            List<CAccount> List = new List<CAccount>();
+            try
+            {
+                var data = DataProvider.Ins.DB.Employee_Account;
+                if (data.Count() > 0)
+                {
+                    foreach (var item in data)
+                    {
+                        CAccount account = new CAccount
+                        {
+                            IdAccount = item.Account_Id,
+                            User = item.Account_User,
+                            Password = item.Account_Password,
+                            EmployeeID = item.Employee_Id,
+                        };
+                        //Thêm vào danh sách
+                        List.Add(account);
+                    }
+                }
+
+               
+            }
+            catch
+            {
+
+            }
+            return List;
+        }
+
+        /// <summary>
+        /// Hàm reset mới password của tìa khoản nhân viên
+        /// </summary>
+        public bool ResetPassword(CAccount account)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Employee_Account.Find(account.IdAccount);
+                if (find != null)
+                {
+                    string newpass = Help.RandomPassword();
+                    find.Account_Password = newpass;
+                    //Lưu lại
+                    DataProvider.Ins.DB.SaveChanges();
+                    return true;
+                }
+                else return false;
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
         #endregion
     }
 }

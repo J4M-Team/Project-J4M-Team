@@ -45,6 +45,13 @@
                         <TextBlock Text="Bảng lương" Margin="5,0,0,0" Foreground="Black"/>
                     </StackPanel>
                 </Button>
+                <Button Command="{Binding AccountCommand}"
+                        Background="{x:Null}" BorderBrush="{x:Null}" Foreground="#FF2196F3" Width="170">
+                    <StackPanel Orientation="Horizontal">
+                        <materialDesign:PackIcon Kind="AccountAddress"  Foreground="Black"/>
+                        <TextBlock Text="Tài khoản" Margin="5,0,0,0" Foreground="Black"/>
+                    </StackPanel>
+                </Button>
             </StackPanel>
             
             <Grid Name="GridCursor" Width="150" Height="5" Background="#FF2196F3" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="{Binding GridCursorMargin}"></Grid>

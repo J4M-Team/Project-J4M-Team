@@ -88,5 +88,44 @@ namespace BookStore.Model.MyClass
             return resuft;
 
         }
+
+        
+        static public string RandomPassword()
+        {
+            StringBuilder builder = new StringBuilder(); // chuỗi tổng
+
+            int number = new int(); // số 2 chữ số
+            StringBuilder CHARS = new StringBuilder(); // chuỗi in hoa
+            StringBuilder chars = new StringBuilder(); // chuỗi in thường
+
+            //random số có 2 chữ số
+            Random random = new Random();
+
+            number = random.Next(10, 99);      
+            builder.Append(number); //nối vào chuỗi tổng
+
+
+            //random kí tự in hoa
+            
+            char CH;
+            for (int i = 0; i < 2; i++)
+            {
+                CH = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                CHARS.Append(CH);
+            }
+            builder.Append(CHARS); //nối vào chuỗi tổng
+
+
+            //random kí tự in thường        
+            char ch;
+            for (int i = 0; i < 2; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));                
+                chars.Append(ch);
+            }
+            builder.Append(chars.ToString().ToLower()); //nối vào chuỗi tổng
+
+            return builder.ToString();
+        }
     }
 }
