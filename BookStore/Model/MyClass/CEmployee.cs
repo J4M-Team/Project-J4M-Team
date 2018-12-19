@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core.Objects;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -384,6 +385,83 @@ namespace BookStore.Model.MyClass
             {
 
             }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm tăng số ngày làm việc (điểm danh) của nhân viên khi đăng nhập 1, chỉ tính lần đăng nhập đầu tiên trong ngày
+        /// </summary>
+        /// <param name="Employee_Id">Id nhân viên</param>
+        /// <returns></returns>
+        public bool CheckIn(int Employee_Id)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Employee_Account.Where(x => x.Employee_Id == Employee_Id).First();
+                if (find != null)
+                {
+                    //Kiểm tra đã từng đăng nhập chưa
+                    var LastLogin = find.LastLogin;
+                    if (LastLogin != null)
+                    {
+                        //Kiểm tra ngày đăng nhập cuối cùng có trùng với ngày hôm này hay không
+                        if(EntityFunctions.TruncateTime(find.LastLogin)== EntityFunctions.TruncateTime(DateTime.Now))
+                        {
+                            return false;
+                        }
+                        else
+                        {
+                            //Tạo mới một đăng nhập
+                            find.LastLogin = DateTime.Now;
+
+                            //Lưu lại thay đổi
+                            DataProvider.Ins.DB.SaveChanges();
+
+                            //Lấy ra thông tin bên bảng employee_info
+                            var FindInfo = DataProvider.Ins.DB.Employee_Info.Where(x => x.Employee_Id == Employee_Id).First();
+                            if (FindInfo != null)
+                            {
+                                //Thêm ngày làm việc vào
+                                FindInfo.Sum_Date = FindInfo.Sum_Date + 1;
+                                FindInfo.Date_In_Month = FindInfo.Date_In_Month + 1;
+
+                                //Lưu lại thay đổi
+                                DataProvider.Ins.DB.SaveChanges();
+
+                                return true;
+                                
+                            }
+                        }
+                    }
+                    else
+                    {
+                        //Tạo mới một đăng nhập
+                        find.LastLogin = DateTime.Now;
+
+                        //Lưu lại thay đổi
+                        DataProvider.Ins.DB.SaveChanges();
+
+                        //Lấy ra thông tin bên bảng employee_info
+                        var FindInfo = DataProvider.Ins.DB.Employee_Info.Where(x => x.Employee_Id == Employee_Id).First();
+                        if (FindInfo != null)
+                        {
+                            //Thêm ngày làm việc vào
+                            FindInfo.Sum_Date = FindInfo.Sum_Date + 1;
+                            FindInfo.Date_In_Month = FindInfo.Date_In_Month + 1;
+
+                            //Lưu lại thay đổi
+                            DataProvider.Ins.DB.SaveChanges();
+
+                            return true;
+;                        }
+                    }
+                }
+            }
+            catch
+            {
+
+            }
+
             return false;
         }
         #endregion

@@ -79,8 +79,12 @@ namespace BookStore.ViewModel
                                     //Truyền Id của nhân viên qua màn hình 2 
                                     DataTransfer.Employee_Id = EmployeeId;
 
+                                    //CheckIn
+                                    CEmployee.Ins.CheckIn(EmployeeId);
+
                                     p.Hide();
                                     ManagementWindow wd = new ManagementWindow();
+                                    
                                     wd.ShowDialog();
                                     p.Show();
                                 }
@@ -96,6 +100,9 @@ namespace BookStore.ViewModel
                                 {
                                     //Truyền Id của nhân viên qua màn hình 2 
                                     DataTransfer.Employee_Id = EmployeeId;
+
+                                    //CheckIn
+                                    CEmployee.Ins.CheckIn(EmployeeId);
 
                                     p.Hide();
                                     BookWindow wd = new BookWindow();
@@ -114,6 +121,9 @@ namespace BookStore.ViewModel
                                 {
                                     //Truyền Id của nhân viên qua màn hình 2 
                                     DataTransfer.Employee_Id = EmployeeId;
+
+                                    //CheckIn
+                                    CEmployee.Ins.CheckIn(EmployeeId);
 
                                     p.Hide();
                                     BanHangMain wd = new BanHangMain();
