@@ -26,6 +26,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="100"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="30"/>
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
             <Grid Margin="0,20,0,0">
@@ -157,5 +158,31 @@
                 </ListView.ItemTemplate>
             </ListView>
         </Grid>
+        <Grid Grid.Row="2">
+            <StackPanel VerticalAlignment="Bottom" HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button Margin="5,0,5,0"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    ToolTip="MaterialDesignFloatingActionMiniAccentButton" 
+                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                    Height="30" Width="30" Command="{Binding PreviousPageCommand}">
+                    <materialDesign:PackIcon Kind="ArrowLeftThick" />
+                </Button>
+                <Button Margin="5,0,5,0"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    ToolTip="MaterialDesignFloatingActionMiniAccentButton" 
+                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                    Height="30" Width="30" Content="{Binding Page,FallbackValue=1}">
+
+                </Button>
+                <Button Margin="5,0,5,0"
+                    Style="{StaticResource MaterialDesignFloatingActionMiniAccentButton}"
+                    ToolTip="MaterialDesignFloatingActionMiniAccentButton" 
+                    Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                    Height="30" Width="30" Command="{Binding NextPageCommand}">
+                    <materialDesign:PackIcon Kind="ArrowRightThick" />
+                </Button>
+            </StackPanel>
+        </Grid>
+        
     </Grid>
 </Page>

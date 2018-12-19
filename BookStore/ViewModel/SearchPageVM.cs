@@ -175,6 +175,17 @@ namespace BookStore.ViewModel
             }
         }
 
+        private int _Page;
+        public int Page
+        {
+            get { return _Page; }
+            set
+            {
+                _Page = value;
+                OnPropertyChanged(nameof(Page));
+            }
+        }
+
         #endregion
 
         #region properties binding
@@ -201,19 +212,78 @@ namespace BookStore.ViewModel
         public ICommand SelectionChangedPrice { get; set; }
 
         public ICommand SearchCommand { get; set; }
+        public ICommand PreviousPageCommand { get; set; }
+        public ICommand NextPageCommand { get; set; }
 
         #endregion
 
         #region global value
 
         public bool isSale = false;
+        public int CurrentPage = 8;
 
         #endregion
 
         public SearchPageVM()
         {
+            PreviousPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                if (Page > 1)
+                {
+                    Page = Page - 1;
+                    if (TextPrice == "Giảm giá")
+                    {
+                        isSale = true;
+                    }
+                    else
+                    {
+                        isSale = false;
+                    }
+
+                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, TextTheme, TextType, -1, -1, CurrentPage, Page, isSale));
+
+                    if (ListBook.Count() == 0)
+                    {
+                        MessTextVisibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        MessTextVisibility = Visibility.Hidden;
+                    }
+                }
+
+            }
+              );
+
+            NextPageCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                Page = Page + 1;
+                if (TextPrice == "Giảm giá")
+                {
+                    isSale = true;
+                }
+                else
+                {
+                    isSale = false;
+                }
+
+                ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, TextTheme, TextType, -1, -1, CurrentPage, Page, isSale));
+
+                if (ListBook.Count() == 0)
+                {
+                    MessTextVisibility = Visibility.Visible;
+                }
+                else
+                {
+                    MessTextVisibility = Visibility.Hidden;
+                }
+
+            }
+              );
+
             loadCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
+                Page = 1;
                 //ListBook = new ObservableCollection<CBook>(CBook.Ins.Load());
 
                 ListTheme = new ObservableCollection<string>(CBook.Ins.ListTheme());
@@ -234,7 +304,7 @@ namespace BookStore.ViewModel
                 TextPrice = "Tất cả";
                 TextAuthor = "Tất cả";
 
-                ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, TextTheme, TextType, -1, -1, 0, 0, isSale));
+                ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, TextTheme, TextType, -1, -1, CurrentPage, Page, isSale));
 
                 if (ListBook.Count() == 0)
                 {
@@ -261,7 +331,7 @@ namespace BookStore.ViewModel
                         isSale = false;
                     }
 
-                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, TextTheme, SelectedItemType, -1, -1, 0, 0, isSale));
+                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, TextTheme, SelectedItemType, -1, -1, CurrentPage, Page, isSale));
 
                     if (ListBook.Count() == 0)
                     {
@@ -288,7 +358,7 @@ namespace BookStore.ViewModel
                         isSale = false;
                     }
 
-                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, SelectedItemTheme, TextType, -1, -1, 0, 0, isSale));
+                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, SelectedItemTheme, TextType, -1, -1, CurrentPage, Page, isSale));
 
                     if (ListBook.Count() == 0)
                     {
@@ -315,7 +385,7 @@ namespace BookStore.ViewModel
                         isSale = false;
                     }
 
-                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, SelectedItemAuthor, TextTheme, TextType, -1, -1, 0, 0, isSale));
+                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, SelectedItemAuthor, TextTheme, TextType, -1, -1, CurrentPage, Page, isSale));
 
                     if (ListBook.Count() == 0)
                     {
@@ -341,8 +411,8 @@ namespace BookStore.ViewModel
                     {
                         isSale = false;
                     }
-                    
-                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, TextTheme, TextType, -1, -1, 0, 0, isSale));
+
+                    ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, TextTheme, TextType, -1, -1, CurrentPage, Page, isSale));
 
                     if (ListBook.Count() == 0)
                     {
@@ -367,7 +437,7 @@ namespace BookStore.ViewModel
                     isSale = false;
                 }
 
-                ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, TextTheme, TextType, -1, -1, 0, 0, isSale));
+                ListBook = new ObservableCollection<CBook>(CBook.Ins.FindBook(FilterString, TextAuthor, TextTheme, TextType, -1, -1, CurrentPage, Page, isSale));
 
                 if (ListBook.Count() == 0)
                 {

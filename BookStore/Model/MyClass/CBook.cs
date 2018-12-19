@@ -1339,6 +1339,12 @@ namespace BookStore.Model.MyClass
                     Data = Data.Where(x => x.Book_Type.ToLower() == Type.ToLower()).ToList();
                 }
 
+                //Lấy từng trang
+                if (currentPage > 0 && NumberPage > 0)
+                {
+                    Data = Data.Skip((NumberPage - 1) * currentPage).Take(currentPage).ToList();
+                }
+
                 //Thêm vào List sách lọc theo tên, tác giả,thể loại,chủ đề
                 foreach (var item in Data)
                 {
