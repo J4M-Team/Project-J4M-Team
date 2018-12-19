@@ -15,6 +15,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         DataContext="{StaticResource BookVM}"
+        Name="Window"
         Title="BookWindow" Height="800" Width="1305" Icon="Image/Book.png" WindowStartupLocation="CenterScreen">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
@@ -90,7 +91,8 @@
                             </Button>
                         </ListViewItem>
                         <ListViewItem Padding="1">
-                            <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding ExitCommand}" Height="50" Width="148">
+                            <Button BorderBrush="{x:Null}" Background="{x:Null}" 
+                                    Command="{Binding ExitCommand}" CommandParameter="{Binding ElementName=Window}" Height="50" Width="148">
                                 <StackPanel Orientation="Horizontal" Margin="-53,0,0,0">
                                     <materialDesign:PackIcon Kind="ExitToApp" Foreground="Black"/>
                                     <TextBlock Text="Thoát" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>

@@ -15,7 +15,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         DataContext="{StaticResource AddAccountEmployeeVM}" d:DesignWidth="1150"
-        Title="Add Account Employee" Height="420" Width="400">
+        Title="Add Account Employee" Height="420" Width="400" Icon="Image/Book.png" WindowStartupLocation="CenterScreen">
     <Grid>
         <materialDesign:Card Width="392" Height="389" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid Margin="0,0,0,238">

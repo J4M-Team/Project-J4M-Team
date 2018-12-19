@@ -109,16 +109,16 @@
                                 </DataGridTextColumn.ElementStyle>
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Count}"
+                                Binding="{Binding Count,StringFormat='0,0'}"
                                 IsReadOnly="True"
                                 Header="Số lượng"/>
                             <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Price.InputPrice}"
+                                Binding="{Binding Price.InputPrice,StringFormat='0,0.0'}"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                 IsReadOnly="{Binding Data.InPriceIsReadOnly,Source={StaticResource proxy}}"
                                 Header="Giá nhập"/>
                             <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Price.OutputPrice}"
+                                Binding="{Binding Price.OutputPrice,StringFormat='0,0.0'}"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                 IsReadOnly="{Binding Data.OutPriceIsReadOnly,Source={StaticResource proxy}}"
                                 Header="giá bán"/>
@@ -156,7 +156,7 @@
                                     DisplayMemberBinding="{Binding Id}"
                                     Header="Mã sách" />
                                 <GridViewColumn
-                                    DisplayMemberBinding="{Binding Price.InputPrice}"
+                                    DisplayMemberBinding="{Binding Price.InputPrice,StringFormat='0,0.0'}"
                                     Header="Giá nhập" />
                                 <GridViewColumn
                                     DisplayMemberBinding="{Binding Price.Input_Date_Set}"
@@ -183,7 +183,7 @@
                                     DisplayMemberBinding="{Binding Id}"
                                     Header="Mã sách" />
                                 <GridViewColumn
-                                    DisplayMemberBinding="{Binding Price.OutputPrice}"
+                                    DisplayMemberBinding="{Binding Price.OutputPrice,StringFormat='0,0.0'}"
                                     Header="Giá bán" />
                                 <GridViewColumn
                                     DisplayMemberBinding="{Binding Price.Output_Date_Set}"

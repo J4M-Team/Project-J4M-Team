@@ -145,7 +145,7 @@
                                         </StackPanel>
                                         <StackPanel Orientation="Horizontal">
                                             <TextBlock Text="Lượt mua: " Margin="0,4,0,0"/>
-                                            <TextBlock Text="{Binding TotalCount}" Margin="0,4,0,0"/>
+                                            <TextBlock Text="{Binding TotalCount,StringFormat='0,0'}" Margin="0,4,0,0"/>
                                         </StackPanel>
                                         
                                     </StackPanel>

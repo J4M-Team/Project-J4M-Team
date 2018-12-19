@@ -230,7 +230,7 @@
                             </materialDesign:MaterialDataGridTextColumn>
 
                             <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Count}"
+                                Binding="{Binding Count,StringFormat='0,0'}"
                                 IsReadOnly="True"
                                 Header="Số lượng"
                                 MinWidth="80" Width="80">

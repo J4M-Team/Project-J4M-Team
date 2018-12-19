@@ -117,7 +117,7 @@
                                 <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
                                     <materialDesign:PackIcon Kind="Lastpass" Margin="0,0,5,0" VerticalAlignment="Center"/>
                                     <TextBlock Text="Mật khẩu: " FontSize="15" FontWeight="Medium" VerticalAlignment="Center"/>
-                                    <PasswordBox Password="lê tường qui" FontSize="15" Margin="0,0,0,0"/>
+                                    <PasswordBox Password="J4M-TEAM" FontSize="15" Margin="0,0,0,0" IsHitTestVisible="False"/>
                                     <Button Content="Thay đổi" Height="25" Margin="120,0,0,0" 
                                             Background="#FF3EA0C3" BorderBrush="#FF3EA0C3" Command="{Binding ChangePassCommand}"/>
                                 </StackPanel>

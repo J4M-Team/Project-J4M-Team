@@ -145,8 +145,7 @@ namespace BookStore.Model.MyClass
                         var dataBillInfo = DataProvider.Ins.DB.Bill_Info.Where(x => EntityFunctions.TruncateTime(x.Bill.Bill_Date) == date);
 
                         //Lấy ra tổng số sách                            
-                        int CountBook = dataBillInfo.Sum(x => x.Book_Count);
-                        Console.WriteLine(CountBook);
+                        int CountBook = dataBillInfo.Sum(x => x.Book_Count);                       
 
                         //Lấy ra tổng số tiền bán ra trong ngày
                         float TotalMoney = 0;

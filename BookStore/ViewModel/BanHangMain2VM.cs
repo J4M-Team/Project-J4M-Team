@@ -105,9 +105,10 @@ namespace BookStore.ViewModel
             }
                );
 
-            ExitCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            ExitCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 97 + 52 * 3, 0, 0);
+                p.Close();
             }
                );
         }

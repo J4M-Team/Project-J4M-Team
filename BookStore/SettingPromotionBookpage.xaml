@@ -104,11 +104,11 @@
                                 </DataGridTextColumn.ElementStyle>
                             </materialDesign:MaterialDataGridTextColumn>
                             <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Count}"
+                                Binding="{Binding Count,StringFormat='0,0'}"
                                 IsReadOnly="True"
                                 Header="Số lượng"/>
                             <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Price.OutputPrice}"
+                                Binding="{Binding Price.OutputPrice,StringFormat='0,0.0'}"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                 IsReadOnly="True"
                                 Header="Giá bán gốc"/>
@@ -118,7 +118,7 @@
                                 IsReadOnly="{Binding Data.PromotionIsReadOnly,Source={StaticResource proxy}}"
                                 Header="Khuyến mãi"/>
                             <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding PricePromotion}"
+                                Binding="{Binding PricePromotion,StringFormat='0,0.0'}"
                                 EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                                 IsReadOnly="True"
                                 Header="Giá bán ra"/>

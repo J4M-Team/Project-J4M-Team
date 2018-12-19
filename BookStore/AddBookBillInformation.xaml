@@ -17,7 +17,7 @@
         FontFamily="{DynamicResource MaterialDesignFont}"
         DataContext="{StaticResource AddBookBillInformation}"
         Width="1000" Height="550"        
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" Icon="Image/Book.png">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding loadCommand}"/>
@@ -144,7 +144,7 @@
                                 <GridViewColumn Width="auto" Header="Giá gốc">
                                     <GridViewColumn.CellTemplate>
                                         <DataTemplate>
-                                            <TextBlock Text="{Binding Price.OutputPrice,StringFormat='00.0'}"/>
+                                            <TextBlock Text="{Binding Price.OutputPrice,StringFormat='0,0.0'}"/>
                                         </DataTemplate>
                                     </GridViewColumn.CellTemplate>
                                 </GridViewColumn>

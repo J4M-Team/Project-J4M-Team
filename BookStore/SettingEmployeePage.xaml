@@ -106,11 +106,11 @@
                             </materialDesign:MaterialDataGridComboBoxColumn>
                             
                             <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Count}"
+                            Binding="{Binding Count,StringFormat='0,0'}"
                             IsReadOnly="True"
                             Header="Số lượng"/>
                             <materialDesign:MaterialDataGridTextColumn
-                            Binding="{Binding Salary}"                            
+                            Binding="{Binding Salary,StringFormat='0,0.0'}"                            
                             EditingElementStyle="{StaticResource MaterialDesignDataGridTextColumnEditingStyle}"
                             Header="Mức lương"
                                 IsReadOnly="{Binding Data.SalaryReadOnly,Source={StaticResource proxy}}"/>

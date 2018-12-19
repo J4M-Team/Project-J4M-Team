@@ -15,7 +15,7 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         DataContext="{StaticResource AddEmployeeVM}" d:DesignWidth="1150"
-        Title="Add Employee" Height="645.954" Width="400">
+        Title="Add Employee" Height="645.954" Width="400" Icon="Image/Book.png" WindowStartupLocation="CenterScreen">
     <i:Interaction.Triggers>
         <i:EventTrigger EventName="Loaded">
             <i:InvokeCommandAction Command="{Binding loadCommand}"/>
