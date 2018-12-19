@@ -156,6 +156,7 @@
           <Property Name="Account_User" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Account_Password" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="Employee_Id" Type="int" Nullable="false" />
+          <Property Name="LastLogin" Type="datetime" />
         </EntityType>
         <EntityType Name="Employee_Info">
           <Key>
@@ -942,6 +943,7 @@
           <Property Name="Account_User" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Account_Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="Employee_Id" Type="Int32" Nullable="false" />
+          <Property Name="LastLogin" Type="DateTime" Precision="3" />
           <NavigationProperty Name="Employee" Relationship="BookStoreModel.FK_Employee_Account_Employee" FromRole="Employee_Account" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Employee_Info">
@@ -1468,6 +1470,7 @@
           <EntitySetMapping Name="Employee_Account">
             <EntityTypeMapping TypeName="BookStoreModel.Employee_Account">
               <MappingFragment StoreEntitySet="Employee_Account">
+                <ScalarProperty Name="LastLogin" ColumnName="LastLogin" />
                 <ScalarProperty Name="Employee_Id" ColumnName="Employee_Id" />
                 <ScalarProperty Name="Account_Password" ColumnName="Account_Password" />
                 <ScalarProperty Name="Account_User" ColumnName="Account_User" />

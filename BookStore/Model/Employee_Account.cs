@@ -18,6 +18,7 @@ namespace BookStore.Model
         public string Account_User { get; set; }
         public string Account_Password { get; set; }
         public int Employee_Id { get; set; }
+        public Nullable<System.DateTime> LastLogin { get; set; }
     
         public virtual Employee Employee { get; set; }
     }
