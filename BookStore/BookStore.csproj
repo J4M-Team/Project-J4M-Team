@@ -135,6 +135,9 @@
     <Compile Include="CustomerMenuPage.xaml.cs">
       <DependentUpon>CustomerMenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomerWindow.xaml.cs">
+      <DependentUpon>CustomerWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DeleteBill.xaml.cs">
       <DependentUpon>DeleteBill.xaml</DependentUpon>
     </Compile>
@@ -325,6 +328,7 @@
     <Compile Include="ViewModel\CustomerHistoryPageVM.cs" />
     <Compile Include="ViewModel\CustomerInfoPageVM.cs" />
     <Compile Include="ViewModel\CustomerMenuPageVM.cs" />
+    <Compile Include="ViewModel\CustomerWindowVM.cs" />
     <Compile Include="ViewModel\DeleteBillVM.cs" />
     <Compile Include="ViewModel\EditBookPageVM.cs" />
     <Compile Include="ViewModel\ExpenseReportPageVM.cs" />
@@ -397,6 +401,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="CustomerMenuPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomerWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

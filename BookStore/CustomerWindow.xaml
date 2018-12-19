@@ -1,0 +1,42 @@
+﻿<Window x:Class="BookStore.CustomerWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+         xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:local="clr-namespace:BookStore"
+        mc:Ignorable="d"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="13"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"      
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        DataContext="{StaticResource CustomerWindowVM}"
+        Name="Window"
+        Title="CustomerWindow" Height="800" Width="1305" Icon="Image/Book.png" WindowStartupLocation="CenterScreen" WindowStyle="None">
+    <Window.Background>
+        <ImageBrush ImageSource="Image/WindowBackground.jpg"/>
+    </Window.Background>
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    <Grid>
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Background="{x:Null}" BorderBrush="{x:Null}"
+                Command="{Binding CloseCommand}" CommandParameter="{Binding ElementName=Window}">
+            <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <materialDesign:PackIcon Kind="CloseOctagonOutline" Width="25" Height="25"/>
+            </Grid>
+        </Button>
+        <materialDesign:Card VerticalAlignment="Center" Height="720" Width="1170" HorizontalAlignment="Center"
+                             Foreground="{DynamicResource PrimaryHueDarkForegroundBrush}"
+                             Padding="0"
+                             UniformCornerRadius="15"
+                             >
+            <Frame NavigationUIVisibility="Hidden" Content="{Binding FramePage}"></Frame>
+        </materialDesign:Card>
+    </Grid>
+</Window>

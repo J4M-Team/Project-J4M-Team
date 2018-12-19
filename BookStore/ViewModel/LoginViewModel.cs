@@ -62,85 +62,101 @@ namespace BookStore.ViewModel
                 {
                     if (SelectedItem != null)
                     {
-                        PassWord = Help.Base64Encode(PassWord);
-                        int EmployeeId = CAccount.Ins.IsAccount(new CAccount { User = UserName, Password = PassWord });
-                        //Kiểm tra tài khoản có tồn tại trong cơ sở dữ liệu
-                        if (EmployeeId == 0)
+                        //Kiểm tra nếu chọn vào màn hình tìm kiếm sách
+                        if (SelectedItem.Content.ToString() == "Màn hình tìm kiếm sách")
                         {
-                            MessageBox.Show("Sai mật khẩu hoặc tài khoản,vui lòng kiểm tra lại!");
+                            p.Hide();
+                            CustomerWindow wd = new CustomerWindow();
+                            wd.ShowDialog();
+                            p.Show();
                         }
                         else
                         {
-                            //Kiểm tra quyền của tài khoản
-                            if (SelectedItem.Content.ToString() == "Màn hình quản lý")
+                            PassWord = Help.Base64Encode(PassWord);
+                            int EmployeeId = CAccount.Ins.IsAccount(new CAccount { User = UserName, Password = PassWord });
+                            //Kiểm tra tài khoản có tồn tại trong cơ sở dữ liệu
+                            if (EmployeeId == 0)
                             {
-                                if (4 == CAccount.Ins.Decentralization(EmployeeId) || 1 == CAccount.Ins.Decentralization(EmployeeId))
+                                MessageBox.Show("Sai mật khẩu hoặc tài khoản,vui lòng kiểm tra lại!");
+                            }
+                            else
+                            {
+                                //Kiểm tra quyền của tài khoản
+                                if (SelectedItem.Content.ToString() == "Màn hình quản lý")
                                 {
-                                    //Truyền Id của nhân viên qua màn hình 2 
-                                    DataTransfer.Employee_Id = EmployeeId;
+                                    if (4 == CAccount.Ins.Decentralization(EmployeeId) || 1 == CAccount.Ins.Decentralization(EmployeeId))
+                                    {
+                                        //Truyền Id của nhân viên qua màn hình 2 
+                                        DataTransfer.Employee_Id = EmployeeId;
 
-                                    //CheckIn
-                                    CEmployee.Ins.CheckIn(EmployeeId);
+                                        //CheckIn
+                                        CEmployee.Ins.CheckIn(EmployeeId);
 
+                                        p.Hide();
+                                        ManagementWindow wd = new ManagementWindow();
+
+                                        wd.ShowDialog();
+                                        p.Show();
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Tài khoản của bạn không có quyền truy cập chức năng này");
+                                    }
+
+                                }
+                                else if (SelectedItem.Content.ToString() == "Màn hình quản lý kho")
+                                {
+                                    if (4 == CAccount.Ins.Decentralization(EmployeeId) || 1 == CAccount.Ins.Decentralization(EmployeeId) || 2 == CAccount.Ins.Decentralization(EmployeeId))
+                                    {
+                                        //Truyền Id của nhân viên qua màn hình 2 
+                                        DataTransfer.Employee_Id = EmployeeId;
+
+                                        //CheckIn
+                                        CEmployee.Ins.CheckIn(EmployeeId);
+
+                                        p.Hide();
+                                        BookWindow wd = new BookWindow();
+                                        wd.ShowDialog();
+                                        p.Show();
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Tài khoản của bạn không có quyền truy cập chức năng này");
+                                    }
+
+                                }
+                                else if (SelectedItem.Content.ToString() == "Màn hình bán hàng")
+                                {
+                                    if (4 == CAccount.Ins.Decentralization(EmployeeId) || 1 == CAccount.Ins.Decentralization(EmployeeId) || 3 == CAccount.Ins.Decentralization(EmployeeId))
+                                    {
+                                        //Truyền Id của nhân viên qua màn hình 2 
+                                        DataTransfer.Employee_Id = EmployeeId;
+
+                                        //CheckIn
+                                        CEmployee.Ins.CheckIn(EmployeeId);
+
+                                        p.Hide();
+                                        BanHangMain wd = new BanHangMain();
+                                        wd.ShowDialog();
+                                        p.Show();
+                                    }
+                                    else
+                                    {
+                                        MessageBox.Show("Tài khoản của bạn không có quyền truy cập chức năng này");
+                                    }
+                                }
+                                else if (SelectedItem.Content.ToString() == "Màn hình tìm kiếm sách")
+                                {
                                     p.Hide();
-                                    ManagementWindow wd = new ManagementWindow();
-                                    
+                                    CustomerWindow wd = new CustomerWindow();
                                     wd.ShowDialog();
                                     p.Show();
                                 }
-                                else
-                                {
-                                    MessageBox.Show("Tài khoản của bạn không có quyền truy cập chức năng này");
-                                }
 
                             }
-                            else if (SelectedItem.Content.ToString() == "Màn hình quản lý kho")
-                            {
-                                if (4 == CAccount.Ins.Decentralization(EmployeeId) || 1 == CAccount.Ins.Decentralization(EmployeeId)|| 2 == CAccount.Ins.Decentralization(EmployeeId))
-                                {
-                                    //Truyền Id của nhân viên qua màn hình 2 
-                                    DataTransfer.Employee_Id = EmployeeId;
+                        }
 
-                                    //CheckIn
-                                    CEmployee.Ins.CheckIn(EmployeeId);
-
-                                    p.Hide();
-                                    BookWindow wd = new BookWindow();
-                                    wd.ShowDialog();
-                                    p.Show();
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Tài khoản của bạn không có quyền truy cập chức năng này");
-                                }
-
-                            }
-                            else if (SelectedItem.Content.ToString() == "Màn hình bán hàng")
-                            {
-                                if (4 == CAccount.Ins.Decentralization(EmployeeId) || 1 == CAccount.Ins.Decentralization(EmployeeId) || 3 == CAccount.Ins.Decentralization(EmployeeId))
-                                {
-                                    //Truyền Id của nhân viên qua màn hình 2 
-                                    DataTransfer.Employee_Id = EmployeeId;
-
-                                    //CheckIn
-                                    CEmployee.Ins.CheckIn(EmployeeId);
-
-                                    p.Hide();
-                                    BanHangMain wd = new BanHangMain();
-                                    wd.ShowDialog();
-                                    p.Show();
-                                }
-                                else
-                                {
-                                    MessageBox.Show("Tài khoản của bạn không có quyền truy cập chức năng này");
-                                }
-                            }
-                            else if (SelectedItem.Content.ToString() == "Màn hình tìm kiếm sách")
-                            {
-                                //Chưa code
-                            }
-                            
-                        }                       
+                           
                     }
                     else
                     {
@@ -149,7 +165,20 @@ namespace BookStore.ViewModel
                 }
                 else
                 {
-                    MessageBox.Show("Vui lòng điền đầy đủ thông tin");
+                    if (SelectedItem != null)
+                    {
+                        if (SelectedItem.Content.ToString() == "Màn hình tìm kiếm sách")
+                        {
+                            p.Hide();
+                            CustomerWindow wd = new CustomerWindow();
+                            wd.ShowDialog();
+                            p.Show();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Vui lòng điền đầy đủ thông tin");
+                        }
+                    }                    
                 }                             
             }
                 );
