@@ -123,6 +123,9 @@
     <Compile Include="BookWindow.xaml.cs">
       <DependentUpon>BookWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ChangePassWindow.xaml.cs">
+      <DependentUpon>ChangePassWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="CustomerHistoryPage.xaml.cs">
       <DependentUpon>CustomerHistoryPage.xaml</DependentUpon>
     </Compile>
@@ -318,6 +321,7 @@
     <Compile Include="ViewModel\BaseViewModel.cs" />
     <Compile Include="ViewModel\BillHistoryPageVM.cs" />
     <Compile Include="ViewModel\BookViewModel.cs" />
+    <Compile Include="ViewModel\ChangePassWindowVM.cs" />
     <Compile Include="ViewModel\CustomerHistoryPageVM.cs" />
     <Compile Include="ViewModel\CustomerInfoPageVM.cs" />
     <Compile Include="ViewModel\CustomerMenuPageVM.cs" />
@@ -377,6 +381,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="BookWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ChangePassWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -38,5 +38,6 @@
     <viewmodel:OutputHistoryPageVM x:Key="OutputHistoryPageVM"></viewmodel:OutputHistoryPageVM>
     <viewmodel:DeleteBillVM x:Key="DeleteBillVM"></viewmodel:DeleteBillVM>
     <viewmodel:SettingInfoPageVM x:Key="SettingInfoPageVM"></viewmodel:SettingInfoPageVM>
+    <viewmodel:ChangePassWindowVM x:Key="ChangePassWindowVM"></viewmodel:ChangePassWindowVM>
     
 </ResourceDictionary>

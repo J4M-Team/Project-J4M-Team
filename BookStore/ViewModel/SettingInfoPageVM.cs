@@ -28,6 +28,7 @@ namespace BookStore.ViewModel
         #region command binding
 
         public ICommand loadCommand { get; set; }
+        public ICommand ChangePassCommand { get; set; }
 
         #endregion
 
@@ -43,6 +44,13 @@ namespace BookStore.ViewModel
                 }
             }
                );
+
+            ChangePassCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                System.Windows.MessageBox.Show("fsf");
+            }
+               );
+
         }
 
         #endregion
