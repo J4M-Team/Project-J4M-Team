@@ -207,6 +207,25 @@ namespace BookStore.Model.MyClass
                 //Lưu thay đổi
                 DataProvider.Ins.DB.SaveChanges();
 
+                //Lấy ra id vừa tạo
+                var Id = DataProvider.Ins.DB.Employees.Where(x => x.Employee_Name == newEmployee.Name && x.Employee_Identity == newEmployee.Identity 
+                && x.Employee_Phone == newEmployee.Phone).Select(x => x.Employee_Id).FirstOrDefault();
+
+                //Thêm vào bảng info
+                Employee_Info info = new Employee_Info
+                {
+                    Employee_Id = Id,
+                    Date_Start = newEmployee.Info.DateStart,
+                    Sum_Date = newEmployee.Info.SumDay,
+                    Date_In_Month = newEmployee.Info.DateWork
+                };
+
+                //Thêm vào bảng info
+                DataProvider.Ins.DB.Employee_Info.Add(info);
+
+                //Lưu thay đổi
+                DataProvider.Ins.DB.SaveChanges();
+
                 return true;
 
             }

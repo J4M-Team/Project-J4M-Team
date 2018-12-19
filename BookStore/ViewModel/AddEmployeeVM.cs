@@ -129,6 +129,7 @@ namespace BookStore.ViewModel
             {
                 //Thêm data vào combobox
                 ListRoleName = new ObservableCollection<string>(CRole.Ins.ListRoleName());
+                EmployeeBirthday = DateTime.Now;
             }
                 );
             AddEmployeeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
@@ -178,7 +179,13 @@ namespace BookStore.ViewModel
                         Phone = EmployeePhone,
                         BirthDay = EmployeeBirthday,
                         Identity = EmployeeIdentity,
-                        Role = role
+                        Role = role,
+                        Info = new CEmployee_Info
+                        {
+                            DateStart = DateTime.Now,
+                            DateWork = 0,
+                            SumDay = 0
+                        }
                     };
 
                     //Thêm vào cơ sở dữ liệu
