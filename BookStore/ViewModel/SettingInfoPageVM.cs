@@ -47,7 +47,8 @@ namespace BookStore.ViewModel
 
             ChangePassCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                System.Windows.MessageBox.Show("fsf");
+                ChangePassWindow wd = new ChangePassWindow();
+                wd.ShowDialog();
             }
                );
 

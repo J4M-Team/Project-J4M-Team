@@ -15,11 +15,56 @@
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
         DataContext="{StaticResource ChangePassWindowVM}"
-        Title="ChangePassWindow" Height="450" Width="400" Icon="Image/Book.png" WindowStartupLocation="CenterScreen">
+        Title="ChangePassWindow" Height="400" Width="350" Icon="Image/Book.png" WindowStartupLocation="CenterScreen">
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding loadCommand}"/>
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
-        <materialDesign:Card>
+        <materialDesign:Card VerticalAlignment="Stretch">
             <Grid>
-                
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid Grid.Row="0" Background="#03a9f4">
+                    <TextBlock Text="Thay đổi mật khẩu" HorizontalAlignment="Center" VerticalAlignment="Center"
+                               Foreground="White" FontSize="15" FontWeight="Medium"></TextBlock>
+                </Grid>
+                <Grid Grid.Row="1">
+                    <StackPanel>
+                        <TextBlock Text="Mật khẩu cũ" FontWeight="Medium" FontSize="15" Margin="5,10,20,0"></TextBlock>
+                        <PasswordBox Name="OldPass" Height="32" Margin="5,0,20,20" >
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding OldPassCommand,UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding ElementName=OldPass}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+
+                        <TextBlock Text="Mật khẩu mới" FontWeight="Medium" FontSize="15" Margin="5,10,20,0"></TextBlock>
+                        <PasswordBox Name="NewPass" Height="32" Margin="5,0,20,20">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding NewPassCommand,UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding ElementName=NewPass}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+
+                        <TextBlock Text="Xác nhận mật khẩu" FontWeight="Medium" FontSize="15" Margin="5,10,20,0"></TextBlock>
+                        <PasswordBox Name="ComfirmPass" Height="32" Margin="5,0,20,20">
+                            <i:Interaction.Triggers>
+                                <i:EventTrigger EventName="PasswordChanged">
+                                    <i:InvokeCommandAction Command="{Binding ComfirmPassCommand,UpdateSourceTrigger=PropertyChanged}" CommandParameter="{Binding ElementName=ComfirmPass}"/>
+                                </i:EventTrigger>
+                            </i:Interaction.Triggers>
+                        </PasswordBox>
+                        <Button Margin="0,30,0,0" Content="Xác nhận" Width="100"
+                                Background="#FF3EA0C3" BorderBrush="#FF3EA0C3"
+                            Command="{Binding AcceptCommand}"/>
+                    </StackPanel>
+                </Grid>
             </Grid>
         </materialDesign:Card>
     </Grid>

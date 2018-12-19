@@ -151,6 +151,29 @@ namespace BookStore.Model.MyClass
             }
             return false;
         }
+
+        public bool ChangePassword(int Employee_Id,string newPass)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Employee_Account.Where(x => x.Employee_Id == Employee_Id).First();
+                if (find != null)
+                {
+                    //Thay đổi
+                    find.Account_Password = Help.Base64Encode(newPass);
+
+                    //Lưu lại
+                    DataProvider.Ins.DB.SaveChanges();
+
+                    return true;
+                }
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
         #endregion
     }
 }
