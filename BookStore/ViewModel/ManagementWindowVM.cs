@@ -74,6 +74,7 @@ namespace BookStore.ViewModel
         public ICommand ExitCommand { get; set; }
         public ICommand loadCommand { get; set; }     
         public ICommand HistoryCommand { get; set; }
+        public ICommand SearchBookCommand { get; set; }//Hiển thị màn hình tìm kiếm sách
 
         #endregion
 
@@ -89,35 +90,42 @@ namespace BookStore.ViewModel
             }
                );
 
-            EmployeeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            SearchBookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
                 GridCursorMargin = new Thickness(0, 97, 0, 0);
+                FramePage = new SearchPage();
+            }
+              );
+
+            EmployeeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 97 + 52 * 1, 0, 0);
                 FramePage = new ManagementEmployee();
             });
 
             CustomerCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 1, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 2, 0, 0);
                 FramePage = new CustomerMenuPage();
             });
 
             ReportCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 2, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 3, 0, 0);
                 FramePage = new ReportMenuPage();
 
             });
 
             AccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 5, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 6, 0, 0);
                 FramePage = new SettingInfoPage();
 
             });
 
             ExitCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 6, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 7, 0, 0);
                 //Thoát
                 p.Close();
 
@@ -125,13 +133,13 @@ namespace BookStore.ViewModel
 
             SettingCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 4, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 5, 0, 0);
                 FramePage = new SettingPage();
             });
 
             HistoryCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 3, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 4, 0, 0);
                 FramePage = new HistoryMenuPage();
             });
         } 

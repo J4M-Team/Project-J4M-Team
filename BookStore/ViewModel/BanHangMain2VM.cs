@@ -70,6 +70,7 @@ namespace BookStore.ViewModel
         public ICommand AccountCommand { get; set; }
         public ICommand ExitCommand { get; set; }
         public ICommand loadCommand { get; set; }
+        public ICommand SearchBookCommand { get; set; }//Hiển thị màn hình tìm kiếm sách
 
         #endregion
 
@@ -84,30 +85,37 @@ namespace BookStore.ViewModel
             }
                );
 
+            SearchBookCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
+            {
+                GridCursorMargin = new Thickness(0, 97, 0, 0);
+                FramePage = new SearchPage();
+            }
+              );
+
             DeleteCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 1, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 2, 0, 0);
                 FramePage = new DeleteBill();
             }
                );
 
             PrintCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 1, 0, 0);
                 FramePage = new InHoaDonPage();
             }
                );
             
             AccountCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 2, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 3, 0, 0);
                 FramePage = new SettingInfoPage();
             }
                );
 
             ExitCommand = new RelayCommand<Window>((p) => { return true; }, (p) =>
             {
-                GridCursorMargin = new Thickness(0, 97 + 52 * 3, 0, 0);
+                GridCursorMargin = new Thickness(0, 97 + 52 * 4, 0, 0);
                 p.Close();
             }
                );

@@ -49,6 +49,15 @@
                     <TextBlock Text="System" Margin="15" FontWeight="DemiBold"/>
                     <ListView FontSize="15">
                         <ListViewItem Padding="1">
+                            <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding SearchBookCommand}" Height="50" Width="148">
+                                <StackPanel Orientation="Horizontal" Margin="-30,0,0,0">
+                                    <materialDesign:PackIcon Kind="DatabaseSearch" Foreground="Black"/>
+                                    <TextBlock Text="Tìm kiếm" VerticalAlignment="Center" Margin="15,0,0,0" Foreground="Black"/>
+                                </StackPanel>
+                            </Button>
+                        </ListViewItem>
+                        
+                        <ListViewItem Padding="1">
                             <Button BorderBrush="{x:Null}" Background="{x:Null}" Command="{Binding PrintCommand}" Height="50" Width="148">
                                 <StackPanel Orientation="Horizontal" Margin="-20,0,0,0">
                                     <materialDesign:PackIcon Kind="LocalPrintShop" Foreground="Black"/>
