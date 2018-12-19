@@ -38,5 +38,10 @@
                              >
             <Frame NavigationUIVisibility="Hidden" Content="{Binding FramePage}"></Frame>
         </materialDesign:Card>
+        <TextBlock Text="Created by J4M Team" HorizontalAlignment="Center" 
+                   VerticalAlignment="Bottom" 
+                   Foreground="White"
+                   Margin="0,0,0,10" FontStretch="Medium" FontWeight="Medium"
+                   Cursor="Hand"/>
     </Grid>
 </Window>

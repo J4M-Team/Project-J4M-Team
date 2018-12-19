@@ -1291,14 +1291,14 @@ namespace BookStore.Model.MyClass
         /// <param name="currentPage">Trang cần lấy</param>
         /// <param name="NumberPage">Số lượng sách ở mỗi trang</param>
         /// <returns></returns>
-        public List<CBook> FindBook(string Name, string Author, string Theme, string Type, float MinPrice, float MaxPrice, int currentPage, int NumberPage)
+        public List<CBook> FindBook(string Name, string Author, string Theme, string Type, float MinPrice, float MaxPrice, int currentPage, int NumberPage,bool isSale)
         {
             List<CBook> List = new List<CBook>();
 
             try
             {
                 List<Book> Data = DataProvider.Ins.DB.Books.ToList();
-
+ 
                 //Lọc theo tên
                 if (string.IsNullOrEmpty(Name) || Name.ToLower() == "tất cả")
                 {
@@ -1349,6 +1349,14 @@ namespace BookStore.Model.MyClass
                         float Promotion = (float)item.Book_Output_PromotionPrice.Select(x => x.Promotion).FirstOrDefault();
                         float OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault();
 
+                        if (isSale == true)
+                        {
+                            if (Promotion == 0)
+                            {
+                                goto Endloop;
+                            }
+                        }
+
                         Book = new CBook
                         {
                             Id = item.Book_Id,
@@ -1365,11 +1373,21 @@ namespace BookStore.Model.MyClass
 
                             PriceVisibility = Promotion == 0 ? Visibility.Collapsed : Visibility.Visible
                         };
+                        
+                        List.Add(Book);
                     }
                     else
                     {
                         float Promotion = (float)item.Book_Output_PromotionPrice.Select(x => x.Promotion).FirstOrDefault();
                         float OutputPrice = (float)item.Book_Output_Price.OrderByDescending(x => x.Date_Set).Select(x => x.Output_Price).FirstOrDefault();
+
+                        if (isSale == true)
+                        {
+                            if (Promotion == 0)
+                            {
+                                goto Endloop;
+                            }
+                        }
 
                         Book = new CBook
                         {
@@ -1387,10 +1405,14 @@ namespace BookStore.Model.MyClass
 
                             PriceVisibility = Promotion == 0 ? Visibility.Collapsed : Visibility.Visible
                         };
+
+                        List.Add(Book);
                     }
 
-                    List.Add(Book);
-
+#pragma warning disable CS0164 // This label has not been referenced
+                Endloop:
+                    continue;
+#pragma warning restore CS0164 // This label has not been referenced
                 }
 
             }
