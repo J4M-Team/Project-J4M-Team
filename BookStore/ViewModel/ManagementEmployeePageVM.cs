@@ -272,7 +272,50 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItem != null)
                 {
-                    CEmployee.Ins.UpdateEmployee(SelectedItem);
+                    //Kiểm tra 
+                    if (string.IsNullOrEmpty(SelectedItem.Name) || string.IsNullOrEmpty(SelectedItem.Phone) || string.IsNullOrEmpty(SelectedItem.Identity)
+                    || string.IsNullOrEmpty(SelectedItem.Address)||string.IsNullOrEmpty(SelectedItem.Identity))
+                    {
+                        MessageBox.Show("Thông tin không được để trống", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        ListEmployee = new ObservableCollection<CEmployee>(CEmployee.Ins.ListEmployee());
+                        return;
+                    }
+
+                    //Kiểm tra nhập số cho SĐT và CMND
+                    double test;
+                    if (!double.TryParse(SelectedItem.Phone, out test) || !double.TryParse(SelectedItem.Identity, out test))
+                    {
+                        MessageBox.Show("Cần nhập SĐT hoặc CMND bằng số !!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        ListEmployee = new ObservableCollection<CEmployee>(CEmployee.Ins.ListEmployee());
+                        return;
+                    }
+
+                    //Kiểm tra nhập email
+
+                    if (Help.isEmail(SelectedItem.Email) == false)
+                    {
+                        MessageBox.Show("Nhập sai định dạng email !!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        ListEmployee = new ObservableCollection<CEmployee>(CEmployee.Ins.ListEmployee());
+                        return;
+                    }
+
+                    //Kiểm tra thông tin cập nhật trùng với nhân viên khác
+                    if(SelectedItem.Id != CEmployee.Ins.isEmployee(SelectedItem.Identity))
+                    {
+                        MessageBox.Show("Thông tin cập nhật trùng với nhân viên khác", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        ListEmployee = new ObservableCollection<CEmployee>(CEmployee.Ins.ListEmployee());
+                        return;
+                    }
+
+                    if (CEmployee.Ins.UpdateEmployee(SelectedItem) == true)
+                    {
+                        MessageBox.Show("Cập nhật thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cập nhật thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        ListEmployee = new ObservableCollection<CEmployee>(CEmployee.Ins.ListEmployee());
+                    }
                 }
             }
                );
