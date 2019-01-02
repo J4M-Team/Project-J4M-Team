@@ -63,11 +63,19 @@ namespace BookStore.ViewModel
                 //Reset lại mật khẩu 
                 if (SelectedItem != null)
                 {
-                    CAccount.Ins.ResetPassword(SelectedItem);
+                    string newpass = CAccount.Ins.ResetPassword(SelectedItem);
+                    if (string.IsNullOrEmpty(newpass))
+                    {
+                        MessageBox.Show("Reset thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                    else
+                    {
+                        MessageBox.Show($"Mật khẩu mới là: {newpass}", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                        //load lại cơ sở dữ liệu
+                        ListAccount = new ObservableCollection<CAccount>(CAccount.Ins.ListAccount());
+                    }
                 }
-                //load lại cơ sở dữ liệu
-                ListAccount = new ObservableCollection<CAccount>(CAccount.Ins.ListAccount());
-
             }
                );
         }

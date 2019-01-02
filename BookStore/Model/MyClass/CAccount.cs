@@ -207,7 +207,7 @@ namespace BookStore.Model.MyClass
         /// <summary>
         /// Hàm reset mới password của tìa khoản nhân viên
         /// </summary>
-        public bool ResetPassword(CAccount account)
+        public string ResetPassword(CAccount account)
         {
             try
             {
@@ -215,19 +215,19 @@ namespace BookStore.Model.MyClass
                 if (find != null)
                 {
                     string newpass = Help.RandomPassword();
-                    newpass = Help.Base64Encode(newpass); //mã hóa 
-                    find.Account_Password = newpass;
+                    string newpass2 = Help.Base64Encode(newpass); //mã hóa 
+                    find.Account_Password = newpass2;
                     //Lưu lại
                     DataProvider.Ins.DB.SaveChanges();
-                    return true;
+                    return newpass;
                 }
-                else return false;
+                else return "";
             }
             catch
             {
 
             }
-            return false;
+            return "";
         }
 
         public bool ChangePassword(int Employee_Id,string newPass)
