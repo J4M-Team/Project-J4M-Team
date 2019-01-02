@@ -62,7 +62,7 @@ namespace BookStore.ViewModel
         public ICommand AddAccountCommand { get; set; }
         public ICommand PasswordCommand { get; set; }
         public ICommand PasswordAgainCommand { get; set; }
-
+       
 
 
         #endregion
@@ -79,50 +79,60 @@ namespace BookStore.ViewModel
                 }
                 else
                 {
-                    //Tìm trong csdl tên đăng nhập có tồn tại không
-                    var find = DataProvider.Ins.DB.Employee_Account.Where(x => x.Account_User == UserName).FirstOrDefault();
-                    if (find != null)
+                    //Tìm trong csdl tên đăng nhập có tồn tại không                    
+                    if (CAccount.Ins.isAlreadyUser(UserName) == true)
                     {
-                        MessageBox.Show("Tên tài khoản đã được sử dụng", "Thông báo");
+                        MessageBox.Show("Tên tài khoản đã được sử dụng", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                     //Kiểm tra việc nhập lại password đúng không
                     if (Password != PasswordAgain)
                     {
-                        MessageBox.Show("Mật khẩu nhập lại không đúng !!", "Thông báo");
+                        MessageBox.Show("Mật khẩu nhập lại không đúng !!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
                     Password = Help.Base64Encode(Password); //mã hóa password
-                    Employee_Account account = new Employee_Account
+
+                    //Tạo mới accout
+                    CAccount account = new CAccount
                     {
-                        Account_User = UserName,                       
-                        Account_Password = Password,
-                        Employee_Id = DataTransfer.IDEmployee,
+                        User = UserName,
+                        Password = Password,
+                        EmployeeID = DataTransfer.IDEmployee
                     };
 
-                    //Thêm vào danh sách account trong csdl
-                    DataProvider.Ins.DB.Employee_Account.Add(account);
+                    //Thêm account mới
+                    if (CAccount.Ins.addAccount(account) == true)
+                    {
+                        MessageBox.Show("Thêm Account mới thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
 
-                    //Lưu lại
-                    DataProvider.Ins.DB.SaveChanges();
-
-                    MessageBox.Show("Đã thêm account mới cho nhân viên", "Thông báo");
-
+                        //Đóng cửa số thêm account
+                        (p as Window)?.Close();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Thêm Account mới thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                    }
+                   
                 }
 
             }
                 );
+
             PasswordCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) =>
             {
                 Password = p.Password;
             }
               );
+
             PasswordAgainCommand = new RelayCommand<PasswordBox>((p) => { return true; }, (p) =>
             {
                 PasswordAgain = p.Password;
             }
               );
+
+            
         }
     }
 }

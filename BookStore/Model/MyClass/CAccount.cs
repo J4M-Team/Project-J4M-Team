@@ -115,15 +115,93 @@ namespace BookStore.Model.MyClass
                         //Thêm vào danh sách
                         List.Add(account);
                     }
-                }
-
-               
+                }              
             }
             catch
             {
 
             }
             return List;
+        }
+
+        /// <summary>
+        /// Hàm kiểm tra nhân viên đã có account
+        /// </summary>
+        /// <param name="EmployeeID"></param>
+        /// <returns></returns>
+        public bool isHasAccount(int EmployeeID)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Employee_Account.Where(x => x.Employee_Id == EmployeeID);
+                if (find.Count() > 0)
+                {
+                    return true;
+                }
+                return false;
+            
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm thêm tài khoản mới cho nhân viên
+        /// </summary>
+        /// <param name="newAccount"></param>
+        /// <returns></returns>
+        public bool addAccount(CAccount newAccount)
+        {
+            try
+            {
+                //Tạo mới
+                Employee_Account account = new Employee_Account
+                {
+                    Account_User = newAccount.User,
+                    Account_Password = newAccount.Password,
+                    Employee_Id = newAccount.EmployeeID
+                };
+
+                //Thêm vào csdl
+                DataProvider.Ins.DB.Employee_Account.Add(account);
+
+                //lưu thay đổi
+                DataProvider.Ins.DB.SaveChanges();
+
+                return true;
+            }
+            catch
+            {
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Hàm kiểm tra tên đăng nhập đã được đăng ký hay chưa
+        /// </summary>
+        /// <param name="UserName"></param>
+        /// <returns></returns>
+        public bool isAlreadyUser(string UserName)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Employee_Account.Where(x => x.Account_User == UserName);
+
+                if (find.Count() > 0)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch
+            {
+
+            }
+            return false;
         }
 
         /// <summary>

@@ -14,8 +14,9 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-        DataContext="{StaticResource AddAccountEmployeeVM}" d:DesignWidth="1150"
-        Title="Add Account Employee" Height="420" Width="400" Icon="Image/Book.png" WindowStartupLocation="CenterScreen">
+        DataContext="{StaticResource AddAccountEmployeeVM}" d:DesignWidth="1150" x:Name="Window"
+        Title="Add Account Employee" Height="420" Width="400" Icon="Image/Book.png" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" WindowStyle="None">
+   
     <Grid>
         <materialDesign:Card Width="392" Height="389" HorizontalAlignment="Left" VerticalAlignment="Top">
             <Grid Margin="0,0,0,238">
@@ -52,7 +53,7 @@
                             </i:Interaction.Triggers>
                         </PasswordBox>
                         <Button Margin="126,10,126,0" Content="Thêm"
-                            Command="{Binding AddAccountCommand}"/>
+                            Command="{Binding AddAccountCommand}" CommandParameter="{Binding ElementName=Window}"/>
 
                     </StackPanel>
                 </Grid>
