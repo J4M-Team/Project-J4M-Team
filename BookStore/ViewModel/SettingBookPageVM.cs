@@ -167,9 +167,43 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItem != null)
                 {
-                    CBook.Ins.ChangeInputPrice(SelectedItem.Id, SelectedItem.Price.InputPrice);
-                    CBook.Ins.ChangeOutputPrice(SelectedItem.Id, SelectedItem.Price.OutputPrice);
+                    //Kiểm tra thông tin nhập
+                    
 
+                    //Giá nhập và giá bán <0
+                    if(SelectedItem.Price.InputPrice<=0)
+                    {
+                        MessageBox.Show("Giá nhập không hợp lệ", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                        //load lại dữ liệu
+                        DataListBook = new ObservableCollection<CBook>(CBook.Ins.ListPriceBook());
+                        ListBook = DataListBook;
+                        return;
+                    }
+
+                    if (SelectedItem.Price.OutputPrice <= 0)
+                    {
+                        MessageBox.Show("Giá bán không hợp lệ", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                        //load lại dữ liệu
+                        DataListBook = new ObservableCollection<CBook>(CBook.Ins.ListPriceBook());
+                        ListBook = DataListBook;
+                        return;
+                    }
+
+
+                    if( CBook.Ins.ChangeInputPrice(SelectedItem.Id, SelectedItem.Price.InputPrice) == false && CBook.Ins.ChangeOutputPrice(SelectedItem.Id, SelectedItem.Price.OutputPrice) == false)
+                    {
+                        MessageBox.Show("Cập nhật thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        //Load lại thông tin
+                        DataListBook = new ObservableCollection<CBook>(CBook.Ins.ListPriceBook());
+                        ListBook = DataListBook;
+
+                        return;
+                    }
+
+                    //Thông báo cập nhật thành công
+                    MessageBox.Show("Cập nhật thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                     //Không cần phải load lại data vì dữ liệu trên giao diện đã thay đổi rồi
                 }
             }

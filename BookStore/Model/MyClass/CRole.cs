@@ -177,6 +177,32 @@ namespace BookStore.Model.MyClass
             return List;
         }
 
+
+        /// <summary>
+        /// Hàm kiểm tra nhân viên đó có tồn tại trong cơ sở dữ liệu hay chưa
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        public int isRole(CRole role)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Employee_Role.Where(x => x.Role_Name.ToLower() == role.Name.ToLower());
+                if (find.Count() > 0)
+                {
+                    return find.First().Role_Id;
+                }
+
+                return 0;
+            }
+            catch
+            {
+
+            }
+            return 0;
+            
+        }
+
         /// <summary>
         /// Hàm trả về danh sách loại nhân viên
         /// </summary>

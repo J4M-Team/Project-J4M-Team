@@ -240,7 +240,46 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItem != null)
                 {
-                    CRole.Ins.UpdateRole(SelectedItem);              
+                    //Kiểm tra thông tin rỗng
+                    if (string.IsNullOrEmpty(SelectedItem.Name))
+                    {
+                        MessageBox.Show("Thông tin không được để trống", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                        ListRole = new ObservableCollection<CRole>(CRole.Ins.ListRole());
+                        return;
+                    }
+                    else
+                    {
+                       
+
+                        //Kiểm tra mức lương hợp lệ
+                        if (SelectedItem.Salary <= 0)
+                        {
+                            MessageBox.Show("Giá trị lương không hợp lệ", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            //load lại bảng
+                            ListRole = new ObservableCollection<CRole>(CRole.Ins.ListRole());
+                            return;
+                        }
+
+                        //Kiểm tra loại nhân viên trùng với loại nhân viên khác
+                        if (CRole.Ins.isRole(SelectedItem) != SelectedItem.Id)
+                        {
+                            MessageBox.Show("Loại nhân viên đã tồn tại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            ListRole = new ObservableCollection<CRole>(CRole.Ins.ListRole());
+                            return;
+                        }
+
+                        if (CRole.Ins.UpdateRole(SelectedItem) == true)
+                        {
+                            MessageBox.Show("Cập nhật thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Cập nhật thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            ListRole = new ObservableCollection<CRole>(CRole.Ins.ListRole());
+                        }
+                    }
+                        
                 }          
             }
                );
@@ -249,6 +288,7 @@ namespace BookStore.ViewModel
             {
                 if (string.IsNullOrEmpty(EmployeeRole) || string.IsNullOrEmpty(EmployeeSalary) || string.IsNullOrEmpty(ComboBoxSelectedItem))
                 {
+                    MessageBox.Show("Thông tin không được để trống", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 else
@@ -258,17 +298,43 @@ namespace BookStore.ViewModel
 
                     if(float.TryParse(EmployeeSalary,out RoleSalary) == true)
                     {
+                        //Kiểm tra giá trị lương không hợp lệ
+                        if (RoleSalary <= 0)
+                        {
+                            MessageBox.Show("Giá trị lương không hợp lệ", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                            ListRole = new ObservableCollection<CRole>(CRole.Ins.ListRole());
+                            return;
+
+                        }
+                     
                         //Tạo mới CRole
                         CRole Role = new CRole { Name = EmployeeRole, Salary = RoleSalary, Decentralization = ComboBoxSelectedItem };
 
-                        //Thêm vào cơ sở dữ liệu
-                        CRole.Ins.AddRole(Role);
+                        //Kiểm tra loại nhân viên đã tồn tại
+                        if (CRole.Ins.isRole(Role) != 0)
+                        {
+                            MessageBox.Show("Loại nhân viên đã tồn tại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
 
-                        //load lại bảng
-                        ListRole = new ObservableCollection<CRole>(CRole.Ins.ListRole());
+                        //Thêm vào cơ sở dữ liệu
+                        if (CRole.Ins.AddRole(Role) == true)
+                        {
+                            //Thông báo thêm thành công
+                            MessageBox.Show("Thêm thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                            //load lại bảng
+                            ListRole = new ObservableCollection<CRole>(CRole.Ins.ListRole());
+                        }
+                        else
+                        {
+                            //Thông báo lỗi
+                            MessageBox.Show("Thêm thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }                      
                     }
                     else
                     {
+                        MessageBox.Show("Giá trị lương nhập vào phải là số", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
                 }

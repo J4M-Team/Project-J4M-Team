@@ -239,7 +239,7 @@ namespace BookStore.ViewModel
                 }
 
                 //Kiểm tra thỏa mãn điều kiện lượng tồn tối thiểu
-                if (CBook.Ins.InventoryNumber(Book_Id) > IMinExist)
+                if (CBook.Ins.InventoryNumber(Book_Id) + ICount > IMinExist)
                 {
                     return false;
                 }
@@ -298,7 +298,7 @@ namespace BookStore.ViewModel
                 }
 
                 //Kiểm tra thỏa mãn điều kiện lượng tồn tối thiểu
-                if (CBook.Ins.InventoryNumber(Book_Id) > IMinExist)
+                if (CBook.Ins.InventoryNumber(Book_Id) + ICount > IMinExist)
                 {
                     return false;
                 }

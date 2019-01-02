@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BookStore.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BookStore.Model.MyClass
 {
-    public class CBook_Price
+    public class CBook_Price:BaseViewModel
     {
         #region private properties
 
@@ -19,8 +20,8 @@ namespace BookStore.Model.MyClass
 
         #region public properties
 
-        public float InputPrice { get { return _InputPrice; } set { _InputPrice = value; } }
-        public float OutputPrice { get { return _OutputPrice; } set { _OutputPrice = value; } }
+        public float InputPrice { get { return _InputPrice; } set { _InputPrice = value;OnPropertyChanged(nameof(InputPrice)); } }
+        public float OutputPrice { get { return _OutputPrice; } set { _OutputPrice = value;OnPropertyChanged(nameof(OutputPrice)); } }
         public DateTime Input_Date_Set { get { return _Input_Date_Set; } set { _Input_Date_Set = value; } }
         public DateTime Output_Date_Set { get { return _Output_Date_Set; } set { _Output_Date_Set = value; } }
 

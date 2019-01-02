@@ -136,15 +136,27 @@ namespace BookStore.ViewModel
                 if (SelectedItem != null)
                 {
                     //Kiểm tra điều kiện nhập
-                    if (SelectedItem.Promotion <= 0)
+                    if (SelectedItem.Promotion <= 0 || SelectedItem.Promotion>=1)
                     {
+                        MessageBox.Show("Giá trị khuyến mãi không hợp lệ", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+
+                        //Load lại
+                        DataListBook = new ObservableCollection<CBook>(CBook.Ins.ListPromotionBook());
+                        ListBook = DataListBook;
+
                         return;
                     }
                     else
                     {
                         //Gọi hàm cập nhật
-                        CBook.Ins.ChangePromotion(SelectedItem.Id, SelectedItem.Promotion);
-
+                        if (CBook.Ins.ChangePromotion(SelectedItem.Id, SelectedItem.Promotion) == true)
+                        {
+                            MessageBox.Show("Cập nhật thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                        }
+                        else
+                        {
+                            MessageBox.Show("Cập nhật thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        }
                         //Load lại
                         DataListBook = new ObservableCollection<CBook>(CBook.Ins.ListPromotionBook());
                         ListBook = DataListBook;

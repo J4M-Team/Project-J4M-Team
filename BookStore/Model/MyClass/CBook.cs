@@ -62,7 +62,7 @@ namespace BookStore.Model.MyClass
         public string Type { get { return _Type; } set { _Type = value; } }
         public string Content { get { return _Content; } set { _Content = value; } }
         public int Count { get { return _Count; } set { _Count = value; OnPropertyChanged(nameof(Count)); } }
-        public CBook_Price Price { get { return _Price; } set { _Price = value; } }
+        public CBook_Price Price { get { return _Price; } set { _Price = value;OnPropertyChanged(nameof(Price)); } }
         public BitmapImage Image { get { return _Image; } set { _Image = value; } }
         public float Promotion { get { return _Promotion; } set { _Promotion = value; } }
         public float PricePromotion { get { return _PricePromotion; } set { _PricePromotion = value; } }
