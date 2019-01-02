@@ -113,8 +113,7 @@ namespace BookStore.ViewModel
                     else
                     {
                         MessageBox.Show("Thêm Account mới thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
-                    }
-                   
+                    }                  
                 }
 
             }

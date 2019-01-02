@@ -136,6 +136,7 @@ namespace BookStore.ViewModel
             {
                 if (string.IsNullOrEmpty(EmployeeName) || string.IsNullOrEmpty(EmployeeAddress) || string.IsNullOrEmpty(EmployeeEmail) || string.IsNullOrEmpty(EmployeePhone) || string.IsNullOrEmpty(EmployeeIdentity))
                 {
+                    MessageBox.Show("Không được để trống thông tin", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 else
@@ -144,19 +145,15 @@ namespace BookStore.ViewModel
                     double test;
                     if(!double.TryParse(EmployeePhone, out test) || !double.TryParse(EmployeeIdentity, out test))
                     {
-                        MessageBox.Show("Cần nhập SĐT hoặc CMND bằng số !!", "Thông báo");
+                        MessageBox.Show("Cần nhập SĐT hoặc CMND bằng số !!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
                     //Kiểm tra nhập email
 
-                    string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" 
-                                           + @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" 
-                                           + @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$";
-                    Regex re = new Regex(strRegex);
-                    if (!re.IsMatch(EmployeeEmail))
+                    if (Help.isEmail(EmployeeEmail) == false)
                     {
-                        MessageBox.Show("Nhập sai định dạng email !!", "Thông báo");
+                        MessageBox.Show("Nhập sai định dạng email !!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
@@ -167,13 +164,20 @@ namespace BookStore.ViewModel
                     };
                     if(role.Name == null)
                     {
-                        MessageBox.Show("Chưa nhập loại nhân viên !!", "Thông báo");
+                        MessageBox.Show("Chưa nhập loại nhân viên !!", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
-                    CEmployee Employee = new CEmployee
 
+                    //Kiểm tra nhân viên đã có trong csdl chưa theo số cmnd
+                    if (CEmployee.Ins.isEmployee(EmployeeIdentity) != 0)
                     {
-                        Name = EmployeeName,
+                        MessageBox.Show("Nhân viên đã tồn tại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    CEmployee Employee = new CEmployee
+                    {
+                        Name = Help.StandardizeName(EmployeeName),
                         Address = EmployeeAddress,
                         Email = EmployeeEmail,
                         Phone = EmployeePhone,
@@ -189,21 +193,22 @@ namespace BookStore.ViewModel
                     };
 
                     //Thêm vào cơ sở dữ liệu
-                    CEmployee.Ins.AddEmployee(Employee);
+                    int employeeID = CEmployee.Ins.AddEmployee(Employee);
+                    if(employeeID == 0)
+                    {
+                        MessageBox.Show("Thêm thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
 
                     MessageBox.Show("Thêm vào thành công ", "Thông báo !!");
 
                     //Lấy ID đc khởi tạo tự động trong cơ sở dữ liệu để truyền qua cửa sổ tạo account
-                    int employeeID = DataProvider.Ins.DB.Employees.Where(x => x.Employee_Identity == Employee.Identity).Select(x => x.Employee_Id).First();
+                   
                     //Hiện cửa sổ thêm account cho nhân viên
                     DataTransfer.IDEmployee =  employeeID;
                     AddAccountEmployee wd = new AddAccountEmployee();
                     wd.ShowDialog();
-
-
-
                 }
-
 
             }
                 );

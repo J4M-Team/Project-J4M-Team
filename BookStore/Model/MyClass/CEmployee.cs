@@ -182,8 +182,12 @@ namespace BookStore.Model.MyClass
             return false;
         }
 
-
-        public bool AddEmployee(CEmployee newEmployee)
+        /// <summary>
+        /// hàm thêm nhân viên mới vào csdl
+        /// </summary>
+        /// <param name="newEmployee"></param>
+        /// <returns></returns>
+        public int AddEmployee(CEmployee newEmployee)
         {
             try
             {
@@ -227,14 +231,32 @@ namespace BookStore.Model.MyClass
                 //Lưu thay đổi
                 DataProvider.Ins.DB.SaveChanges();
 
-                return true;
+                return Id;
 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                
             }
-            return false;
+            return 0;
+        }
+
+        public int isEmployee(string Identity)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Employees.Where(x => x.Employee_Identity == Identity).FirstOrDefault();
+                if (find != null)
+                {
+                    return find.Employee_Id;
+                }
+                return 0;
+            }
+            catch
+            {
+
+            }
+            return 0;
         }
 
         //Hàm trả về thông tin của nhân viên tương ứng với id của nhân viên đó
