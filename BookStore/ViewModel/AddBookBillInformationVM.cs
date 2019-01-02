@@ -163,11 +163,7 @@ namespace BookStore.ViewModel
               );
             NumberOfBookChangeCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-               if(CheckNumberOfBook()==false)
-                {
-                    MessageBox.Show("KHONG DUOC NHAP CHU");
-
-                }
+               
             }
               );
 
@@ -175,7 +171,7 @@ namespace BookStore.ViewModel
             {
                 if(NumberOfBook=="" || NumberOfBook==null)
                 {
-                    MessageBox.Show("Khong duoc de trong so luong");
+                    MessageBox.Show("Không được để số lượng trống", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 else
                 {
@@ -184,22 +180,38 @@ namespace BookStore.ViewModel
                         //Kiểm tra số lượng tồn tối thiểu
                         if(int.TryParse(MinExist,out IMinExist) == false)
                         {
-                            MessageBox.Show("Giá trị số lượng tồn tối thiểu không hợp lệ");
+                            MessageBox.Show("Giá trị số lượng tồn tối thiểu không hợp lệ", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                             return;
                         }
 
                         if (IMinExist < 0)
                         {
-                            MessageBox.Show("Giá trị số lượng tồn tối thiểu không hợp lệ");
+                            MessageBox.Show("Giá trị số lượng tồn tối thiểu không hợp lệ", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        //Kiểm tra số lượng
+                        if (Help.isInt(NumberOfBook) == false)
+                        {
+                            MessageBox.Show("Giá trị số lượng không hợp lệ", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        //Giá trị số lượng <=0
+
+                        if (int.Parse(NumberOfBook) <= 0)
+                        {
+                            MessageBox.Show("Giá trị số lượng không hợp lệ", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                             return;
                         }
 
                         //Kiểm tra số lượng tồn tối thiểu
                         if(SelectedItem.Count- int.Parse(NumberOfBook) < IMinExist)
                         {
-                            MessageBox.Show("Sách không còn đủ trong kho");
+                            MessageBox.Show("Sách không còn đủ trong kho", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                             return;
                         }
+
 
                         CBook Book = new CBook
                         {
@@ -215,6 +227,9 @@ namespace BookStore.ViewModel
 
 
                         DataTransfer.ListBooks.Add(Book);
+
+                        //Thông báo thêm thành công
+                        MessageBox.Show("Thêm thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                     }                                                        
                 }
             }

@@ -152,13 +152,26 @@ namespace BookStore.ViewModel
               );
 
             PayCommand = new RelayCommand<object>((p) => {
+                //Kiểm tra List không có sách
                 if (ListSelectedBooks.Count() == 0)
                 {
                     return false;
                 }
+                //Kiểm tra thông tin tên và số điện thoại của khách hàng
                 if (string.IsNullOrEmpty(CustomerName) || string.IsNullOrEmpty(CustomerPhone))
                 {
                     return false;
+                }
+
+                //Kiểm tra số điện thoại hợp lệ
+                if (Help.isInt(CustomerPhone) == false)
+                    return false;
+
+                //Kiểm tra thông tin mail không hợp lệ
+                if (!string.IsNullOrEmpty(CustomerEmail))
+                {
+                    if (Help.isEmail(CustomerEmail) == false)
+                        return false;
                 }
                 return true;
             }, 
@@ -168,7 +181,7 @@ namespace BookStore.ViewModel
                 //Lấy id của khách hàng
                 int CustomerId = CCustomer.Ins.AddCustomer(new CCustomer
                 {
-                    Name = CustomerName,
+                    Name = Help.StandardizeName(CustomerName),
                     Phone = CustomerPhone,
                     Address = CustomerAddress,
                     Email = CustomerEmail
@@ -190,7 +203,7 @@ namespace BookStore.ViewModel
 
                 if (Check > 0)
                 {
-                    MessageBox.Show("Thanh toán thành công");
+                    MessageBox.Show("Thanh toán thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
 
                     //Xóa bảng
                     CustomerAddress = "";
@@ -206,7 +219,7 @@ namespace BookStore.ViewModel
                 }
                 else
                 {
-                    MessageBox.Show("Thanh toán thất bại");
+                    MessageBox.Show("Thanh toán thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
               );

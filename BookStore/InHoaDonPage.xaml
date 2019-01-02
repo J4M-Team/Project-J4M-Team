@@ -50,7 +50,7 @@
                     Width="200"
                     Margin="5,5"
                     materialDesign:HintAssist.Hint="Tên khách hàng"
-                            Text="{Binding CustomerName}"                        
+                            Text="{Binding CustomerName,UpdateSourceTrigger=PropertyChanged}"                        
              />
 
                         <TextBox
@@ -61,7 +61,7 @@
                     TextWrapping="Wrap"
                     Width="200"
                     Margin="5,5"
-                    materialDesign:HintAssist.Hint="Số điện thoại" Text="{Binding CustomerPhone}"/>
+                    materialDesign:HintAssist.Hint="Số điện thoại" Text="{Binding CustomerPhone,UpdateSourceTrigger=PropertyChanged}"/>
                         <TextBox
                     Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
                     VerticalAlignment="Top"
@@ -70,7 +70,7 @@
                     TextWrapping="Wrap"
                     Width="200"
                     Margin="5,5"
-                    materialDesign:HintAssist.Hint="Địa chỉ" Text="{Binding CustomerAddress}"
+                    materialDesign:HintAssist.Hint="Địa chỉ" Text="{Binding CustomerAddress,UpdateSourceTrigger=PropertyChanged}"
              />
                         <TextBox
                     Style="{StaticResource MaterialDesignFilledTextFieldTextBox}"
@@ -80,7 +80,7 @@
                     TextWrapping="Wrap"
                     Width="200"
                     Margin="5,5"
-                    materialDesign:HintAssist.Hint="Email" Text="{Binding CustomerEmail}"
+                    materialDesign:HintAssist.Hint="Email" Text="{Binding CustomerEmail,UpdateSourceTrigger=PropertyChanged}"
              />
                     </StackPanel>
                 </Grid>

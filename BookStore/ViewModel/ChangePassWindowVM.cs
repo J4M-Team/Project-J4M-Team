@@ -99,12 +99,14 @@ namespace BookStore.ViewModel
                 if(Help.Base64Encode(OldPassWord) != Employee.Acount.Password)
                 {
                     System.Windows.MessageBox.Show("Mật khẩu không đúng, vui lòng nhập lại");
+                    return;
                 }
 
                 //Kiểm tra mật khẩu mới có trùng với mật khẩu xác nhận hay không
                 if (NewPassWord != ComfirmPassWord)
                 {
                     System.Windows.MessageBox.Show("Mật khẩu xác nhận không đúng");
+                    return;
                 }
 
                 //Thay đổi mật khẩu

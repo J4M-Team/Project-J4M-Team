@@ -61,10 +61,18 @@ namespace BookStore.ViewModel
              {
                  if(SelectedItem != null)
                  {
+                     //kiểm tra số ngày làm
+                     if (SelectedItem.Info.DateWork == 0)
+                     {
+                         MessageBox.Show("Tháng này chưa có ngày làm việc", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                         return;
+                     }
+                    
                      CEmployee.Ins.Payment(SelectedItem);
-                 }
-                 //load lại csdl
-                 ListSalary = new ObservableCollection<CEmployee>(CEmployee.Ins.ListSalary());
+                     MessageBox.Show("Thanh toán thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                     //load lại csdl
+                     ListSalary = new ObservableCollection<CEmployee>(CEmployee.Ins.ListSalary());
+                 }               
              }
                 );
         }
