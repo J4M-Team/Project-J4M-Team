@@ -191,7 +191,7 @@ namespace BookStore.ViewModel
                 }
 
                 //Thông báo thêm thành công
-                System.Windows.MessageBox.Show("Thêm thành công");
+                System.Windows.MessageBox.Show("Thêm thành công", "Thông báo", System.Windows.MessageBoxButton.OK, System.Windows.MessageBoxImage.Asterisk);
                 //Trả về trang trắng
                 Name = "";
                 Author = "";
@@ -232,9 +232,19 @@ namespace BookStore.ViewModel
                     return false;
                 }
 
-                //Kiểm tra thỏa mãn điều kiện lượng nhập tối thiểu, lượng tồn tối thiểu
+                //Kiểm tra thỏa mãn điều kiện lượng nhập tối thiểu
+                if (ICount < IMinCount)
+                {
+                    return false;
+                }
 
-               
+                //Kiểm tra thỏa mãn điều kiện lượng tồn tối thiểu
+                if (CBook.Ins.InventoryNumber(Book_Id) > IMinExist)
+                {
+                    return false;
+                }
+
+
                 return true;
             }, 
             (p) =>
@@ -243,11 +253,12 @@ namespace BookStore.ViewModel
                 {
                     CBook Book = new CBook { Name = Name, Author = Author };
                     //Sửa lại id sách
+                    //System.Windows.MessageBox.Show(SelectedIndex.ToString());
                     ListBook[SelectedIndex].Id = CBook.Ins.isExist(Book);
 
                     ListBook[SelectedIndex].Name = Name;
                     ListBook[SelectedIndex].Author = Author;
-                    ListBook[SelectedIndex].Count = int.Parse(Count);                   
+                    ListBook[SelectedIndex].Count = int.Parse(Count);
                 }
             }
                );

@@ -174,7 +174,7 @@
                             </DataGridTextColumn>
 
                             <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Name}"     
+                                Binding="{Binding Name,UpdateSourceTrigger=PropertyChanged}"     
                                 Header="Tên sách"
                                 Width="130"
                                 MinWidth="130"
@@ -188,7 +188,7 @@
                             </materialDesign:MaterialDataGridTextColumn>
 
                             <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Author}"
+                                Binding="{Binding Author,UpdateSourceTrigger=PropertyChanged}"
                                 Header="Tác giả"                            
                                 MinWidth="130"
                                 Width="130"
@@ -202,7 +202,7 @@
                             </materialDesign:MaterialDataGridTextColumn>
 
                             <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Type}"
+                                Binding="{Binding Type,UpdateSourceTrigger=PropertyChanged}"
                                 Header="Thể loại"                           
                                 MinWidth="110"
                                 Width="110"
@@ -216,7 +216,7 @@
                             </materialDesign:MaterialDataGridTextColumn>
 
                             <materialDesign:MaterialDataGridTextColumn
-                                Binding="{Binding Theme}"
+                                Binding="{Binding Theme,UpdateSourceTrigger=PropertyChanged}"
                                 Header="Chủ đề"                      
                                 MinWidth="110"
                                 Width="110"

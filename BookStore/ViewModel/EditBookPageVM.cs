@@ -229,25 +229,37 @@ namespace BookStore.ViewModel
 
             EditCommand = new RelayCommand<object>((p) => { return true; }, (p) =>
             {
-                
+                //Kiểm tra thông tin không đầy đủ
                 if(string.IsNullOrEmpty(SelectedItem.Name)|| string.IsNullOrEmpty(SelectedItem.Author)|| string.IsNullOrEmpty(SelectedItem.Theme)|| string.IsNullOrEmpty(SelectedItem.Type))
                 {
-                    return;
+                    //Thông báo lỗi
+                    MessageBox.Show("Thông tin không được để trống", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);                  
                 }
                 else
                 {
                     if (SelectedItem != null)
                     {
+                      
                         CBook Book = new CBook
                         {
                             Id = SelectedItem.Id,
-                            Name = SelectedItem.Name,
-                            Author = SelectedItem.Author,
+                            Name = Help.StandardizeName(SelectedItem.Name),
+                            Author = Help.StandardizeName(SelectedItem.Author),
                             Theme = SelectedItem.Theme,
                             Type = SelectedItem.Type,
                             Image = CoverImage
                         };
+
+                        //Kiểm tra thông tin sách mới nhập có trùng lắp với thông tin của sách khác hay không
+                        if (CBook.Ins.isExist(Book) != SelectedItem.Id)
+                        {
+                            MessageBox.Show("Thông tin trùng lặp với thông tin của sách khác", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
                         CBook.Ins.Update(Book);
+                        //Thông báo đã cập nhật thành công
+                        MessageBox.Show("Cập nhật thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
 
                         //Không cần load lại dữ liệu vì dữ liệu trên UI đã thay đổi
                         DataListBook = new ObservableCollection<CBook>(CBook.Ins.Load());

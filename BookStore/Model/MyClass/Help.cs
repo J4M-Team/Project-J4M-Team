@@ -141,5 +141,35 @@ namespace BookStore.Model.MyClass
             return System.Text.Encoding.UTF8.GetString(base64EncodedBytes);
         }
 
+        //Hàm kiểm tra chuỗi có phải là số không
+        public static bool isInt(string stringNumber)
+        {
+            int myInt;
+            if (int.TryParse(stringNumber, out myInt) == true)
+                return true;
+
+            //Kiểm tra nếu như giá trị <=0
+            if (myInt <= 0)
+            {
+                return false;
+            }
+            return false;
+        }
+
+        //Hàm kiểm tra chuỗi có phải là số thực hay không
+        public static bool isFloat(string stringNumber)
+        {
+            float myFloat;
+            if (float.TryParse(stringNumber, out myFloat))
+                return true;
+
+            //Kiểm tra giá trị <=0
+            if (myFloat <= 0)
+            {
+                return false;
+            }
+            return false;
+        }
+
     }
 }

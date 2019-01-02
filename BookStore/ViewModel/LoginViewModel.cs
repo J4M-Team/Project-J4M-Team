@@ -178,7 +178,11 @@ namespace BookStore.ViewModel
                         {
                             MessageBox.Show("Vui lòng điền đầy đủ thông tin");
                         }
-                    }                    
+                    }
+                    else
+                    {
+                        MessageBox.Show("Vui lòng chọn màn hình");
+                    }
                 }                             
             }
                 );

@@ -140,12 +140,14 @@ namespace BookStore.ViewModel
                );
 
             AddCommand = new RelayCommand<object>((p) => {
+                //Kiểm tra thông tin rỗng
                 if (string.IsNullOrEmpty(Name) || string.IsNullOrEmpty(Author) || string.IsNullOrEmpty(Type) || string.IsNullOrEmpty(Theme) && string.IsNullOrEmpty(Count) || string.IsNullOrEmpty(Price))
                 {
                     return false;
                 }
                 else
                 {
+                    //Kiểm tra tính hợp lệ của thông tin số lượng và giá tiền nhập
                     int ICount;
                     float FPrice;
                     if (int.TryParse(Count, out ICount) == false || float.TryParse(Price, out FPrice) == false)
@@ -182,8 +184,8 @@ namespace BookStore.ViewModel
             {
                 CBook Book = new CBook
                 {
-                    Name = Name,
-                    Author = Author,
+                    Name = Help.StandardizeName(Name),
+                    Author = Help.StandardizeName(Author),
                     Theme = Theme,
                     Type = Type,
                     Count = int.Parse(Count),
@@ -202,6 +204,9 @@ namespace BookStore.ViewModel
                     {
                         CWarehouse.Ins_Warehouse.AddHistoryInput(DataTransfer.Employee_Id, Book);
                     }
+
+                    //Thông báo thêm thành công
+                    MessageBox.Show("Thêm thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
                     
                     //tạo trắng bảng
                     Name = "";
@@ -211,7 +216,11 @@ namespace BookStore.ViewModel
                     Price = "";
                     Count = "";
                 }
-                          
+                else
+                {
+                    //Thông báo có lỗi trong quá trình thêm
+                    MessageBox.Show("Thêm thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                }                        
             }
                );
         }
