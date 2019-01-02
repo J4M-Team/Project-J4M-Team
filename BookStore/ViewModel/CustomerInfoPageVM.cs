@@ -151,9 +151,60 @@ namespace BookStore.ViewModel
             {
                 if (SelectedItem != null)
                 {
-                    CCustomer.Ins.Update(SelectedItem);
-                }
-                
+                    //Kiểm tra 
+                    if(string.IsNullOrEmpty(SelectedItem.Name)||string.IsNullOrEmpty(SelectedItem.Address)||string.IsNullOrEmpty(SelectedItem.Phone)
+                    ||string.IsNullOrEmpty(SelectedItem.Email))
+                    {
+                        MessageBox.Show("Thông tin không được để trống", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        DataListCustomer = new ObservableCollection<CCustomer>(CCustomer.Ins.Load());
+
+                        ListCustomer = DataListCustomer;
+                        return;
+                    }
+
+                    //Kiểm tra thông tin sdt
+                    if (Help.isInt(SelectedItem.Phone) == false)
+                    {
+                        MessageBox.Show("Số điện thoại không hợp lệ", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        DataListCustomer = new ObservableCollection<CCustomer>(CCustomer.Ins.Load());
+
+                        ListCustomer = DataListCustomer;
+                        return;
+                    }
+
+                    //Kiểm tra thông tin mail
+                    if (Help.isEmail(SelectedItem.Email) == false)
+                    {
+                        MessageBox.Show("Email không hợp lệ", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        DataListCustomer = new ObservableCollection<CCustomer>(CCustomer.Ins.Load());
+
+                        ListCustomer = DataListCustomer;
+                        return;
+                    }
+
+                    //Kiểm tra thông tin mới nhập có bị trùng với thông tin của khách hàng khác không
+                    if(SelectedItem.Id != CCustomer.Ins.isCustomer(SelectedItem.Phone, SelectedItem.Name))
+                    {
+                        MessageBox.Show("Thông tin bị trùng lắp", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        DataListCustomer = new ObservableCollection<CCustomer>(CCustomer.Ins.Load());
+
+                        ListCustomer = DataListCustomer;
+                        return;
+                    }
+
+
+                    if (CCustomer.Ins.Update(SelectedItem) == true)
+                    {
+                        MessageBox.Show("Cập nhật thành công", "Thông báo", MessageBoxButton.OK, MessageBoxImage.Asterisk);
+                    }
+                    else
+                    {
+                        MessageBox.Show("Cập nhật thất bại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
+                        DataListCustomer = new ObservableCollection<CCustomer>(CCustomer.Ins.Load());
+
+                        ListCustomer = DataListCustomer;
+                    }
+                }                
             }
                );
 

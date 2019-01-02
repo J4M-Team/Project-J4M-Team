@@ -94,6 +94,32 @@ namespace BookStore.Model.MyClass
         }
 
         /// <summary>
+        /// hàm trả về id của khách hàng theo tên và sdt
+        /// </summary>
+        /// <param name="Phone"></param>
+        /// <param name="Name"></param>
+        /// <returns></returns>
+        public int isCustomer(string Phone,string Name)
+        {
+            try
+            {
+                var find = DataProvider.Ins.DB.Customers.Where(x => x.Customer_Phone == Phone && x.Customer_Name.ToLower() == Name.ToLower()).FirstOrDefault();
+
+                if (find != null)
+                {
+                    return find.Customer_Id;
+                }
+
+                return 0;
+            }
+            catch
+            {
+
+            }
+            return 0;
+        }
+
+        /// <summary>
         /// Hàm thêm khách hàng, thêm thành công sẽ trả về id của khách hàng đó, nếu khách hàng đã tồn tại thì trả về id khách hàng
         /// </summary>
         /// <param name="Customer"></param>
