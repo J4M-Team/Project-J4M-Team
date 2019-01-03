@@ -261,8 +261,9 @@ namespace BookStore.ViewModel
                             return;
                         }
 
+                        int check = CRole.Ins.isRole(SelectedItem);
                         //Kiểm tra loại nhân viên trùng với loại nhân viên khác
-                        if (CRole.Ins.isRole(SelectedItem) != SelectedItem.Id)
+                        if (check != SelectedItem.Id && check != 0)
                         {
                             MessageBox.Show("Loại nhân viên đã tồn tại", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                             ListRole = new ObservableCollection<CRole>(CRole.Ins.ListRole());

@@ -299,8 +299,10 @@ namespace BookStore.ViewModel
                         return;
                     }
 
+                    int check = CEmployee.Ins.isEmployee(SelectedItem.Identity);
+
                     //Kiểm tra thông tin cập nhật trùng với nhân viên khác
-                    if(SelectedItem.Id != CEmployee.Ins.isEmployee(SelectedItem.Identity))
+                    if (SelectedItem.Id != check && check != 0)
                     {
                         MessageBox.Show("Thông tin cập nhật trùng với nhân viên khác", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         ListEmployee = new ObservableCollection<CEmployee>(CEmployee.Ins.ListEmployee());

@@ -182,8 +182,9 @@ namespace BookStore.ViewModel
                         return;
                     }
 
+                    int check = CCustomer.Ins.isCustomer(SelectedItem.Phone, SelectedItem.Name);
                     //Kiểm tra thông tin mới nhập có bị trùng với thông tin của khách hàng khác không
-                    if(SelectedItem.Id != CCustomer.Ins.isCustomer(SelectedItem.Phone, SelectedItem.Name))
+                    if (SelectedItem.Id != check && check != 0)
                     {
                         MessageBox.Show("Thông tin bị trùng lắp", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                         DataListCustomer = new ObservableCollection<CCustomer>(CCustomer.Ins.Load());

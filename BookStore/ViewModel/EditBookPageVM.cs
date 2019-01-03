@@ -250,8 +250,9 @@ namespace BookStore.ViewModel
                             Image = CoverImage
                         };
 
+                        int check = CBook.Ins.isExist(Book);
                         //Kiểm tra thông tin sách mới nhập có trùng lắp với thông tin của sách khác hay không
-                        if (CBook.Ins.isExist(Book) != SelectedItem.Id)
+                        if (check != SelectedItem.Id && check != 0)
                         {
                             MessageBox.Show("Thông tin trùng lặp với thông tin của sách khác", "Lỗi", MessageBoxButton.OK, MessageBoxImage.Error);
                             return;
